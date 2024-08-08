@@ -3,23 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Smart Home</title>
   </head>
   <body>
     <main>
-      <h1>SMART HOME</h1>
+      <h1 class="title">SMART HOME</h1>
       <section class="general">
-        <div class="security" id="security">Security</div>
-        <div class="garage" id="garage">Garage</div>
-        <div class="garden" id="garden">Garden</div>
-        <div class="settings" id="settings"></div>
+        <div class="general__item item" id="security">Security</div>
+        <div class="general__item item" id="garage">Garage</div>
+        <div class="general__item item" id="garden">Garden</div>
+        <div class="general__item item" id="settings">
+          <i class="fa-solid fa-gears"></i>
+        </div>
       </section>
       <section class="rooms">
-        <div class="living-room" id="living-room">Living-room</div>
-        <div class="bedroom" id="bedroom">Bedroom</div>
-        <div class="kitchen" id="kitchen">Kitchen</div>
-        <div class="bathroom" id="bathroom">Bathroom</div>
+        <div class="rooms__item item" id="living-room">Living-room</div>
+        <div class="rooms__item item" id="bedroom">Bedroom</div>
+        <div class="rooms__item item" id="kitchen">Kitchen</div>
+        <div class="rooms__item item" id="bathroom">Bathroom</div>
       </section>
     </main>
   </body>
