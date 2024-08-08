@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/index.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -11,18 +10,24 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="styles/index.css" />
     <title>Smart Home</title>
   </head>
   <body>
     <main>
       <h1 class="title">SMART HOME</h1>
-      <section class="general">
-        <div class="general__item item" id="security">Security</div>
-        <div class="general__item item" id="garage">Garage</div>
-        <div class="general__item item" id="garden">Garden</div>
-        <div class="general__item item" id="settings">
+      <section class="more-options">
+        <div class="more-options__options item">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="more-options__settings item">
           <i class="fa-solid fa-gears"></i>
         </div>
+      </section>
+      <section class="general">
+        <div class="general__item item" id="security">Security</div>
+        <div class="general__item item" id="yard">Yard</div>
+        <div class="general__item item" id="garage">Garage</div>
       </section>
       <section class="rooms">
         <div class="rooms__item item" id="living-room">Living-room</div>
