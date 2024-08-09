@@ -1,4 +1,4 @@
-import { Device } from './baseClassOfDevice'
+import { Device } from '../app.mjs'
 
 export class Door extends Device {
   constructor(name, isOpen = false) {

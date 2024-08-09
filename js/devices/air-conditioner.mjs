@@ -1,8 +1,8 @@
-import { Device } from './baseClassOfDevice'
+import { Device } from '../app.mjs'
 
 export class AirConditioner extends Device {
   constructor(name, temperature = 20) {
-    super(name, isOn)
+    super(name)
     this.temperature = temperature
   }
 

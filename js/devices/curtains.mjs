@@ -1,7 +1,7 @@
-import { Door } from './door'
+import { Door } from './door.mjs'
 
 export class Curtains extends Door {
-  constructor(name, isOpen, halfOpen = false) {
+  constructor(name, isOpen = false, halfOpen = false) {
     super(name, isOpen)
     this.halfOpen = halfOpen
   }
