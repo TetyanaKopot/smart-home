@@ -41,7 +41,8 @@ main {
   }
 }
 
-section {
+section,
+.devices-wrapper {
   width: 100%;
   border: 1px solid var(--color-accent);
   border-radius: 10px;
