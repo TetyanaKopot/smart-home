@@ -1,6 +1,7 @@
 import { renderLight } from './light-ui.mjs'
 import { renderCurtains } from './curtains-ui.mjs'
 import { renderAirConditioner } from './air-conditioner-ui.mjs'
+import { renderTelevision } from './television-ui.mjs'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
@@ -16,10 +17,7 @@ function bindEvents() {
             ${renderLight()}
             ${renderCurtains()}
             ${renderAirConditioner()}
-            <div class="device">
-                <h3 class="device__title">TV</h3>
-                <i class="fa-solid fa-tv"></i>
-            </div>
+            ${renderTelevision()}
         </div>
         `
     const toHome = document.getElementById('home')

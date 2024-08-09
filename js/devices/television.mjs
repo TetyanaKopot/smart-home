@@ -34,5 +34,5 @@ export class Television extends Device {
   }
 }
 
-const channels = ['BBC', 'CNN', 'National Geographic', 'Discovery']
+export const channels = ['BBC', 'CNN', 'National Geographic', 'Discovery']
 const myTV = new Television('Living-room TV', channels)

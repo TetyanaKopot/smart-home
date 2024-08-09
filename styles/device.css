@@ -15,11 +15,6 @@
   margin: 20px 0;
 }
 
-.light-color,
-.device-button {
-  border-radius: 50%;
-}
-
 .light-color {
   width: 30px;
   height: 30px;
@@ -58,20 +53,20 @@
   border: 1px solid blue;
 }
 
-.control-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-.device-button {
-  width: 50px;
-  height: 50px;
-  padding: 5px;
-  background-color: var(--color-background-dark);
-  border: 1px solid var(--color-background-dark);
-  color: var(--color-background-light);
-}
-
 .temperature-controller {
   margin: 40px 0;
+}
+
+.channel-selector label {
+  font-size: 0.8rem;
+}
+
+.channel-selector select {
+  padding: 5px;
+  font-size: 1rem;
+  background-color: var(--color-background-light);
+  color: var(--color-text-dark);
+  border: 1px solid var(--color-text-dark);
+  border-radius: 5px;
+  outline: none;
 }
