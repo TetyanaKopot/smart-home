@@ -1,0 +1,11 @@
+.button {
+  background-color: var(--color-background-medium);
+  border: 1px solid var(--color-background-medium);
+  border-radius: 5px;
+  padding: 10px;
+  color: var(--color-background-dark);
+}
+
+.button.security {
+  height: 54px;
+}

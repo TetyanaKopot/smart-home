@@ -34,6 +34,7 @@ main {
   background-color: var(--color-background-light);
   color: var(--color-text-dark);
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   @media (min-width: 1200px) {
     width: 50%;
@@ -51,4 +52,19 @@ section {
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.item,
+.button {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.item:hover,
+.button:hover {
+  transform: scale(1.05);
+  background-color: var(--color-background-dark);
+  color: var(--color-text-light);
+
+  .fa-solid {
+    color: var(--color-background-light);
+  }
 }
