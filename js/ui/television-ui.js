@@ -1,6 +1,7 @@
-import { channels } from '../devices/television.mjs'
+import { channels } from '../devices/television.js'
+import { renderControlButtons } from './render-buttons-ui.js'
 
-export function renderTelevision() {
+export const renderTelevision = () => {
   return `
         <div class="device">
             <h3 class="device__title">TV</h3>
@@ -23,10 +24,7 @@ export function renderTelevision() {
                 <span>20</span>
                 <button class="device-button id="volume-up">Vol+</button>
             </div>
-            <div class="control-buttons">
-                <button class="device-button off" id="tv-off">Off</button>
-                <button class="device-button on" id="tv-on">On</button>
-            </div>
+            ${renderControlButtons()}
         </div>
     
     `

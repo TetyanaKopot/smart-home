@@ -1,4 +1,4 @@
-import { Device } from '../app.mjs'
+import { Device } from './device.js'
 
 export class AirConditioner extends Device {
   constructor(name, temperature = 20) {

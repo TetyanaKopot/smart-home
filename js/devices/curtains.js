@@ -1,4 +1,4 @@
-import { Door } from './door.mjs'
+import { Door } from './door.js'
 
 export class Curtains extends Door {
   constructor(name, isOpen = false, halfOpen = false) {

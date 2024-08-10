@@ -1,4 +1,6 @@
-export function renderAirConditioner() {
+import { renderControlButtons } from './render-buttons-ui.js'
+
+export const renderAirConditioner = () => {
   return `
         <div class="device">
             <h3 class="device__title">AC</h3>
@@ -7,10 +9,7 @@ export function renderAirConditioner() {
                 <input type="range" id="ac-temperature" min="15" max="30" value="22">
                 <span id="brightness">22°C</span>
             </div>
-            <div class="control-buttons">
-                <button class="device-button off" id="ac-off">Off</button>
-                <button class="device-button on" id="ac-on">On</button>
-            </div>
+            ${renderControlButtons()}
         </div>
     `
 }

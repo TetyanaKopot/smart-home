@@ -1,18 +1,18 @@
-import { renderLight } from './light-ui.mjs'
-import { renderCurtains } from './curtains-ui.mjs'
-import { renderAirConditioner } from './air-conditioner-ui.mjs'
-import { renderTelevision } from './television-ui.mjs'
+import { renderLight } from './ui/light-ui.js'
+import { renderCurtains } from './ui/curtains-ui.js'
+import { renderAirConditioner } from './ui/air-conditioner-ui.js'
+import { renderTelevision } from './ui/television-ui.js'
+import { renderHomeButton } from './ui/render-buttons-ui.js'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
-function bindEvents() {
+
+const bindEvents = () => {
   const livingRoom = document.querySelector('#living-room')
   livingRoom.addEventListener('click', () => {
     main.innerHTML = `
-        <button class="button" id="home">
-            <i class="fa-solid fa-house"></i>
-        </button>
-        <h2>Living-room devices</h2>
+        ${renderHomeButton()}
+        <h2>Living Room devices</h2>
         <div class="devices-wrapper">
             ${renderLight()}
             ${renderCurtains()}
