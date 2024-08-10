@@ -17,11 +17,3 @@ export class Light extends Device {
     console.log(`${this.name} has ${this.color} color`)
   }
 }
-// document.addEventListener('DOMContentLoaded', () => {
-//   const lightOn = document.querySelector('#light-on')
-//   console.log(lightOn)
-// Тут можна підключати кнопку до дії
-// })
-// const livingRoomLight = new Light('Living Room Light')
-// const lightOn = document.querySelector('#light-on')
-// console.log(lightOn)

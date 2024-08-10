@@ -5,7 +5,7 @@
   background-color: var(--color-background-medium);
   border-radius: 10px;
   padding: 10px;
-  font-size: 1.5rem;
+  font-size: 1rem;
 
   @media (min-width: 768px) {
     width: calc(50% - 10px);
@@ -54,11 +54,15 @@
   border: 1px solid blue;
 }
 
-.temperature-controller {
+.power-controller {
   margin: 40px 0;
 }
 
-.channel-selector label {
+.channel-selector {
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+  width: 70%;
   font-size: 0.8rem;
 }
 
@@ -70,4 +74,12 @@
   border: 1px solid var(--color-text-dark);
   border-radius: 5px;
   outline: none;
+}
+
+.timer {
+  margin: 10px 0;
+}
+
+.input-time {
+  width: 30px;
 }

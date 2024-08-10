@@ -6,7 +6,7 @@ export const renderRoom = (room) => {
     </button>
     <h2>${room.name} devices</h2>
     <div class="devices-wrapper">
-        ${deviceHtml}
+      ${deviceHtml}
     </div>
   `
 }

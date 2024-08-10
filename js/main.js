@@ -3,10 +3,12 @@ import { renderCurtains } from './ui/render-curtains.js'
 import { renderAirConditioner } from './ui/render-air-conditioner.js'
 import { renderTelevision } from './ui/render-television.js'
 import { renderRoom } from './ui/render-room.js'
+import { renderOven } from './ui/render-oven.js'
+import { renderHood } from './ui/render-hood.js'
 
 const rooms = [
   {
-    name: 'Livingroom',
+    name: 'LivingRoom',
     devices: [
       renderLight,
       renderCurtains,
@@ -20,6 +22,10 @@ const rooms = [
   },
   {
     name: 'Kitchen',
+    devices: [renderLight, renderOven, renderHood],
+  },
+  {
+    name: 'UtilityRoom',
     devices: [renderLight],
   },
 ]
