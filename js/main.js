@@ -5,6 +5,8 @@ import { renderTelevision } from './ui/render-television.js'
 import { renderRoom } from './ui/render-room.js'
 import { renderOven } from './ui/render-oven.js'
 import { renderHood } from './ui/render-hood.js'
+import { renderBoiler } from './ui/render-boiler.js'
+import { renderWashingMachine } from './ui/render-washing-machine.js'
 
 const rooms = [
   {
@@ -26,7 +28,7 @@ const rooms = [
   },
   {
     name: 'UtilityRoom',
-    devices: [renderLight],
+    devices: [renderLight, renderWashingMachine, renderBoiler],
   },
 ]
 
