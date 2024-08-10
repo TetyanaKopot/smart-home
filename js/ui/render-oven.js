@@ -11,7 +11,7 @@ export const renderOven = () => {
       <i class="fa-solid fa-fire"></i>
       ${renderTimer()}
       ${renderPowerController(50, 360, 180)}
-      ${renderControlButtons()}
+      ${renderControlButtons('off', 'on')}
     </div>
   `
 }

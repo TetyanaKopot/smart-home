@@ -9,7 +9,7 @@ export const renderHood = () => {
       <h3 class="device__title">Hood</h3>
       <i class="fa-solid fa-wind"></i>
       ${renderPowerController(0, 100, 30)}
-      ${renderControlButtons()}
+      ${renderControlButtons('off', 'on')}
     </div>
     `
 }

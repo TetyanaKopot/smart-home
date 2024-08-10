@@ -10,8 +10,8 @@ export const renderWashingMachine = () => {
         <h3 class="device__title">Washing Machine</h3>
         <i class="fa-solid fa-soap"></i>
         ${renderTimer()}
-        ${renderPowerController(50, 360, 180)}
-        ${renderControlButtons()}
+        ${renderPowerController(0, 90, 40)}
+        ${renderControlButtons('off', 'on')}
       </div>
     `
 }

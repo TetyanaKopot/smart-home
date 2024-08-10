@@ -7,11 +7,13 @@ import { renderOven } from './ui/render-oven.js'
 import { renderHood } from './ui/render-hood.js'
 import { renderBoiler } from './ui/render-boiler.js'
 import { renderWashingMachine } from './ui/render-washing-machine.js'
+import { renderDoor } from './ui/render-door.js'
 
 const rooms = [
   {
     name: 'LivingRoom',
     devices: [
+      renderDoor,
       renderLight,
       renderCurtains,
       renderAirConditioner,
@@ -24,7 +26,7 @@ const rooms = [
   },
   {
     name: 'Kitchen',
-    devices: [renderLight, renderOven, renderHood],
+    devices: [renderLight, renderCurtains, renderOven, renderHood],
   },
   {
     name: 'UtilityRoom',
@@ -37,9 +39,11 @@ const originalContent = main.innerHTML
 
 const bindEvents = () => {
   rooms.forEach((room) => {
-    const roomElement = document.querySelector(`#${room.name.toLowerCase()}`)
+    const roomName = room.name.toLowerCase()
+    const roomElement = document.querySelector(`#${roomName}`)
     roomElement.addEventListener('click', () => {
       main.innerHTML = renderRoom(room)
+      console.log(roomElement)
 
       const toHome = document.querySelector('#home')
       toHome.addEventListener('click', () => {

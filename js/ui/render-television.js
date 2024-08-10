@@ -24,7 +24,7 @@ export const renderTelevision = () => {
         <span>20</span>
         <button class="device-button id="volume-up">Vol+</button>
       </div>
-      ${renderControlButtons()}
+      ${renderControlButtons('off', 'on')}
     </div>    
     `
 }

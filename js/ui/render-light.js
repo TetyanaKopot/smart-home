@@ -16,7 +16,7 @@ export const renderLight = () => {
         <button type="button" class="light-color blue" id="blue-light">B</button>
       </div>
       ${renderPowerController(0, 100, 50)}
-      ${renderControlButtons()}
+      ${renderControlButtons('off', 'on')}
     </div>
     `
 }
