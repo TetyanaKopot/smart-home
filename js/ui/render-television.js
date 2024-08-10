@@ -1,5 +1,5 @@
 import { channels } from '../devices/television.js'
-import { renderControlButtons } from './render-buttons-ui.js'
+import { renderControlButtons } from './render-buttons.js'
 
 export const renderTelevision = () => {
   return `

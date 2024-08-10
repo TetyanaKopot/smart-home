@@ -6,11 +6,3 @@ export const renderControlButtons = () => {
     </div>
     `
 }
-
-export const renderHomeButton = () => {
-  return `
-    <button class="button" id="home">
-      <i class="fa-solid fa-house"></i>
-    </button>
-  `
-}

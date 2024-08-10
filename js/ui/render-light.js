@@ -1,4 +1,4 @@
-import { renderControlButtons } from './render-buttons-ui.js'
+import { renderControlButtons } from './render-buttons.js'
 
 export const renderLight = () => {
   return `
