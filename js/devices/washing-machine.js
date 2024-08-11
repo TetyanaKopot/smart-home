@@ -1,4 +1,9 @@
-import Device from './device.js'
+import { Device } from './device.js'
+import {
+  renderControlButtons,
+  renderTimer,
+  renderPowerController,
+} from '../ui/render-elements.js'
 
 export class WashingMachine extends Device {
   constructor(name, temperature = 40) {
@@ -22,9 +27,11 @@ export class WashingMachine extends Device {
         const mins = Math.floor((timeInSeconds % 3600) / 60)
         const secs = Math.floor(timeInSeconds % 60)
 
-        document.querySelector('#timer').innerText = `Timer ${this.formatTime(
-          hrs
-        )} : ${this.formatTime(mins)} : ${this.formatTime(secs)}`
+        document.querySelector(
+          `#${roomName}-${this.name}-timer`
+        ).innerText = `Timer ${this.formatTime(hrs)} : ${this.formatTime(
+          mins
+        )} : ${this.formatTime(secs)}`
       } else {
         clearInterval(this.timer)
       }
@@ -32,5 +39,17 @@ export class WashingMachine extends Device {
   }
   formatTime(value) {
     return value < 10 ? `0${value}` : value
+  }
+
+  render(roomName) {
+    return `
+      <div class="device">
+        <h3 class="device__title">Washing Machine</h3>
+        <i class="fa-solid fa-soap"></i>
+        ${renderTimer(this.name, roomName)}
+        ${renderPowerController(0, 90, 40, 'temperature', this.name, roomName)}
+        ${renderControlButtons('off', 'on', this.name, roomName)}
+      </div>
+    `
   }
 }

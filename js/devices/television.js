@@ -1,4 +1,5 @@
 import { Device } from './device.js'
+import { renderControlButtons } from '../ui/render-elements.js'
 
 export class Television extends Device {
   constructor(name, channels) {
@@ -31,6 +32,42 @@ export class Television extends Device {
 
   getChannelList() {
     return this.channels
+  }
+
+  render(roomName) {
+    return `
+    <div class="device">
+      <h3 class="device__title">TV</h3>
+      <div class="channel-selector">
+        <label for="channels">Select Channel:</label>
+        <select id="${roomName}-${this.name}-channels">
+          <option value="1">${channels[0]}</option>
+          <option value="2">${channels[1]}</option>
+          <option value="3">${channels[2]}</option>
+          <option value="4">${channels[3]}</option>
+        </select>
+      </div>
+      <div class="channel-buttons">
+        <button class="device-button id="${roomName}-${
+      this.name
+    }-channel-prev">Prev</button>
+        <span>CNN</span>
+        <button class="device-button id="${roomName}-${
+      this.name
+    }-channel-next">Next</button>
+      </div>
+      <div class="volume-buttons">
+        <button class="device-button id="${roomName}-${
+      this.name
+    }-volume-down">Vol-</button>
+        <span>20</span>
+        <button class="device-button id="${roomName}-${
+      this.name
+    }-volume-up">Vol+</button>
+      </div>
+      ${renderControlButtons('off', 'on', this.name, roomName)}
+    </div>    
+    `
   }
 }
 
