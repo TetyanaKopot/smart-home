@@ -4,12 +4,12 @@ export class Device {
     this.isOn = false
   }
 
-  turnOn() {
+  on() {
     this.isOn = true
     console.log(`${this.name} is turned on`)
   }
 
-  turnOff() {
+  off() {
     this.isOn = false
     console.log(`${this.name} is turned off`)
   }

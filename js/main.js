@@ -18,40 +18,40 @@ const bindEvents = () => {
         console.log(actions)
 
         if (actions) {
-        }
-        const onButton = document.querySelector(
-          `#${roomName}-${device.name}-${actions.on}`
-        )
-        if (onButton) {
-          onButton.addEventListener('click', () => {
-            if (typeof device[actions.on] === 'function') {
-              device[actions.on]()
-            }
-            // updateDeviceUI(device);
-          })
-        }
-        const offButton = document.querySelector(
-          `#${roomName}-${device.name}-off`
-        )
-        if (offButton) {
-          offButton.addEventListener('click', () => {
-            if (typeof device[actions.off] === 'function') {
-              device[actions.off]()
-            }
-            // updateDeviceUI(device);
-          })
-        } else {
-          console.error(`Немає дій для пристрою ${device.constructor.name}`)
-        }
-        const brightnessSlider = document.querySelector(
-          `#${roomName}-${device.name}-brightness`
-        )
-        // console.log(`#${roomName}-${device.name}-brightness`)
-        if (brightnessSlider) {
-          brightnessSlider.addEventListener('input', (event) => {
-            device.setBrightness(event.target.value)
-            // updateDeviceUI(device);
-          })
+          const onButton = document.querySelector(
+            `#${roomName}-${device.name}-${actions.on}`
+          )
+          if (onButton) {
+            onButton.addEventListener('click', () => {
+              if (typeof device[actions.on] === 'function') {
+                device[actions.on]()
+              }
+              // updateDeviceUI(device)
+            })
+          }
+          const offButton = document.querySelector(
+            `#${roomName}-${device.name}-${actions.off}`
+          )
+          if (offButton) {
+            offButton.addEventListener('click', () => {
+              if (typeof device[actions.off] === 'function') {
+                device[actions.off]()
+              }
+              // updateDeviceUI(device);
+            })
+          } else {
+            console.error(`Немає дій для пристрою ${device.constructor.name}`)
+          }
+          const brightnessSlider = document.querySelector(
+            `#${roomName}-${device.name}-brightness`
+          )
+          // console.log(`#${roomName}-${device.name}-brightness`)
+          if (brightnessSlider) {
+            brightnessSlider.addEventListener('input', (event) => {
+              device.setBrightness(event.target.value)
+              // updateDeviceUI(device);
+            })
+          }
         }
       })
 

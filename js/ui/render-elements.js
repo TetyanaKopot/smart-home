@@ -4,8 +4,8 @@ export const renderControlButtons = (deviceTipe, name, roomName) => {
   const actions = controlActions[deviceTipe] || { on: 'on', off: 'off' }
   return `
   <div class="control-buttons">
-  <button class="device-button on" id="${roomName}-${name}-on">${actions.on}</button>
-  <button class="device-button off" id="${roomName}-${name}-off">${actions.off}</button>
+  <button class="device-button on" id="${roomName}-${name}-${actions.on}">${actions.on}</button>
+  <button class="device-button off" id="${roomName}-${name}-${actions.off}">${actions.off}</button>
     </div>
     `
 }

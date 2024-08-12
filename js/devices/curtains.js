@@ -2,8 +2,8 @@ import { Door } from './door.js'
 import { renderControlButtons } from '../ui/render-elements.js'
 
 export class Curtains extends Door {
-  constructor(name, isOpen = false, halfOpen = false) {
-    super(name, isOpen)
+  constructor(name, halfOpen = false) {
+    super(name)
     this.halfOpen = halfOpen
   }
 
