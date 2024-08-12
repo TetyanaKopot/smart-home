@@ -17,6 +17,12 @@ export class Door extends Device {
     console.log(`${this.name} is close`)
   }
 
+  getStatus() {
+    return {
+      isOpen: this.isOpen,
+    }
+  }
+
   render(roomName) {
     return `
     <div class="device">

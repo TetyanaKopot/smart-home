@@ -41,6 +41,13 @@ export class WashingMachine extends Device {
     return value < 10 ? `0${value}` : value
   }
 
+  getStatus() {
+    return {
+      isOn: this.isOn,
+      temperature: this.temperature,
+    }
+  }
+
   render(roomName) {
     return `
       <div class="device">

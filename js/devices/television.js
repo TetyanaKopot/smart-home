@@ -34,6 +34,14 @@ export class Television extends Device {
     return this.channels
   }
 
+  getStatus() {
+    return {
+      isOn: this.isOn,
+      currentChannel: this.currentChannel,
+      volume: this.volume,
+    }
+  }
+
   render(roomName) {
     return `
     <div class="device">

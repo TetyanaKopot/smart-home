@@ -12,6 +12,13 @@ export class Oven extends WashingMachine {
     this.timer = null
   }
 
+  getStatus() {
+    return {
+      isOn: this.isOn,
+      temperature: this.temperature,
+    }
+  }
+
   render(roomName) {
     return `
     <div class="device">

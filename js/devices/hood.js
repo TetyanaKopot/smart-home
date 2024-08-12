@@ -14,6 +14,13 @@ export class Hood extends Device {
     this.power = value
   }
 
+  getStatus() {
+    return {
+      isOn: this.isOn,
+      power: this.power,
+    }
+  }
+
   render(roomName) {
     return `
     <div class="device">

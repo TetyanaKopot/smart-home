@@ -15,6 +15,13 @@ export class AirConditioner extends Device {
     console.log(`${this.name} temperature is set to${this.temperature}`)
   }
 
+  getStatus() {
+    return {
+      isOn: this.isOn,
+      temperature: this.temperature,
+    }
+  }
+
   render(roomName) {
     return `
     <div class="device">

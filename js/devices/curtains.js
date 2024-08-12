@@ -11,6 +11,13 @@ export class Curtains extends Door {
     this.halfOpen = true
   }
 
+  getStatus() {
+    return {
+      isOn: this.isOn,
+      halfOpen: this.halfOpen,
+    }
+  }
+
   render(roomName) {
     return `
     <div class="device">
