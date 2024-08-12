@@ -19,7 +19,7 @@ export class Oven extends WashingMachine {
       <i class="fa-solid fa-fire"></i>
       ${renderTimer(this.name, roomName)}
       ${renderPowerController(50, 360, 180, 'temperature', this.name, roomName)}
-      ${renderControlButtons('off', 'on', this.name, roomName)}
+      ${renderControlButtons('Oven', this.name, roomName)}
     </div>
   `
   }

@@ -41,7 +41,7 @@ export const rooms = [
     devices: [
       new Light('Light'),
       new WashingMachine('WashingMachine'),
-      new Boiler(Boiler),
+      new Boiler('Boiler'),
     ],
   },
 ]

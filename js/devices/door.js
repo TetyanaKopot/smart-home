@@ -9,10 +9,12 @@ export class Door extends Device {
 
   open() {
     this.isOpen = true
+    console.log(`${this.name} is open`)
   }
 
   close() {
     this.isOpen = false
+    console.log(`${this.name} is close`)
   }
 
   render(roomName) {
@@ -20,7 +22,7 @@ export class Door extends Device {
     <div class="device">
       <h3 class="device__title">Door</h3>
         <i class="fa-solid fa-door-open"></i> 
-      ${renderControlButtons('close', 'open', this.name, roomName)}
+      ${renderControlButtons('Door', this.name, roomName)}
     </div>
     `
   }

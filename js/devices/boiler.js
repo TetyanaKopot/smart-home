@@ -1,8 +1,8 @@
+import { Device } from './device.js'
 import {
   renderControlButtons,
   renderPowerController,
 } from '../ui/render-elements.js'
-import { Device } from './device.js'
 
 export class Boiler extends Device {
   constructor(name, temperature = 50) {
@@ -21,7 +21,7 @@ export class Boiler extends Device {
         <h3 class="device__title">Boiler</h3>
         <i class="fa-brands fa-hotjar"></i>
         ${renderPowerController(40, 60, 50, 'temperature', this.name, roomName)}
-        ${renderControlButtons('off', 'on', this.name, roomName)}
+        ${renderControlButtons('Boiler', this.name, roomName)}
       </div>
       `
   }

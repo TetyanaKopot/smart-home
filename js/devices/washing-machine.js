@@ -48,7 +48,7 @@ export class WashingMachine extends Device {
         <i class="fa-solid fa-soap"></i>
         ${renderTimer(this.name, roomName)}
         ${renderPowerController(0, 90, 40, 'temperature', this.name, roomName)}
-        ${renderControlButtons('off', 'on', this.name, roomName)}
+        ${renderControlButtons('WashingMachine', this.name, roomName)}
       </div>
     `
   }

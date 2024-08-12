@@ -65,7 +65,7 @@ export class Television extends Device {
       this.name
     }-volume-up">Vol+</button>
       </div>
-      ${renderControlButtons('off', 'on', this.name, roomName)}
+      ${renderControlButtons('Television', this.name, roomName)}
     </div>    
     `
   }

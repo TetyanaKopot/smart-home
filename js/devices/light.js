@@ -60,7 +60,7 @@ export class Light extends Device {
           this.name,
           roomName
         )}
-        ${renderControlButtons('Off', 'On', this.name, roomName)}   
+        ${renderControlButtons('Light', this.name, roomName)}   
         </div>
         `
   }

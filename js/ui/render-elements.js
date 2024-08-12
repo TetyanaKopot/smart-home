@@ -1,8 +1,11 @@
-export const renderControlButtons = (off, on, name, roomName) => {
+import { controlActions } from '../config.js'
+
+export const renderControlButtons = (deviceTipe, name, roomName) => {
+  const actions = controlActions[deviceTipe] || { on: 'on', off: 'off' }
   return `
   <div class="control-buttons">
-  <button class="device-button on" id="${roomName}-${name}-on">${on}</button>
-  <button class="device-button off" id="${roomName}-${name}-off">${off}</button>
+  <button class="device-button on" id="${roomName}-${name}-on">${actions.on}</button>
+  <button class="device-button off" id="${roomName}-${name}-off">${actions.off}</button>
     </div>
     `
 }
