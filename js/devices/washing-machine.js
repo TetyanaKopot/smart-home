@@ -6,14 +6,15 @@ import {
 } from '../ui/render-elements.js'
 
 export class WashingMachine extends Device {
-  constructor(name, temperature = 40) {
+  constructor(name, tempValue = 40) {
     super(name)
-    this.temperature = temperature
+    this.tempValue = tempValue
     this.timer = null
   }
 
-  setTemperature(value) {
-    this.temperature = value
+  temperature(value) {
+    this.tempValue = value
+    console.log(`${this.name} temperfture is set to${this.tempValue}`)
   }
 
   startTimer(hours, minutes) {
@@ -44,7 +45,7 @@ export class WashingMachine extends Device {
   getStatus() {
     return {
       isOn: this.isOn,
-      temperature: this.temperature,
+      temperature: this.tempValue,
     }
   }
 
@@ -54,7 +55,14 @@ export class WashingMachine extends Device {
         <h3 class="device__title">Washing Machine</h3>
         <i class="fa-solid fa-soap"></i>
         ${renderTimer(this.name, roomName)}
-        ${renderPowerController(0, 90, 40, 'temperature', this.name, roomName)}
+        ${renderPowerController(
+          0,
+          90,
+          this.tempValue,
+          'temperature',
+          this.name,
+          roomName
+        )}
         ${renderControlButtons('WashingMachine', this.name, roomName)}
       </div>
     `

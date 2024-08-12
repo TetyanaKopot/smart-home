@@ -9,3 +9,12 @@ export const controlActions = {
   Television: { on: 'on', off: 'off' },
   WashingMachine: { on: 'on', off: 'off' },
 }
+
+export const parameterControls = {
+  AirConditioner: { power: 'temperature' },
+  Boiler: { power: 'temperature' },
+  Hood: { power: 'power' },
+  Light: { power: 'brightness' },
+  Oven: { power: 'temperature' },
+  WashingMachine: { power: 'temperature' },
+}

@@ -5,20 +5,20 @@ import {
 } from '../ui/render-elements.js'
 
 export class Boiler extends Device {
-  constructor(name, temperature = 50) {
+  constructor(name, tempValue = 50) {
     super(name)
-    this.temperature = temperature
+    this.tempValue = tempValue
   }
 
-  setTemperature(value) {
-    this.temperature = value
-    console.log(`${this.name} temperature is set to${this.temperature}`)
+  temperature(value) {
+    this.tempValue = value
+    console.log(`${this.name} temperature is set to${this.tempValue}`)
   }
 
   getStatus() {
     return {
       isOn: this.isOn,
-      temperature: this.temperature,
+      temperature: this.tempValue,
     }
   }
 
@@ -27,7 +27,14 @@ export class Boiler extends Device {
       <div class="device">
         <h3 class="device__title">Boiler</h3>
         <i class="fa-brands fa-hotjar"></i>
-        ${renderPowerController(40, 60, 50, 'temperature', this.name, roomName)}
+        ${renderPowerController(
+          40,
+          60,
+          this.tempValue,
+          'temperature',
+          this.name,
+          roomName
+        )}
         ${renderControlButtons('Boiler', this.name, roomName)}
       </div>
       `

@@ -1,6 +1,6 @@
 import { rooms } from './rooms.js'
 import { renderRoom } from './ui/render-room.js'
-import { controlActions } from './config.js'
+import { controlActions, parameterControls } from './config.js'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
@@ -15,7 +15,6 @@ const bindEvents = () => {
       room.devices.forEach((device) => {
         const roomName = room.name.toLowerCase()
         const actions = controlActions[device.constructor.name]
-        console.log(actions)
 
         if (actions) {
           const onButton = document.querySelector(
@@ -39,16 +38,19 @@ const bindEvents = () => {
               }
               // updateDeviceUI(device);
             })
-          } else {
-            console.error(`Немає дій для пристрою ${device.constructor.name}`)
           }
-          const brightnessSlider = document.querySelector(
-            `#${roomName}-${device.name}-brightness`
+        }
+
+        const param = parameterControls[device.constructor.name]
+        if (param) {
+          const powerSlider = document.querySelector(
+            `#${roomName}-${device.name}-${param.power}`
           )
-          // console.log(`#${roomName}-${device.name}-brightness`)
-          if (brightnessSlider) {
-            brightnessSlider.addEventListener('input', (event) => {
-              device.setBrightness(event.target.value)
+          if (powerSlider) {
+            powerSlider.addEventListener('input', (event) => {
+              if (typeof device[param.power] === 'function') {
+                device[param.power](event.target.value)
+              }
               // updateDeviceUI(device);
             })
           }

@@ -6,16 +6,16 @@ import {
 } from '../ui/render-elements.js'
 
 export class Oven extends WashingMachine {
-  constructor(name, temperature = 180) {
+  constructor(name, tempValue = 180) {
     super(name)
-    this.temperature = temperature
+    this.tempValue = tempValue
     this.timer = null
   }
 
   getStatus() {
     return {
       isOn: this.isOn,
-      temperature: this.temperature,
+      temperature: this.tempValue,
     }
   }
 
@@ -25,7 +25,14 @@ export class Oven extends WashingMachine {
       <h3 class="device__title">Oven</h3>
       <i class="fa-solid fa-fire"></i>
       ${renderTimer(this.name, roomName)}
-      ${renderPowerController(50, 360, 180, 'temperature', this.name, roomName)}
+      ${renderPowerController(
+        50,
+        360,
+        this.tempValue,
+        'temperature',
+        this.name,
+        roomName
+      )}
       ${renderControlButtons('Oven', this.name, roomName)}
     </div>
   `
