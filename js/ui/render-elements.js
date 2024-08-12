@@ -21,7 +21,7 @@ export const renderPowerController = (
   return `
     <div class="power-controller">
       <input type="range" id="${roomName}-${name}-${deviceParam}" min="${min}" max="${max}" value="${value}">
-      <span id="${deviceParam}">${value}</span>
+      <span id="${roomName}-${name}-${deviceParam}-value">${value}</span>
     </div>
   `
 }
