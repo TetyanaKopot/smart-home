@@ -1,6 +1,6 @@
 import { rooms } from './rooms.js'
 import { renderRoom } from './ui/render-room.js'
-import { setupDeviceControls } from './events/input-range.js'
+import { hendleInpurRange } from './events/input-range.js'
 import { handleOnOffClick } from './events/on-off-buttons.js'
 
 const main = document.querySelector('main')
@@ -16,7 +16,7 @@ const bindEvents = () => {
       room.devices.forEach((device) => {
         const roomName = room.name.toLowerCase()
         handleOnOffClick(device, roomName)
-        setupDeviceControls(device, roomName)
+        hendleInpurRange(device, roomName)
       })
 
       const toHome = document.querySelector('.home-button')
