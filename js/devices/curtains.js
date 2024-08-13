@@ -9,6 +9,7 @@ export class Curtains extends Door {
 
   openHalf() {
     this.halfOpen = true
+    console.log(`${this.name} is open half`)
   }
 
   getStatus() {
@@ -23,7 +24,9 @@ export class Curtains extends Door {
     <div class="device">
       <h3 class="device__title">Curtains</h3>
       <i class="fa-regular fa-window-maximize"></i> 
-      <i class="fa-solid fa-circle-half-stroke"></i>
+      <i class="fa-solid fa-circle-half-stroke" id="${roomName}-${
+      this.name
+    }-open-half"></i>
       ${renderControlButtons('Curtains', this.name, roomName)}
     </div>
     `

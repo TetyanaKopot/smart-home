@@ -27,4 +27,13 @@ export const handleOnOffClick = (device, roomName) => {
       })
     }
   }
+
+  const openHalfButton = document.querySelector(
+    `#${roomName}-${device.name}-open-half`
+  )
+  if (openHalfButton) {
+    openHalfButton.addEventListener('click', () => {
+      device.openHalf()
+    })
+  }
 }

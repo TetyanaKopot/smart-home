@@ -43,15 +43,15 @@ export class Light extends Device {
 
   render(roomName) {
     return `
-    <div class="device">
+    <div class="device ${roomName}">
     <h3 class="device__title">${this.name}</h3>
     <i class="fa-solid fa-lightbulb"></i>      
-    <div class="light-colors">
-    <button class="light-color white" id="${roomName}-white">W</button>
-    <button class="light-color yellow" id="${roomName}-yellow">Y</button>
-    <button class="light-color red" id="${roomName}-red">R</button>
-    <button class="light-color green" id="${roomName}-green">G</button>
-          <button class="light-color blue" id="${roomName}-blue">B</button>
+    <div class="light-colors" id="${roomName}-${this.name}-colors">
+    <button class="light-color white" id="${roomName}-white" data-color="white">W</button>
+    <button class="light-color yellow" id="${roomName}-yellow" data-color="yellow">Y</button>
+    <button class="light-color red" id="${roomName}-red" data-color="red">R</button>
+    <button class="light-color green" id="${roomName}-green" data-color="green">G</button>
+          <button class="light-color blue" id="${roomName}-blue" data-color="blue">B</button>
         </div>
         ${renderPowerController(
           0,
