@@ -17,7 +17,7 @@ export class WashingMachine extends Device {
     console.log(`${this.name} temperfture is set to${this.tempValue}`)
   }
 
-  startTimer(hours, minutes) {
+  startTimer(hours, minutes, roomName) {
     let timeInSeconds = hours * 60 * 60 + minutes * 60
 
     this.timer = setInterval(() => {
