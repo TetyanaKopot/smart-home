@@ -32,11 +32,15 @@ export const handleOnOffClick = (device, roomName) => {
           hoursElement.value = 0
           minutesElement.value = 0
           device[actions.on]?.()
+          onButton.classList.add('is-clicked')
+          offButton.classList.remove('is-clicked')
         } else {
           console.log(`Set timer for ${device.name}, please`)
         }
       } else {
         device[actions.on]?.()
+        onButton.classList.add('is-clicked')
+        offButton.classList.remove('is-clicked')
       }
     }
     const handleOffClick = () => {
@@ -48,6 +52,8 @@ export const handleOnOffClick = (device, roomName) => {
         }
       }
       device[actions.off]?.()
+      offButton.classList.add('is-clicked')
+      onButton.classList.remove('is-clicked')
     }
 
     onButton.addEventListener('click', handleOnClick)

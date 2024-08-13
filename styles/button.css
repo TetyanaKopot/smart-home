@@ -21,9 +21,15 @@
   width: 50px;
   height: 50px;
   padding: 5px;
-  background-color: var(--color-background-dark);
-  border: 1px solid var(--color-background-dark);
-  color: var(--color-background-light);
+  background-color: var(--color-background-medium);
+  border: 3px solid var(--color-background-dark);
+  color: var(--color-text-dark);
+
+  &.is-clicked {
+    background-color: var(--color-background-dark);
+    border: 1px solid var(--color-background-dark);
+    color: var(--color-background-light);
+  }
 }
 
 .light-color,
