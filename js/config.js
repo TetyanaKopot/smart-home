@@ -11,10 +11,28 @@ export const controlActions = {
 }
 
 export const parameterControls = {
-  AirConditioner: { power: 'temperature' },
-  Boiler: { power: 'temperature' },
-  Hood: { power: 'power' },
-  Light: { power: 'brightness' },
-  Oven: { power: 'temperature' },
-  WashingMachine: { power: 'temperature' },
+  AirConditioner: {
+    power: 'temperature',
+    unit: '°C',
+  },
+  Boiler: {
+    power: 'temperature',
+    unit: '°C',
+  },
+  Hood: {
+    power: 'power',
+    unit: 'RPM',
+  },
+  Light: {
+    power: 'brightness',
+    unit: 'lm',
+  },
+  Oven: {
+    power: 'temperature',
+    unit: '°C',
+  },
+  WashingMachine: {
+    power: 'temperature',
+    unit: '°C',
+  },
 }

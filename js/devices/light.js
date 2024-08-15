@@ -60,7 +60,7 @@ export class Light extends Device {
         deviceParam: 'brightness',
         name: this.name,
         roomName,
-        unit: '%',
+        unit: 'lm',
       })}
       ${renderControlButtons('Light', this.name, roomName)}   
     </div>

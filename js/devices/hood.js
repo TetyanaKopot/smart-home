@@ -34,7 +34,7 @@ export class Hood extends Device {
         deviceParam: 'power',
         name: this.name,
         roomName,
-        unit: '%',
+        unit: 'RPM',
       })}
       ${renderControlButtons('Hood', this.name, roomName)}
     </div>
