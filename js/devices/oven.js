@@ -25,14 +25,15 @@ export class Oven extends WashingMachine {
       <h3 class="device__title">Oven</h3>
       <i class="fa-solid fa-fire"></i>
       ${renderTimer(this.name, roomName)}
-      ${renderPowerController(
-        50,
-        360,
-        this.tempValue,
-        'temperature',
-        this.name,
-        roomName
-      )}
+      ${renderPowerController({
+        min: 50,
+        max: 360,
+        value: this.tempValue,
+        deviceParam: 'temperature',
+        name: this.name,
+        roomName,
+        unit: '°C',
+      })}
       ${renderControlButtons('Oven', this.name, roomName)}
     </div>
   `

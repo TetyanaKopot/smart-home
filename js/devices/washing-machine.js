@@ -55,14 +55,15 @@ export class WashingMachine extends Device {
         <h3 class="device__title">Washing Machine</h3>
         <i class="fa-solid fa-soap"></i>
         ${renderTimer(this.name, roomName)}
-        ${renderPowerController(
-          0,
-          90,
-          this.tempValue,
-          'temperature',
-          this.name,
-          roomName
-        )}
+        ${renderPowerController({
+          min: 0,
+          max: 90,
+          value: this.tempValue,
+          deviceParam: 'temperature',
+          name: this.name,
+          roomName,
+          unit: '°C',
+        })}
         ${renderControlButtons('WashingMachine', this.name, roomName)}
       </div>
     `

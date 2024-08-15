@@ -27,14 +27,15 @@ export class Boiler extends Device {
       <div class="device">
         <h3 class="device__title">Boiler</h3>
         <i class="fa-brands fa-hotjar"></i>
-        ${renderPowerController(
-          40,
-          60,
-          this.tempValue,
-          'temperature',
-          this.name,
-          roomName
-        )}
+        ${renderPowerController({
+          min: 40,
+          max: 60,
+          value: this.tempValue,
+          deviceParam: 'temperature',
+          name: this.name,
+          roomName,
+          unit: '°C',
+        })}
         ${renderControlButtons('Boiler', this.name, roomName)}
       </div>
       `

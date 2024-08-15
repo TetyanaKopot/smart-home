@@ -27,14 +27,15 @@ export class Hood extends Device {
     <div class="device">
       <h3 class="device__title">Hood</h3>
       <i class="fa-solid fa-wind"></i>
-      ${renderPowerController(
-        0,
-        100,
-        this.powValue,
-        'power',
-        this.name,
-        roomName
-      )}
+      ${renderPowerController({
+        min: 0,
+        max: 100,
+        value: this.powValue,
+        deviceParam: 'power',
+        name: this.name,
+        roomName,
+        unit: '%',
+      })}
       ${renderControlButtons('Hood', this.name, roomName)}
     </div>
     `

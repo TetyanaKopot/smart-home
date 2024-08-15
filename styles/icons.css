@@ -9,4 +9,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 3rem;
+  opacity: 0.5;
+
+  &.is-active {
+    opacity: 1;
+  }
 }

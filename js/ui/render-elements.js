@@ -5,23 +5,24 @@ export const renderControlButtons = (deviceTipe, name, roomName) => {
   return `
   <div class="control-buttons">
   <button class="device-button on" id="${roomName}-${name}-${actions.on}">${actions.on}</button>
-  <button class="device-button off is-clicked" id="${roomName}-${name}-${actions.off}">${actions.off}</button>
+  <button class="device-button off is-active" id="${roomName}-${name}-${actions.off}">${actions.off}</button>
     </div>
     `
 }
 
-export const renderPowerController = (
+export const renderPowerController = ({
   min,
   max,
   value,
   deviceParam,
   name,
-  roomName
-) => {
+  roomName,
+  unit = '',
+}) => {
   return `
     <div class="power-controller">
       <input type="range" id="${roomName}-${name}-${deviceParam}" min="${min}" max="${max}" value="${value}">
-      <span id="${roomName}-${name}-${deviceParam}-value">${value}</span>
+      <span id="${roomName}-${name}-${deviceParam}-value">${value}${unit}</span>
     </div>
   `
 }

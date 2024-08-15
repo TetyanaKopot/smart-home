@@ -27,14 +27,15 @@ export class AirConditioner extends Device {
     <div class="device">
       <h3 class="device__title">AC</h3>
       <i class="fa-solid fa-fan"></i>
-      ${renderPowerController(
-        15,
-        30,
-        this.tempValue,
-        'temperature',
-        this.name,
-        roomName
-      )}
+      ${renderPowerController({
+        min: 15,
+        max: 30,
+        value: this.tempValue,
+        deviceParam: 'temperature',
+        name: this.name,
+        roomName,
+        unit: '°C',
+      })}
       ${renderControlButtons('AirConditioner', this.name, roomName)}
     </div>
     `

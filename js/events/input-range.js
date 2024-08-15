@@ -12,7 +12,7 @@ export const hendleInpurRange = (device, roomName) => {
     if (powerSlider && poverValueSpan) {
       powerSlider.addEventListener('input', (event) => {
         const newValue = event.target.value
-        poverValueSpan.textContent = newValue
+        poverValueSpan.textContent = `${newValue}${unit}`
 
         if (typeof device[param.power] === 'function') {
           device[param.power](newValue)
