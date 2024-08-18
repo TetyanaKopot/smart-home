@@ -25,7 +25,7 @@ export class Boiler extends Device {
   render(roomName) {
     return `
       <div class="device">
-        <h3 class="device__title">Boiler</h3>
+        <h3 class="device__title">${this.name}</h3>
         <i class="fa-brands fa-hotjar"></i>
         ${renderPowerController({
           min: 40,

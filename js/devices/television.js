@@ -1,20 +1,24 @@
 import { Device } from './device.js'
-import { renderControlButtons } from '../ui/render-elements.js'
+import {
+  renderControlButtons,
+  renderSelectOptions,
+} from '../ui/render-elements.js'
 
+const channels = ['BBC', 'CNN', 'HBO', 'Discovery']
 export class Television extends Device {
   constructor(name, channels) {
     super(name)
     this.channels = channels
-    this.currentChannel = null
+    // this.currentChannel = channels[0] || 'No channel available'
     this.volume = 10
   }
   switchChannel(channelNumber) {
     if (
       this.isOn &&
-      channelNumber > 0 &&
+      channelNumber >= 0 &&
       channelNumber < this.channels.length
     ) {
-      this.currentChannel = channels[channelNumber]
+      this.currentChannel = this.channels[channelNumber]
       console.log(`Switch to channel ${this.currentChannel}`)
     } else {
       console.log('Invalid channel or TV is OFF')
@@ -45,16 +49,8 @@ export class Television extends Device {
   render(roomName) {
     return `
     <div class="device">
-      <h3 class="device__title">TV</h3>
-      <div class="channel-selector">
-        <label for="channels">Select Channel:</label>
-        <select id="${roomName}-${this.name}-channels">
-          <option value="1">${channels[0]}</option>
-          <option value="2">${channels[1]}</option>
-          <option value="3">${channels[2]}</option>
-          <option value="4">${channels[3]}</option>
-        </select>
-      </div>
+      <h3 class="device__title">${this.name}</h3>
+      ${renderSelectOptions(roomName, this.name, channels, 'channel')}
       <div class="channel-buttons">
         <button class="device-button id="${roomName}-${
       this.name
@@ -79,5 +75,4 @@ export class Television extends Device {
   }
 }
 
-export const channels = ['BBC', 'CNN', 'National Geographic', 'Discovery']
 const myTV = new Television('Living-room TV', channels)

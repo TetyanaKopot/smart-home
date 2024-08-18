@@ -25,7 +25,7 @@ export class Hood extends Device {
   render(roomName) {
     return `
     <div class="device">
-      <h3 class="device__title">Hood</h3>
+      <h3 class="device__title">${this.name}</h3>
       <i class="fa-solid fa-wind"></i>
       ${renderPowerController({
         min: 0,

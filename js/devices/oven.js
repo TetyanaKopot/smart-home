@@ -1,11 +1,11 @@
-import { WashingMachine } from './washing-machine.js'
+import { Device } from './device.js'
 import {
   renderControlButtons,
   renderTimer,
   renderPowerController,
 } from '../ui/render-elements.js'
 
-export class Oven extends WashingMachine {
+export class Oven extends Device {
   constructor(name, tempValue = 180) {
     super(name)
     this.tempValue = tempValue

@@ -76,18 +76,18 @@
 }
 
 .power-controller {
-  margin: 40px 0;
+  margin: 15px 0;
 }
 
-.channel-selector {
+.option-selector {
   display: flex;
   flex-direction: column;
   margin: 5px auto;
-  width: 70%;
+  width: 50%;
   font-size: 0.8rem;
 }
 
-.channel-selector select {
+.option-selector select {
   padding: 5px;
   font-size: 0, 8rem;
   background-color: var(--color-background-light);

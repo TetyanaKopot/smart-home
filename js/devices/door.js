@@ -26,7 +26,7 @@ export class Door extends Device {
   render(roomName) {
     return `
     <div class="device">
-      <h3 class="device__title">Door</h3>
+      <h3 class="device__title">${this.name}</h3>
         <i class="fa-solid fa-door-open"></i> 
       ${renderControlButtons('Door', this.name, roomName)}
     </div>

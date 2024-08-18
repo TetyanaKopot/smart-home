@@ -25,7 +25,7 @@ export class AirConditioner extends Device {
   render(roomName) {
     return `
     <div class="device">
-      <h3 class="device__title">AC</h3>
+      <h3 class="device__title">${this.name}</h3>
       <i class="fa-solid fa-fan"></i>
       ${renderPowerController({
         min: 15,

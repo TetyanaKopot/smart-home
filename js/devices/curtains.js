@@ -22,7 +22,7 @@ export class Curtains extends Door {
   render(roomName) {
     return `
     <div class="device">
-      <h3 class="device__title">Curtains</h3>
+      <h3 class="device__title">${this.name}</h3>
       <i class="fa-regular fa-window-maximize"></i> 
       <i class="fa-solid fa-circle-half-stroke" id="${roomName}-${
       this.name

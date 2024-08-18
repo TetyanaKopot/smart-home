@@ -1,15 +1,27 @@
-import { Device } from './device.js'
+import { Oven } from './oven.js'
 import {
-  renderControlButtons,
+  renderSelectOptions,
   renderTimer,
   renderPowerController,
+  renderControlButtons,
 } from '../ui/render-elements.js'
 
-export class WashingMachine extends Device {
-  constructor(name, tempValue = 40) {
-    super(name)
+const modes = ['Standard', 'Cotton', 'Silk', 'Wool', 'Delicate', 'Quik']
+export class WashingMachine extends Oven {
+  constructor(name, tempValue = 40, timer) {
+    super(name, timer)
     this.tempValue = tempValue
-    this.timer = null
+    this.modes = modes
+    this.currentMode = modes[0]
+  }
+
+  setMode(mode) {
+    if (this.modes.includes(mode)) {
+      this.currentMode = mode
+      console.log(`Washing mode set to ${this.currentMode}`)
+    } else {
+      console.log('Invalid washing mode')
+    }
   }
 
   getStatus() {
@@ -24,6 +36,7 @@ export class WashingMachine extends Device {
     <div class="device">
       <h3 class="device__title">${this.name}</h3>
        <i class="fa-solid fa-soap"></i>
+       ${renderSelectOptions(roomName, this.name, modes, 'mode')}
       ${renderTimer(this.name, roomName)}
       ${renderPowerController({
         min: 0,
