@@ -5,6 +5,7 @@
   --color-text-light: #e7d37f;
   --color-text-dark: #365e32;
   --color-accent: #fd9b63;
+  --color-error: red;
 }
 
 *,

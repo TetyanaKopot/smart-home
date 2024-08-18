@@ -48,8 +48,12 @@ export const handleOnOffClick = (device, roomName) => {
           minutesElement.value = 0
           device[actions.on]?.()
           setButtonState(onButton, [offButton, openHalfButton])
+          timerElement.classList.remove('error')
+          timerElement.innerText = ''
         } else {
-          console.log(`Set timer for ${device.name}, please`)
+          timerElement.classList.add('error')
+          timerElement.innerText = `Set timer for ${device.name}, please`
+          return
         }
       } else {
         device[actions.on]?.()
@@ -59,9 +63,11 @@ export const handleOnOffClick = (device, roomName) => {
     const handleOffClick = () => {
       if (offButton.classList.contains('is-active')) return
       if (hasTimer) {
+        console.log('Clearing timer:', device.timer)
         if (device.timer) {
           clearInterval(device.timer)
           device.timer = null
+          console.log('Timer cleared')
           timerElement.innerText = 'Timer 00 : 00 : 00'
         }
       }

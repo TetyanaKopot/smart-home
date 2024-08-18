@@ -47,7 +47,7 @@ export class Light extends Device {
       <h3 class="device__title">${this.name}</h3>
       <i class="fa-solid fa-lightbulb"></i>      
       <div class="light-colors" id="${roomName}-${this.name}-colors">
-        <button class="light-color white" id="${roomName}-white" data-color="white">W</button>
+        <button class="light-color white is-active" id="${roomName}-white" data-color="white">W</button>
         <button class="light-color yellow" id="${roomName}-yellow" data-color="yellow">Y</button>
         <button class="light-color red" id="${roomName}-red" data-color="red">R</button>
         <button class="light-color green" id="${roomName}-green" data-color="green">G</button>
