@@ -35,9 +35,11 @@ export class Oven extends Device {
         )} : ${this.formatTime(secs)}`
       } else {
         clearInterval(this.timer)
+        this.off()
       }
     }, 1000)
   }
+
   formatTime(value) {
     return value < 10 ? `0${value}` : value
   }

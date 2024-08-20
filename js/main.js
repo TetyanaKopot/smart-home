@@ -1,7 +1,7 @@
 import { rooms } from './rooms.js'
 import { renderRoom } from './ui/render-room.js'
-import { hendleInpurRange } from './events/input-range.js'
-import { handleOnOffClick } from './events/on-off-buttons.js'
+import { hendleInputRange } from './events/input-range.js'
+import { handleOnOffClick } from './events/event-handlers.js'
 import { handleLightColorButtons } from './events/light-colors.js'
 
 const main = document.querySelector('main')
@@ -17,7 +17,7 @@ const bindEvents = () => {
       room.devices.forEach((device) => {
         const roomName = room.name.toLowerCase()
         handleOnOffClick(device, roomName)
-        hendleInpurRange(device, roomName)
+        hendleInputRange(device, roomName)
         handleLightColorButtons(device, roomName)
       })
 

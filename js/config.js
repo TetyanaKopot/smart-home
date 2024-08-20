@@ -7,7 +7,7 @@ export const controlActions = {
   Light: { on: 'on', off: 'off' },
   Oven: { on: 'on', off: 'off' },
   Television: { on: 'on', off: 'off' },
-  WashingMachine: { on: 'on', off: 'off' },
+  WashingMachine: { on: 'start', off: 'stop' },
 }
 
 export const parameterControls = {

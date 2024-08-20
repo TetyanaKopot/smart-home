@@ -6,10 +6,10 @@ import {
 
 const channels = ['BBC', 'CNN', 'HBO', 'Discovery']
 export class Television extends Device {
-  constructor(name, channels) {
+  constructor(name, channels = ['No channel available']) {
     super(name)
     this.channels = channels
-    // this.currentChannel = channels[0] || 'No channel available'
+    this.currentChannel = this.channels[0]
     this.volume = 10
   }
   switchChannel(channelNumber) {

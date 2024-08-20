@@ -1,0 +1,55 @@
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: var(--color-background-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  background-color: var(--color-background-light);
+  border-radius: 30px;
+}
+
+.login-fieldset {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 3px solid var(--color-accent);
+  border-radius: 10px;
+}
+
+.login-input {
+  padding: 5px;
+  background-color: var(--color-background-light);
+  color: var(--color-text-dark);
+  font-size: 1rem;
+  border: 2px solid var(--color-background-medium);
+  border-radius: 10px;
+  outline: 2px solid var(--color-background-medium);
+}
+
+.new-data {
+  display: none;
+}

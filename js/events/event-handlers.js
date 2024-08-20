@@ -22,6 +22,14 @@ export const handleOnOffClick = (device, roomName) => {
     const getHours = () => parseInt(hoursElement?.value) || 0
     const getMinutes = () => parseInt(minutesElement?.value) || 0
 
+    const modeSelectElement = document.querySelector(
+      `#${roomName}-${device.name}-mode-select`
+    )
+    const modeSelectLabel = document.querySelector(
+      `#${roomName}-${device.name}-mode-label`
+    )
+    const hasSelectElement = typeof device.setMode === 'function'
+
     const setButtonState = (activeButton, inactiveButtons) => {
       if (activeButton) {
         activeButton.classList.add('is-active')
@@ -46,7 +54,12 @@ export const handleOnOffClick = (device, roomName) => {
           device.startTimer(hours, minutes, roomName)
           hoursElement.value = 0
           minutesElement.value = 0
-          device[actions.on]?.()
+          if (hasSelectElement) {
+            modeSelectElement.disabled = true
+            const selectedModeIndex = modeSelectElement.selectedIndex
+            device.setMode(selectedModeIndex)
+          }
+          device[actions.on]?.(roomName)
           setButtonState(onButton, [offButton, openHalfButton])
           timerElement.classList.remove('error')
           timerElement.innerText = ''
@@ -63,16 +76,17 @@ export const handleOnOffClick = (device, roomName) => {
     const handleOffClick = () => {
       if (offButton.classList.contains('is-active')) return
       if (hasTimer) {
-        console.log('Clearing timer:', device.timer)
         if (device.timer) {
           clearInterval(device.timer)
           device.timer = null
-          console.log('Timer cleared')
           timerElement.innerText = 'Timer 00 : 00 : 00'
         }
       }
-      device[actions.off]?.()
+      device[actions.off]?.(roomName)
       setButtonState(offButton, [onButton, openHalfButton])
+      if (hasSelectElement) {
+        modeSelectElement.disabled = false
+      }
     }
 
     onButton.addEventListener('click', handleOnClick)
