@@ -70,7 +70,6 @@ const checkUserCredentials = () => {
   if (userExists) {
     passwordError.style.color = '#365e32'
     passwordError.innerText = 'Security system activated!'
-    // Далі логіка для активації охорони будинку
   } else {
     passwordError.innerText = 'Incorrect name or password!'
   }
