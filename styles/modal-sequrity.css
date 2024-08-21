@@ -48,7 +48,7 @@
 .login-input {
   margin: 0 auto;
   text-align: center;
-  max-width: 180px;
+  width: 100%;
   padding: 5px;
   background-color: var(--color-background-light);
   color: var(--color-text-dark);
@@ -58,12 +58,13 @@
   outline: 2px solid var(--color-background-medium);
 }
 
-.new-data {
-  display: none;
-}
-
-.error-message {
+.message {
   color: red;
   font-size: 0.875rem;
   margin-top: 5px;
+  display: none;
+
+  &.error {
+    display: block;
+  }
 }

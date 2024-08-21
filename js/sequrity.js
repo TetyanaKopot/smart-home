@@ -1,9 +1,9 @@
 const modal = document.querySelector('#backdrop-sequrity')
+const security = document.querySelector('#security')
 const openBtn = document.querySelector('#security')
 const closeBtn = document.querySelector('#close-modal-sequrity')
 const changeStatusBtn = document.querySelector('#change-status')
-const addUser = document.querySelector('#add-user')
-const newData = document.querySelector('#new-data')
+const newUser = document.querySelector('#new-user')
 const userName = document.querySelector('#name')
 const userPassword = document.querySelector('#password')
 const nameError = document.querySelector('#name-error')
@@ -15,62 +15,76 @@ const close = () => modal.classList.add('is-hidden')
 openBtn.addEventListener('click', open)
 closeBtn.addEventListener('click', close)
 
-const isProtect = false
+let isProtect = false
 changeStatusBtn.innerText = 'Activate'
 
 const regName = /^\w{3,}$/i
 const regPass = /^(\w|\d){8,}$/
 
-addUser.addEventListener('click', () => {
-  changeStatusBtn.style.display = 'none'
-  addUser.style.display = 'none'
-  newData.style.display = 'block'
-  userName.placeholder = 'Enter new name'
-  userPassword.placeholder = 'Enter new password'
-})
+const displayError = (element, condition) => {
+  if (condition) {
+    element.classList.add('error')
+  } else {
+    element.classList.remove('error')
+  }
+}
 
-const addNewData = () => {
+const hendleSuccess = (btn, innerBtn) => {
+  userName.value = ''
+  userPassword.value = ''
+  btn.innerText = 'Successfully!'
+  setTimeout(() => {
+    btn.innerText = innerBtn
+    close()
+  }, 3000)
+}
+
+const addNewUser = () => {
   const name = userName.value.trim()
   const password = userPassword.value.trim()
 
-  if (!regName.test(name) || !regPass.test(password)) {
-    nameError.innerText = 'Name must be at least 3 letters long'
-    passwordError.innerText = '8 characters (letters and numbers)'
-  } else if (regName.test(name) && regPass.test(password)) {
+  const hasNameError = !regName.test(name)
+  const hasPasswordError = !regPass.test(password)
+
+  displayError(nameError, hasNameError)
+  displayError(passwordError, hasPasswordError)
+
+  if (!hasNameError && !hasPasswordError) {
     const users = JSON.parse(localStorage.getItem('users')) || []
     users.push({ name, password })
     localStorage.setItem('users', JSON.stringify(users))
 
-    passwordError.innerText = 'User added successfully!'
-    setTimeout(() => (passwordError.innerText = ''), 3000)
-
-    userName.value = ''
-    userPassword.value = ''
-    changeStatusBtn.style.display = 'block'
-    addUser.style.display = 'block'
-    newData.style.display = 'none'
-    userName.placeholder = 'Name'
-    userPassword.placeholder = 'Password'
-    nameError.innerText = ''
+    hendleSuccess(newUser, 'New User')
   }
 }
-
-newData.addEventListener('click', addNewData)
 
 const checkUserCredentials = () => {
   const name = userName.value.trim()
   const password = userPassword.value.trim()
 
   const users = JSON.parse(localStorage.getItem('users')) || []
-
   const userExists = users.some(
     (user) => user.name === name && user.password === password
   )
 
   if (userExists) {
-    passwordError.style.color = '#365e32'
-    passwordError.innerText = 'Security system activated!'
+    isProtect = !isProtect
+    const previousText = isProtect ? 'Deactivate' : 'Activate'
+    hendleSuccess(changeStatusBtn, previousText)
+    const lock = isProtect
+      ? `<i class="fa-solid fa-lock"></i>`
+      : `<i class="fa-solid fa-lock-open"></i>`
+    security.innerHTML = `Security ${lock}`
   } else {
-    passwordError.innerText = 'Incorrect name or password!'
+    const previousText = changeStatusBtn.innerText
+    changeStatusBtn.classList.add('error')
+    changeStatusBtn.innerText = 'Incorrect name or password!'
+    setTimeout(() => {
+      changeStatusBtn.classList.remove('error')
+      changeStatusBtn.innerText = previousText
+    }, 3000)
   }
 }
+
+changeStatusBtn.addEventListener('click', checkUserCredentials)
+newUser.addEventListener('click', addNewUser)

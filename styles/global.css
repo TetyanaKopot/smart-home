@@ -62,12 +62,12 @@ section,
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 .item:hover,
-.button:hover {
+.button:hover:not(.error) {
   transform: scale(1.05);
   background-color: var(--color-background-dark);
   color: var(--color-text-light);
 
-  .fa-solid {
+  &.fa-solid {
     color: var(--color-background-light);
   }
 }

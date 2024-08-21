@@ -18,7 +18,8 @@
       <h1 class="title">SMART HOME</h1>
       <section class="options">
         <button class="security button" id="security">
-          <i class="fa-solid fa-shield-halved"></i>Security
+          <!-- <i class="fa-solid fa-shield-halved"></i> -->
+          Security
         </button>
         <button type="button" class="menu button">
           <i class="fa-solid fa-bars"></i>
@@ -42,10 +43,6 @@
       <div class="modal" id="modal-sequrity">
         <i class="fa-solid fa-xmark" id="close-modal-sequrity"></i>
         <fieldset class="login-fieldset">
-          <button type="button" class="button add-user" id="add-user">
-            Add User
-          </button>
-
           <input
             type="text"
             name="name"
@@ -54,7 +51,9 @@
             placeholder="Name"
             required
           />
-          <p class="error-message" id="name-error"></p>
+          <p class="message" id="name-error">
+            Name must be at least 3 characters long
+          </p>
           <input
             type="password"
             name="password"
@@ -63,10 +62,12 @@
             placeholder="Password"
             required
           />
-          <p class="error-message" id="password-error"></p>
+          <p class="message" id="password-error">
+            Password must be at least 8 characters long
+          </p>
           <button type="button" class="button" id="change-status"></button>
-          <button type="submit" class="button new-data" id="new-data">
-            Add New
+          <button type="submit" class="button new-user" id="new-user">
+            New User
           </button>
         </fieldset>
       </div>

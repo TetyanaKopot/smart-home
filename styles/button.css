@@ -4,6 +4,16 @@
   border-radius: 5px;
   padding: 10px;
   color: var(--color-background-dark);
+
+  &.error {
+    background-color: var(--color-error);
+    color: var(--color-accent);
+  }
+  &.successfull {
+    background-color: var(--color-background-medium);
+    border: 1px solid var(--color-background-medium);
+    color: var(--color-background-dark);
+  }
 }
 
 .button.security {
