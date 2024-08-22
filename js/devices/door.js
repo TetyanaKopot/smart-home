@@ -1,5 +1,5 @@
 import { Device } from './device.js'
-import { renderControlButtons } from '../ui/render-elements.js'
+// import { renderControlButtons } from '../ui/render-elements.js'
 
 export class Door extends Device {
   constructor(name, isOpen = false) {
@@ -17,19 +17,23 @@ export class Door extends Device {
     console.log(`${this.name} is close`)
   }
 
+  getIcon() {
+    return 'fa-solid fa-door-open'
+  }
+
   getStatus() {
     return {
       isOpen: this.isOpen,
     }
   }
-
-  render(roomName) {
-    return `
-    <div class="device">
-      <h3 class="device__title">${this.name}</h3>
-        <i class="fa-solid fa-door-open"></i> 
-      ${renderControlButtons('Door', this.name, roomName)}
-    </div>
-    `
-  }
 }
+
+// render(roomName) {
+//   return `
+//   <div class="device">
+//     <h3 class="device__title">${this.name}</h3>
+//       <i class="fa-solid fa-door-open"></i>
+//     ${renderControlButtons('Door', this.name, roomName)}
+//   </div>
+//   `
+// }

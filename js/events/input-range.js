@@ -1,6 +1,6 @@
 import { parameterControls } from '../config.js'
 
-export const hendleInputRange = (device, roomName) => {
+export const handleInputRange = (device, roomName) => {
   const param = parameterControls[device.constructor.name]
   if (param) {
     const powerSlider = document.querySelector(

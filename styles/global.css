@@ -67,7 +67,7 @@ section,
   background-color: var(--color-background-dark);
   color: var(--color-text-light);
 
-  &.fa-solid {
+  .fa-solid {
     color: var(--color-background-light);
   }
 }
