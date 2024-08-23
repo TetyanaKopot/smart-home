@@ -105,8 +105,9 @@
   }
 }
 
-.input-time {
-  width: 40px;
+.input-time,
+.channel-input,
+.volume-input {
   padding: 5px;
   background-color: var(--color-background-light);
   border: 1px solid var(--color-background-light);
@@ -114,4 +115,13 @@
   border-radius: 5px;
   font-size: 1rem;
   text-align: center;
+}
+
+.input-time {
+  width: 40px;
+}
+
+.channel-input,
+.volume-input {
+  width: 80px;
 }
