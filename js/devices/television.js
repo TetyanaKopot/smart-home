@@ -76,31 +76,3 @@ export class Television extends Device {
 }
 
 const myTV = new Television('Living-room TV', channels)
-
-// render(roomName) {
-//   return `
-//   <div class="device">
-//     <h3 class="device__title">${this.name}</h3>
-//     ${renderSelectOptions(roomName, this.name, channels, 'channel')}
-//     <div class="channel-buttons">
-//       <button class="device-button id="${roomName}-${
-//     this.name
-//   }-channel-prev">Prev</button>
-//       <span>CNN</span>
-//       <button class="device-button id="${roomName}-${
-//     this.name
-//   }-channel-next">Next</button>
-//     </div>
-//     <div class="volume-buttons">
-//       <button class="device-button id="${roomName}-${
-//     this.name
-//   }-volume-down">Vol-</button>
-//       <span>20</span>
-//       <button class="device-button id="${roomName}-${
-//     this.name
-//   }-volume-up">Vol+</button>
-//     </div>
-//     ${renderControlButtons('Television', this.name, roomName)}
-//   </div>
-//   `
-// }

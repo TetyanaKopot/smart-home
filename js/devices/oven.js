@@ -1,5 +1,6 @@
 import { renderTimer, renderPowerController } from '../ui/render-elements.js'
 import { AirConditioner } from './air-conditioner.js'
+import { setButtonState } from '../events/set-button-state.js'
 
 export class Oven extends AirConditioner {
   constructor(name, tempValue = 180) {
@@ -18,6 +19,7 @@ export class Oven extends AirConditioner {
     const minutesElement = document.querySelector(
       `#${roomName}-${this.name}-minutes`
     )
+
     const getHours = () => parseInt(hoursElement.value) || 0
     const getMinutes = () => parseInt(minutesElement.value) || 0
     const hours = getHours()
@@ -25,27 +27,14 @@ export class Oven extends AirConditioner {
 
     if (hours > 0 || minutes > 0) {
       this.startTimer(hours, minutes, roomName)
-      const onButton = document.querySelector(`#${roomName}-${this.name}-on`)
-      const offButton = document.querySelector(`#${roomName}-${this.name}-off`)
-      console.log(offButton)
-      console.log(onButton)
-
-      onButton.classList.add('is-active')
-      onButton.disabled = true
-      offButton.disabled = false
       hoursElement.value = 0
       minutesElement.value = 0
       timerElement.classList.remove('error')
       timerElement.innerText = ''
-      super.on()
+      super.on(roomName)
     } else {
       timerElement.classList.add('error')
-      timerElement.innerText = `Set timer for ${this.name}, please`
-      // const onButton = document.querySelector(`#${roomName}-${this.name}-on`)
-      // const offButton = document.querySelector(`#${roomName}-${this.name}-off`)
-      // onButton.disabled = true
-      // offButton.disabled = true
-      return
+      timerElement.innerText = `Set timer for ${this.name}.`
     }
   }
 
@@ -57,7 +46,12 @@ export class Oven extends AirConditioner {
         `#${roomName}-${this.name}-timer`
       )
       timerElement.innerText = 'Timer 00 : 00 : 00'
-      super.off()
+      super.off(roomName)
+
+      const onButton = document.querySelector(`#${roomName}-${this.name}-on`)
+      const offButton = document.querySelector(`#${roomName}-${this.name}-off`)
+
+      setButtonState(offButton, [onButton])
     }
   }
 
@@ -79,7 +73,7 @@ export class Oven extends AirConditioner {
         )} : ${this.formatTime(secs)}`
       } else {
         clearInterval(this.timer)
-        this.off()
+        this.off(roomName)
       }
     }, 1000)
   }
@@ -106,36 +100,3 @@ export class Oven extends AirConditioner {
     })}`
   }
 }
-
-// temperature(value) {
-//   this.tempValue = value
-//   console.log(`${this.name} temperfture is set to${this.tempValue}`)
-// }
-
-// getStatus() {
-//   return {
-//     isOn: this.isOn,
-//     temperature: this.tempValue,
-//   }
-// }
-
-// render(roomName) {
-//   return `
-//     <div class="device">
-//       <h3 class="device__title">${this.name}</h3>
-//       <i class="fa-solid fa-fire"></i>
-
-//       ${renderTimer(this.name, roomName)}
-//       ${renderPowerController({
-//         min: 50,
-//         max: 360,
-//         value: this.tempValue,
-//         deviceParam: 'temperature',
-//         name: this.name,
-//         roomName,
-//         unit: '°C',
-//       })}
-//       ${renderControlButtons('Oven', this.name, roomName)}
-//     </div>
-//   `
-// }

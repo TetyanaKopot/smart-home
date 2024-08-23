@@ -1,5 +1,4 @@
 import { renderControlButtons } from '../ui/render-elements.js'
-// import { controlActions } from '../config.js'
 
 export class Device {
   constructor(name) {
@@ -42,22 +41,3 @@ export class Device {
     }
   }
 }
-
-// performAction(action, roomName) {
-//   switch (action) {
-//     case 'on':
-//     case 'start':
-//     case 'open':
-//       this.isOn = true
-//       console.log(`${this.name} is ${action}ed in ${roomName}`)
-//       break
-//     case 'off':
-//     case 'stop':
-//     case 'close':
-//       this.isOn = false
-//       console.log(`${this.name} is ${action}ed in ${roomName}`)
-//       break
-//     default:
-//       console.log(`Action ${action} is not recognized for ${this.name}`)
-//   }
-// }

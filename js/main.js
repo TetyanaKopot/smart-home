@@ -16,7 +16,7 @@ const bindEvents = () => {
       main.innerHTML = renderRoom(room)
 
       room.devices.forEach((device) => {
-        // const roomName = room.name.toLowerCase()
+        const roomName = room.name.toLowerCase()
         handleOnOffClick(device, roomName)
         handleInputRange(device, roomName)
         handleLightColorButtons(device, roomName)

@@ -3,7 +3,6 @@ import {
   renderSelectOptions,
   renderTimer,
   renderPowerController,
-  // renderControlButtons,
 } from '../ui/render-elements.js'
 
 const modes = ['Standard', 'Cotton', 'Silk', 'Wool', 'Delicate', 'Quik']
@@ -18,30 +17,42 @@ export class WashingMachine extends Oven {
   }
 
   setMode(modeIndex) {
-    if (!this.isOn && !this.isLocked) {
+    if (!this.isLocked) {
       this.currentMode = this.modes[modeIndex]
       console.log(`Washing mode set to ${this.currentMode}`)
-    } else if (this.isLocked) {
-      messageLabel.innerText = 'Cannot change mode now'
     }
+  }
+
+  updateModeElements(roomName, text, isDisabled) {
+    const modeSelectElement = document.querySelector(
+      `#${roomName}-${this.name}-mode-select`
+    )
+    const modeSelectLabel = document.querySelector(
+      `#${roomName}-${this.name}-mode-label`
+    )
+    modeSelectLabel.innerText = text
+    modeSelectElement.disabled = isDisabled
   }
 
   start(roomName) {
     if (!this.isLocked) {
       this.isOn = true
       this.isLocked = true
-      console.log(`${this.name} started`)
-      document.querySelector(`#${roomName}-${this.name}-mode-label`).innerText =
-        'Cannot change mode now'
+      const modeSelectElement = document.querySelector(
+        `#${roomName}-${this.name}-mode-select`
+      )
+      const selectedModeIndex = modeSelectElement.selectedIndex
+      this.setMode(selectedModeIndex)
+      this.updateModeElements(roomName, 'Cannot change mode now', true)
+      super.on(roomName)
     }
   }
 
   stop(roomName) {
     this.isOn = false
     this.isLocked = false
-    console.log(`${this.name} stoped`)
-    document.querySelector(`#${roomName}-${this.name}-mode-label`).innerText =
-      'select mode:'
+    this.updateModeElements(roomName, 'select mode:', false)
+    super.off(roomName)
   }
 
   getStatus() {
@@ -71,35 +82,3 @@ export class WashingMachine extends Oven {
       })}`
   }
 }
-// setMode(modeIndex, messageLabel) {
-// render(roomName) {
-//   return `
-//   <div class="device">
-//   <h3 class="device__title">${this.name}</h3>
-//   <i class="fa-solid fa-soap"></i>
-//   ${renderSelectOptions(roomName, this.name, modes, 'mode')}
-//   ${renderTimer(this.name, roomName)}
-//   ${renderPowerController({
-//     min: 0,
-//     max: 90,
-//     value: this.tempValue,
-//     deviceParam: 'temperature',
-//     name: this.name,
-//     roomName,
-//     unit: '°C',
-//   })}
-//     ${renderControlButtons('WashingMachine', this.name, roomName)}
-//     </div>
-// `
-// }
-
-//   if (!this.isOn && !this.isLocked) {
-//     this.currentMode = this.modes[modeIndex]
-//     console.log(`Washing mode set to ${this.currentMode}`)
-//   } else if (this.isLocked) {
-//     console.log('Machine is locked, cannot change mode')
-//     messageLabel.innerText = 'Cannot change mode while machine is running'
-//   } else {
-//     console.log('Machine is on, cannot change mode')
-//   }
-// }
