@@ -1,11 +1,11 @@
 import { Device } from './device.js'
 import { renderSelectOptions } from '../ui/render-elements.js'
 
-const channels = ['BBC', 'CNN', 'HBO', 'Discovery', 'Music Disco']
 export class Television extends Device {
+  static channels = ['BBC', 'CNN', 'HBO', 'Discovery', 'Music Disco']
   constructor(name) {
     super(name)
-    this.channels = channels
+    this.channels = [...Television.channels]
     this.currentChannel = this.channels[0]
     this.volume = 10
     this.pendingChannel = null
@@ -21,7 +21,7 @@ export class Television extends Device {
 
   switchChannelByName(channelIndex, roomName) {
     if (this.isOn) {
-      this.currentChannel = channels[channelIndex]
+      this.currentChannel = this.channels[channelIndex]
       this.setChannelsValue(roomName)
       console.log(`Switched to channel ${this.currentChannel}`)
     } else {
@@ -32,11 +32,8 @@ export class Television extends Device {
 
   switchToNextChannel(roomName) {
     if (this.isOn) {
-      let currentIndex = channels.indexOf(this.currentChannel)
-      let nextIndex = currentIndex + 1
-      if (nextIndex >= channels.length) {
-        nextIndex = 0
-      }
+      let currentIndex = this.channels.indexOf(this.currentChannel)
+      let nextIndex = (currentIndex + 1) % this.channels.length
       const nextChannel = this.channels[nextIndex]
       this.currentChannel = nextChannel
       this.setChannelsValue(roomName)
@@ -50,8 +47,8 @@ export class Television extends Device {
     if (this.isOn) {
       const currentIndex = this.channels.indexOf(this.currentChannel)
       let prevIndex =
-        currentIndex === 0 ? channels.length - 1 : currentIndex - 1
-      this.currentChannel = channels[prevIndex]
+        currentIndex === 0 ? this.channels.length - 1 : currentIndex - 1
+      this.currentChannel = this.channels[prevIndex]
       this.setChannelsValue(roomName)
       console.log(`Switched to channel ${this.currentChannel}`)
     } else {
@@ -70,6 +67,7 @@ export class Television extends Device {
     if (this.isOn) {
       let currentVolume = this.volume
       currentVolume = parseInt(volumeInput.value) || 0
+      currentVolume = Math.max(0, Math.min(currentVolume, 100))
       this.volume = currentVolume
 
       console.log(`Volume set to ${this.volume}`)
@@ -118,7 +116,7 @@ export class Television extends Device {
 
   renderDeviceOptions(roomName) {
     return `
-    ${renderSelectOptions(roomName, this.name, channels, 'channel')}
+    ${renderSelectOptions(roomName, this.name, this.channels, 'channel')}
     <div class="channel-buttons">
       <button class="device-button" id="${roomName}-${
       this.name
@@ -136,7 +134,7 @@ export class Television extends Device {
     }-volume-down">Vol-</button>
       <input class="volume-input" id="${roomName}-${
       this.name
-    }-volume-input" value="20"/>
+    }-volume-input" type="number" min="0" max="99" maxlength="2" value="20"/>
       <button class="device-button" id="${roomName}-${
       this.name
     }-volume-up">Vol+</button>

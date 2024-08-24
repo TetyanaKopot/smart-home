@@ -39,6 +39,17 @@ export const handleTvControll = (device, roomName) => {
     })
 
     volumeInput.addEventListener('change', () => {
+      if (volumeInput.value.length > 2) {
+        volumeInput.value = volumeInput.value.slice(0, 2)
+      }
+      // let value = parseInt(volumeInput.value)
+      // if (isNaN(value)) {
+      //   value = 0
+      // } else if (value < 0) {
+      //   value = 0
+      // } else if (value > 99) {
+      //   value = 100
+      // }
       device.adjustVolume(volumeInput)
     })
 
