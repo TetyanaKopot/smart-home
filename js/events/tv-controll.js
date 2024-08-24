@@ -1,17 +1,18 @@
 import { setButtonState } from './set-button-state.js'
+import { rooms } from '../rooms.js'
+import { Television } from '../devices/television.js'
 
 export const handleTvControll = (device, roomName) => {
-  if (typeof device.adjustVolume === 'function') {
-    const channelOptions = document.querySelector(
-      `#${roomName}-${device.name}-channel-select`
-    )
+  if (device instanceof Television) {
+    const channelInput = document.querySelector('#channel-input')
+    const channelOptions = document.querySelector('#channels')
+
     const next = document.querySelector(
       `#${roomName}-${device.name}-channel-next`
     )
     const prev = document.querySelector(
       `#${roomName}-${device.name}-channel-prev`
     )
-
     const volumeInput = document.querySelector(
       `#${roomName}-${device.name}-volume-input`
     )
@@ -27,13 +28,17 @@ export const handleTvControll = (device, roomName) => {
       device.switchChannelByName(selectedChannelIndex, roomName)
     })
 
+    channelInput.addEventListener('input', function () {
+      device.setChannelsValue(channelInput.value)
+    })
+
     next.addEventListener('click', () => {
-      device.switchToNextChannel(roomName)
+      device.switchToNextChannel(channelInput)
       next.classList.add('is-active')
       prev.classList.remove('is-active')
     })
     prev.addEventListener('click', () => {
-      device.switchToPrevChannel(roomName)
+      device.switchToPrevChannel(channelInput)
       prev.classList.add('is-active')
       next.classList.remove('is-active')
     })
@@ -42,14 +47,6 @@ export const handleTvControll = (device, roomName) => {
       if (volumeInput.value.length > 2) {
         volumeInput.value = volumeInput.value.slice(0, 2)
       }
-      // let value = parseInt(volumeInput.value)
-      // if (isNaN(value)) {
-      //   value = 0
-      // } else if (value < 0) {
-      //   value = 0
-      // } else if (value > 99) {
-      //   value = 100
-      // }
       device.adjustVolume(volumeInput)
     })
 

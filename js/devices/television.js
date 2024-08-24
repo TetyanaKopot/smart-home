@@ -1,66 +1,63 @@
 import { Device } from './device.js'
-import { renderSelectOptions } from '../ui/render-elements.js'
 
+const channels = ['BBC', 'CNN', 'HBO', 'FOX', 'NBC', 'Discovery', 'Music Disco']
 export class Television extends Device {
-  static channels = ['BBC', 'CNN', 'HBO', 'Discovery', 'Music Disco']
   constructor(name) {
     super(name)
-    this.channels = [...Television.channels]
+    this.channels = channels
     this.currentChannel = this.channels[0]
-    this.volume = 10
-    this.pendingChannel = null
+    this.volume = 20
   }
 
-  on() {
-    if (this.pendingChannel) {
-      this.switchChannelByName(this.pendingChannel)
-      this.pendingChannel = null
-    }
-    super.on()
-  }
-
-  switchChannelByName(channelIndex, roomName) {
+  switchChannelByName(channelIndex) {
     if (this.isOn) {
-      this.currentChannel = this.channels[channelIndex]
-      this.setChannelsValue(roomName)
+      this.currentChannel = channels[channelIndex]
       console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      this.pendingChannel = this.currentChannel
-      console.log('TV is OFF. Channel will be switched when TV is ON.')
     }
   }
 
-  switchToNextChannel(roomName) {
-    if (this.isOn) {
-      let currentIndex = this.channels.indexOf(this.currentChannel)
-      let nextIndex = (currentIndex + 1) % this.channels.length
-      const nextChannel = this.channels[nextIndex]
-      this.currentChannel = nextChannel
-      this.setChannelsValue(roomName)
-      console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      console.log('TV is OFF. Cannot switch channel.')
-    }
-  }
-
-  switchToPrevChannel(roomName) {
-    if (this.isOn) {
-      const currentIndex = this.channels.indexOf(this.currentChannel)
-      let prevIndex =
-        currentIndex === 0 ? this.channels.length - 1 : currentIndex - 1
-      this.currentChannel = this.channels[prevIndex]
-      this.setChannelsValue(roomName)
-      console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      console.log('TV is OFF. Cannot switch channel.')
-    }
-  }
-
-  setChannelsValue(roomName) {
-    const channelInput = document.querySelector(
-      `#${roomName}-${this.name}-channel-input`
+  filterChannels(inputValue) {
+    return this.channels.filter((channel) =>
+      channel.toLowerCase().startsWith(inputValue.toLowerCase())
     )
-    channelInput.value = this.currentChannel
+  }
+
+  setChannelsValue() {
+    const channelInput = document.querySelector('#channel-input')
+    const filteredChannels = this.filterChannels(channelInput.value)
+    const datalist = document.querySelector('#channels')
+    datalist.innerHTML = ''
+    filteredChannels.forEach((channel) => {
+      const option = document.createElement('option')
+      option.value = channel
+      datalist.appendChild(option)
+    })
+  }
+
+  switchToNextChannel(channelInput) {
+    if (this.isOn) {
+      let currentIndex = channels.indexOf(this.currentChannel)
+      let nextIndex = (currentIndex + 1) % channels.length
+      const nextChannel = channels[nextIndex]
+      this.currentChannel = nextChannel
+      channelInput.value = this.currentChannel
+      console.log(`Switched to channel ${this.currentChannel}`)
+    } else {
+      console.log('TV is OFF. Cannot switch channel.')
+    }
+  }
+
+  switchToPrevChannel(channelInput) {
+    if (this.isOn) {
+      const currentIndex = channels.indexOf(this.currentChannel)
+      let prevIndex =
+        currentIndex === 0 ? channels.length - 1 : currentIndex - 1
+      this.currentChannel = channels[prevIndex]
+      channelInput.value = this.currentChannel
+      console.log(`Switched to channel ${this.currentChannel}`)
+    } else {
+      console.log('TV is OFF. Cannot switch channel.')
+    }
   }
 
   adjustVolume(volumeInput) {
@@ -111,31 +108,33 @@ export class Television extends Device {
   }
 
   getIcon() {
-    return ``
+    return `fa-solid fa-tv`
   }
 
   renderDeviceOptions(roomName) {
     return `
-    ${renderSelectOptions(roomName, this.name, this.channels, 'channel')}
     <div class="channel-buttons">
-      <button class="device-button" id="${roomName}-${
+    <button class="device-button" id="${roomName}-${
       this.name
     }-channel-prev">Prev</button>
-      <input class="channel-input" id="${roomName}-${
-      this.name
-    }-channel-input" placeholder="CNN"/>
+    <input list="channels" class="channel-input" id="channel-input">
+      <datalist id="channels">
+      ${channels
+        .map((channel, index) => `<option value="${index}">${channel}</option>`)
+        .join('')}
+      </datalist>
       <button class="device-button" id="${roomName}-${
       this.name
     }-channel-next">Next</button>
     </div>
     <div class="volume-buttons">
-      <button class="device-button" id="${roomName}-${
+    <button class="device-button" id="${roomName}-${
       this.name
     }-volume-down">Vol-</button>
-      <input class="volume-input" id="${roomName}-${
+    <input class="volume-input" id="${roomName}-${
       this.name
     }-volume-input" type="number" min="0" max="99" maxlength="2" value="20"/>
-      <button class="device-button" id="${roomName}-${
+    <button class="device-button" id="${roomName}-${
       this.name
     }-volume-up">Vol+</button>
     </div>
