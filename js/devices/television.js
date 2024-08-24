@@ -9,27 +9,34 @@ export class Television extends Device {
     this.volume = 20
   }
 
-  switchChannelByName(channelIndex) {
+  switchChannelByName(channelIndex, channelInput) {
     if (this.isOn) {
-      this.currentChannel = channels[channelIndex]
-      console.log(`Switched to channel ${this.currentChannel}`)
+      const channelIndex = this.channels.indexOf(channelName)
+      if (channelIndex !== -1) {
+        this.currentChannel = this.channels[channelIndex]
+        channelInput.value = this.currentChannel // Встановлюємо назву каналу як значення
+        console.log(`Switched to channel ${this.currentChannel}`)
+      } else {
+        console.log('Channel not found.')
+      }
     }
   }
 
   filterChannels(inputValue) {
+    if (!inputValue) return this.channels
     return this.channels.filter((channel) =>
       channel.toLowerCase().startsWith(inputValue.toLowerCase())
     )
   }
 
-  setChannelsValue() {
-    const channelInput = document.querySelector('#channel-input')
+  setChannelsValue(channelInput) {
     const filteredChannels = this.filterChannels(channelInput.value)
     const datalist = document.querySelector('#channels')
     datalist.innerHTML = ''
     filteredChannels.forEach((channel) => {
       const option = document.createElement('option')
       option.value = channel
+      option.textContent = channel
       datalist.appendChild(option)
     })
   }
@@ -120,7 +127,7 @@ export class Television extends Device {
     <input list="channels" class="channel-input" id="channel-input">
       <datalist id="channels">
       ${channels
-        .map((channel, index) => `<option value="${index}">${channel}</option>`)
+        .map((channel) => `<option value="${channel}">${channel}</option>`)
         .join('')}
       </datalist>
       <button class="device-button" id="${roomName}-${

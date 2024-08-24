@@ -1,5 +1,3 @@
-import { setButtonState } from './set-button-state.js'
-import { rooms } from '../rooms.js'
 import { Television } from '../devices/television.js'
 
 export const handleTvControll = (device, roomName) => {
@@ -23,13 +21,18 @@ export const handleTvControll = (device, roomName) => {
       `#${roomName}-${device.name}-volume-up`
     )
 
-    channelOptions.addEventListener('change', () => {
-      const selectedChannelIndex = channelOptions.selectedIndex
-      device.switchChannelByName(selectedChannelIndex, roomName)
+    // channelOptions.addEventListener('change', () => {
+    //   const selectedChannelIndex = channelOptions.selectedIndex
+    //   device.switchChannelByName(selectedChannelIndex, roomName)
+    // })
+
+    channelInput.addEventListener('input', () => {
+      device.setChannelsValue(channelInput.value)
     })
 
-    channelInput.addEventListener('input', function () {
-      device.setChannelsValue(channelInput.value)
+    channelOptions.addEventListener('change', () => {
+      const selectedChannelName = channelOptions.value
+      device.switchChannelByName(selectedChannelName, channelInput)
     })
 
     next.addEventListener('click', () => {
