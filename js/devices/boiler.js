@@ -4,10 +4,7 @@ import { AirConditioner } from './air-conditioner.js'
 export class Boiler extends AirConditioner {
   constructor(name, tempValue = 50) {
     super(name, tempValue)
-  }
-
-  getIcon() {
-    return 'fa-brands fa-hotjar'
+    this.loadState()
   }
 
   renderDeviceOptions(roomName) {
@@ -20,5 +17,9 @@ export class Boiler extends AirConditioner {
       roomName,
       unit: '°C',
     })}`
+  }
+
+  getIcon() {
+    return 'fa-brands fa-hotjar'
   }
 }

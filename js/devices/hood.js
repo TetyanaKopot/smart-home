@@ -5,15 +5,7 @@ export class Hood extends Device {
   constructor(name, powValue = 30) {
     super(name)
     this.powValue = powValue
-  }
-
-  power(value) {
-    this.powValue = value
-    console.log(`${this.name} power is set to${this.powValue}`)
-  }
-
-  getIcon() {
-    return 'fa-solid fa-wind'
+    this.loadState()
   }
 
   renderDeviceOptions(roomName) {
@@ -28,10 +20,28 @@ export class Hood extends Device {
     })}`
   }
 
+  getIcon() {
+    return 'fa-solid fa-wind'
+  }
+
+  power(value) {
+    this.powValue = value
+    console.log(`${this.name} power is set to${this.powValue}`)
+    this.saveState()
+  }
+
   getStatus() {
     return {
       ...super.getStatus(),
-      power: this.powValue,
+      powValue: this.powValue,
+    }
+  }
+
+  loadState() {
+    super.loadState()
+    const state = JSON.parse(localStorage.getItem(this.name))
+    if (state) {
+      this.powValue = state.powValue
     }
   }
 }

@@ -7,115 +7,7 @@ export class Television extends Device {
     this.channels = channels
     this.currentChannel = this.channels[0]
     this.volume = 20
-  }
-
-  switchChannelByName(channelIndex, channelInput) {
-    if (this.isOn) {
-      const channelIndex = this.channels.indexOf(channelName)
-      if (channelIndex !== -1) {
-        this.currentChannel = this.channels[channelIndex]
-        channelInput.value = this.currentChannel // Встановлюємо назву каналу як значення
-        console.log(`Switched to channel ${this.currentChannel}`)
-      } else {
-        console.log('Channel not found.')
-      }
-    }
-  }
-
-  filterChannels(inputValue) {
-    if (!inputValue) return this.channels
-    return this.channels.filter((channel) =>
-      channel.toLowerCase().startsWith(inputValue.toLowerCase())
-    )
-  }
-
-  setChannelsValue(channelInput) {
-    const filteredChannels = this.filterChannels(channelInput.value)
-    const datalist = document.querySelector('#channels')
-    datalist.innerHTML = ''
-    filteredChannels.forEach((channel) => {
-      const option = document.createElement('option')
-      option.value = channel
-      option.textContent = channel
-      datalist.appendChild(option)
-    })
-  }
-
-  switchToNextChannel(channelInput) {
-    if (this.isOn) {
-      let currentIndex = channels.indexOf(this.currentChannel)
-      let nextIndex = (currentIndex + 1) % channels.length
-      const nextChannel = channels[nextIndex]
-      this.currentChannel = nextChannel
-      channelInput.value = this.currentChannel
-      console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      console.log('TV is OFF. Cannot switch channel.')
-    }
-  }
-
-  switchToPrevChannel(channelInput) {
-    if (this.isOn) {
-      const currentIndex = channels.indexOf(this.currentChannel)
-      let prevIndex =
-        currentIndex === 0 ? channels.length - 1 : currentIndex - 1
-      this.currentChannel = channels[prevIndex]
-      channelInput.value = this.currentChannel
-      console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      console.log('TV is OFF. Cannot switch channel.')
-    }
-  }
-
-  adjustVolume(volumeInput) {
-    if (this.isOn) {
-      let currentVolume = this.volume
-      currentVolume = parseInt(volumeInput.value) || 0
-      currentVolume = Math.max(0, Math.min(currentVolume, 100))
-      this.volume = currentVolume
-
-      console.log(`Volume set to ${this.volume}`)
-    } else {
-      console.log('Cannot adjust volume. TV is OFF')
-    }
-  }
-  quieterVolume(volumeInput) {
-    if (this.isOn) {
-      if (this.volume > 0) {
-        this.volume--
-        volumeInput.value = this.volume
-        console.log(`Volume decreased to ${this.volume}`)
-      } else {
-        console.log('Sound limits from 0 to 100')
-      }
-    }
-  }
-  louderVolume(volumeInput) {
-    if (this.isOn) {
-      if (this.volume < 100) {
-        this.volume++
-        volumeInput.value = this.volume
-        console.log(`Volume increased  to ${this.volume}`)
-      } else {
-        console.log('Sound limits from 0 to 100')
-      }
-    }
-  }
-
-  getChannelList() {
-    return this.channels
-  }
-
-  getStatus() {
-    return {
-      ...super.getStatus(),
-      currentChannel: this.currentChannel,
-      volume: this.volume,
-    }
-  }
-
-  getIcon() {
-    return `fa-solid fa-tv`
+    this.loadState()
   }
 
   renderDeviceOptions(roomName) {
@@ -146,5 +38,132 @@ export class Television extends Device {
     }-volume-up">Vol+</button>
     </div>
     `
+  }
+
+  getIcon() {
+    return `fa-solid fa-tv`
+  }
+
+  getChannelList() {
+    return this.channels
+  }
+
+  switchChannelByName(channelInput) {
+    if (this.isOn) {
+      const channelIndex = this.channels.indexOf(channelName)
+      if (channelIndex !== -1) {
+        this.currentChannel = this.channels[channelIndex]
+        channelInput.value = this.currentChannel
+        console.log(`Switched to channel ${this.currentChannel}`)
+      } else {
+        console.log('Channel not found.')
+      }
+    }
+    this.saveState()
+  }
+
+  filterChannels(inputValue) {
+    if (!inputValue) return this.channels
+    return this.channels.filter((channel) =>
+      channel.toLowerCase().startsWith(inputValue.toLowerCase())
+    )
+  }
+
+  setChannelsValue(channelInput) {
+    const filteredChannels = this.filterChannels(channelInput.value)
+    const datalist = document.querySelector('#channels')
+    datalist.innerHTML = ''
+    filteredChannels.forEach((channel) => {
+      const option = document.createElement('option')
+      option.value = channel
+      option.textContent = channel
+      datalist.appendChild(option)
+    })
+    this.saveState()
+  }
+
+  switchToNextChannel(channelInput) {
+    if (this.isOn) {
+      let currentIndex = channels.indexOf(this.currentChannel)
+      let nextIndex = (currentIndex + 1) % channels.length
+      const nextChannel = channels[nextIndex]
+      this.currentChannel = nextChannel
+      channelInput.value = this.currentChannel
+      console.log(`Switched to channel ${this.currentChannel}`)
+    } else {
+      console.log('TV is OFF. Cannot switch channel.')
+    }
+    this.saveState()
+  }
+
+  switchToPrevChannel(channelInput) {
+    if (this.isOn) {
+      const currentIndex = channels.indexOf(this.currentChannel)
+      let prevIndex =
+        currentIndex === 0 ? channels.length - 1 : currentIndex - 1
+      this.currentChannel = channels[prevIndex]
+      channelInput.value = this.currentChannel
+      console.log(`Switched to channel ${this.currentChannel}`)
+    } else {
+      console.log('TV is OFF. Cannot switch channel.')
+    }
+    this.saveState()
+  }
+
+  adjustVolume(volumeInput) {
+    if (this.isOn) {
+      let currentVolume = this.volume
+      currentVolume = parseInt(volumeInput.value) || 0
+      currentVolume = Math.max(0, Math.min(currentVolume, 100))
+      this.volume = currentVolume
+
+      console.log(`Volume set to ${this.volume}`)
+    } else {
+      console.log('Cannot adjust volume. TV is OFF')
+    }
+    this.saveState()
+  }
+
+  quieterVolume(volumeInput) {
+    if (this.isOn) {
+      if (this.volume > 0) {
+        this.volume--
+        volumeInput.value = this.volume
+        console.log(`Volume decreased to ${this.volume}`)
+      } else {
+        console.log('Sound limits from 0 to 100')
+      }
+    }
+    this.saveState()
+  }
+
+  louderVolume(volumeInput) {
+    if (this.isOn) {
+      if (this.volume < 100) {
+        this.volume++
+        volumeInput.value = this.volume
+        console.log(`Volume increased  to ${this.volume}`)
+      } else {
+        console.log('Sound limits from 0 to 100')
+      }
+    }
+    this.saveState()
+  }
+
+  getStatus() {
+    return {
+      ...super.getStatus(),
+      currentChannel: this.currentChannel,
+      volume: this.volume,
+    }
+  }
+
+  loadState() {
+    super.loadState()
+    const state = JSON.parse(localStorage.getItem(this.name))
+    if (state) {
+      this.currentChannel = state.currentChannel
+      this.volume = state.value
+    }
   }
 }

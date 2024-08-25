@@ -6,25 +6,7 @@ export class Light extends Device {
     super(name)
     this.brightValue = brightValue
     this.color = color
-  }
-
-  brightness(value) {
-    if (value > 0 && value < 100) {
-      this.brightValue = value
-      console.log(`${this.name} brightness is set to ${this.brightValue}`)
-    }
-  }
-
-  changeColor(newColor) {
-    const allowedColors = ['white', 'yellow', 'red', 'green', 'blue']
-    if (allowedColors.includes(newColor)) {
-      this.color = newColor
-      console.log(`${this.name} change ${this.color} color`)
-    }
-  }
-
-  getIcon() {
-    return 'fa-solid fa-lightbulb'
+    this.loadState()
   }
 
   renderDeviceOptions(roomName) {
@@ -47,11 +29,41 @@ export class Light extends Device {
     })}`
   }
 
+  getIcon() {
+    return 'fa-solid fa-lightbulb'
+  }
+
+  brightness(value) {
+    if (value > 0 && value < 100) {
+      this.brightValue = value
+      console.log(`${this.name} brightness is set to ${this.brightValue}`)
+      this.saveState()
+    }
+  }
+
+  changeColor(newColor) {
+    const allowedColors = ['white', 'yellow', 'red', 'green', 'blue']
+    if (allowedColors.includes(newColor)) {
+      this.color = newColor
+      console.log(`${this.name} change ${this.color} color`)
+      this.saveState()
+    }
+  }
+
   getStatus() {
     return {
       ...super.getStatus(),
-      brightness: this.brightValue,
+      brightValue: this.brightValue,
       color: this.color,
+    }
+  }
+
+  loadState() {
+    super.loadState()
+    const state = JSON.parse(localStorage.getItem(this.name))
+    if (state) {
+      this.brightValue = state.brightValue
+      this.color = state.color
     }
   }
 }

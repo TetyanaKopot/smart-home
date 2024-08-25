@@ -4,16 +4,7 @@ export class Device {
   constructor(name) {
     this.name = name
     this.isOn = false
-  }
-
-  on() {
-    this.isOn = true
-    console.log(`${this.name} is turned on`)
-  }
-
-  off() {
-    this.isOn = false
-    console.log(`${this.name} is turned off`)
+    this.loadState()
   }
 
   render(roomName) {
@@ -39,5 +30,29 @@ export class Device {
     return {
       isOn: this.isOn,
     }
+  }
+
+  saveState() {
+    const state = this.getStatus()
+    localStorage.setItem(this.name, JSON.stringify(state))
+  }
+
+  loadState() {
+    const state = JSON.parse(localStorage.getItem(this.name))
+    if (state) {
+      this.isOn = state.isOn
+    }
+  }
+
+  on() {
+    this.isOn = true
+    console.log(`${this.name} is turned on`)
+    this.saveState()
+  }
+
+  off() {
+    this.isOn = false
+    console.log(`${this.name} is turned off`)
+    this.saveState()
   }
 }

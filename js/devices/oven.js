@@ -7,6 +7,68 @@ export class Oven extends AirConditioner {
     super(name)
     this.tempValue = tempValue
     this.timer = null
+    this.loadState()
+  }
+
+  renderDeviceOptions(roomName) {
+    return `
+    ${renderTimer(this.name, roomName)}
+    ${renderPowerController({
+      min: 50,
+      max: 360,
+      value: this.tempValue,
+      deviceParam: 'temperature',
+      name: this.name,
+      roomName,
+      unit: '°C',
+    })}`
+  }
+
+  getIcon() {
+    return 'fa-solid fa-fire'
+  }
+
+  startTimer(hours, minutes, roomName) {
+    let timeInSeconds = hours * 60 * 60 + minutes * 60
+
+    this.timer = setInterval(() => {
+      if (timeInSeconds > 0) {
+        timeInSeconds--
+
+        const hrs = Math.floor(timeInSeconds / 3600)
+        const mins = Math.floor((timeInSeconds % 3600) / 60)
+        const secs = Math.floor(timeInSeconds % 60)
+
+        document.querySelector(
+          `#${roomName}-${this.name}-timer`
+        ).innerText = `Timer ${this.formatTime(hrs)} : ${this.formatTime(
+          mins
+        )} : ${this.formatTime(secs)}`
+      } else {
+        clearInterval(this.timer)
+        this.off(roomName)
+      }
+    }, 1000)
+    this.saveState()
+  }
+
+  formatTime(value) {
+    return value < 10 ? `0${value}` : value
+  }
+
+  getStatus() {
+    return {
+      ...super.getStatus(),
+      timer: this.timer,
+    }
+  }
+
+  loadState() {
+    super.loadState()
+    const state = JSON.parse(localStorage.getItem(this.name))
+    if (state) {
+      this.timer = state.timer
+    }
   }
 
   on(roomName) {
@@ -36,6 +98,7 @@ export class Oven extends AirConditioner {
       timerElement.classList.add('error')
       timerElement.innerText = `Set timer for ${this.name}.`
     }
+    this.saveState()
   }
 
   off(roomName) {
@@ -53,50 +116,6 @@ export class Oven extends AirConditioner {
 
       setButtonState(offButton, [onButton])
     }
-  }
-
-  startTimer(hours, minutes, roomName) {
-    let timeInSeconds = hours * 60 * 60 + minutes * 60
-
-    this.timer = setInterval(() => {
-      if (timeInSeconds > 0) {
-        timeInSeconds--
-
-        const hrs = Math.floor(timeInSeconds / 3600)
-        const mins = Math.floor((timeInSeconds % 3600) / 60)
-        const secs = Math.floor(timeInSeconds % 60)
-
-        document.querySelector(
-          `#${roomName}-${this.name}-timer`
-        ).innerText = `Timer ${this.formatTime(hrs)} : ${this.formatTime(
-          mins
-        )} : ${this.formatTime(secs)}`
-      } else {
-        clearInterval(this.timer)
-        this.off(roomName)
-      }
-    }, 1000)
-  }
-
-  formatTime(value) {
-    return value < 10 ? `0${value}` : value
-  }
-
-  getIcon() {
-    return 'fa-solid fa-fire'
-  }
-
-  renderDeviceOptions(roomName) {
-    return `
-    ${renderTimer(this.name, roomName)}
-    ${renderPowerController({
-      min: 50,
-      max: 360,
-      value: this.tempValue,
-      deviceParam: 'temperature',
-      name: this.name,
-      roomName,
-      unit: '°C',
-    })}`
+    this.saveState()
   }
 }

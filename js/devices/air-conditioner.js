@@ -6,15 +6,7 @@ export class AirConditioner extends Device {
     super(name)
     this.isOn = false
     this.tempValue = tempValue
-  }
-
-  temperature(value) {
-    this.tempValue = value
-    console.log(`${this.name} temperature is set to ${this.tempValue}`)
-  }
-
-  getIcon() {
-    return 'fa-solid fa-fan'
+    this.loadState()
   }
 
   renderDeviceOptions(roomName) {
@@ -29,10 +21,28 @@ export class AirConditioner extends Device {
     })}`
   }
 
+  getIcon() {
+    return 'fa-solid fa-fan'
+  }
+
+  temperature(value) {
+    this.tempValue = value
+    console.log(`${this.name} temperature is set to ${this.tempValue}`)
+    this.saveState()
+  }
+
   getStatus() {
     return {
       ...super.getStatus(),
-      temperature: this.tempValue,
+      tempValue: this.tempValue,
+    }
+  }
+
+  loadState() {
+    super.loadState()
+    const state = JSON.parse(localStorage.getItem(this.name))
+    if (state) {
+      this.tempValue = state.tempValue
     }
   }
 }
