@@ -16,11 +16,11 @@ export const renderSelectOptions = (roomName, name, options, type) => {
 export const renderTimer = (name, roomName) => {
   return `
   <div class="timer-container">
-  <p class="timer" id="${roomName}-${name}-timer">Timer 00:00:00</p>
-  <label for="hours">Hours</label>
-  <input class="input-time" id="${roomName}-${name}-hours" placeholder="00">
-  <label for="minutes">Min</label>
-  <input class="input-time" id="${roomName}-${name}-minutes" placeholder="00">
+  <p class="timer" id="${roomName}-${name}-timer">Timer</br> 00:00:00</p>
+  <label for="hours"></label>
+  <input class="input-time" id="${roomName}-${name}-hours" placeholder="h">
+  <label for="minutes"></label>
+  <input class="input-time" id="${roomName}-${name}-minutes" placeholder="m">
   </div>
   `
 }

@@ -41,7 +41,7 @@ export class WashingMachine extends Oven {
       this.currentMode = this.modes[modeIndex]
       console.log(`Washing mode set to ${this.currentMode}`)
     }
-    this.saveState()
+    // this.saveState()
   }
 
   updateModeElements(roomName, text, isDisabled) {
@@ -71,26 +71,26 @@ export class WashingMachine extends Oven {
     }
   }
 
-  start(roomName) {
-    if (!this.isLocked) {
-      this.isOn = true
-      this.isLocked = true
-      const modeSelectElement = document.querySelector(
-        `#${roomName}-${this.name}-mode-select`
-      )
-      const selectedModeIndex = modeSelectElement.selectedIndex
-      this.setMode(selectedModeIndex)
-      this.updateModeElements(roomName, 'Cannot change mode now', true)
-      super.on(roomName)
-    }
+  on(roomName) {
+    // if (!this.isLocked) {
+    super.on(roomName)
+    const modeSelectElement = document.querySelector(
+      `#${roomName}-${this.name}-mode-select`
+    )
+    const selectedModeIndex = modeSelectElement.selectedIndex
+    this.setMode(selectedModeIndex)
+    this.updateModeElements(roomName, 'Cannot change now', true)
+    this.isLocked = true
+    // }
     this.saveState()
+    return this.isOn
   }
 
-  stop(roomName) {
-    this.isOn = false
+  off(roomName) {
+    super.off(roomName)
+    // this.isOn = false
     this.isLocked = false
     this.updateModeElements(roomName, 'select mode:', false)
-    super.off(roomName)
     this.saveState()
   }
 }

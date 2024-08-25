@@ -4,6 +4,7 @@ export class Device {
   constructor(name) {
     this.name = name
     this.isOn = false
+    this.hasPower = true
     this.loadState()
   }
 
@@ -13,6 +14,7 @@ export class Device {
     <h3 class="device__title">${this.name}</h3>
     <i class="${this.getIcon()}"></i>
     ${this.renderDeviceOptions(roomName)}
+    <p class="device__status" id="${roomName}-${this.name}-status"></p>
     ${renderControlButtons(this.constructor.name, this.name, roomName)}
     </div>
     `
@@ -29,6 +31,7 @@ export class Device {
   getStatus() {
     return {
       isOn: this.isOn,
+      hasPower: this.hasPower,
     }
   }
 
@@ -46,13 +49,12 @@ export class Device {
 
   on() {
     this.isOn = true
-    console.log(`${this.name} is turned on`)
     this.saveState()
+    return this.isOn
   }
 
   off() {
     this.isOn = false
-    console.log(`${this.name} is turned off`)
     this.saveState()
   }
 }

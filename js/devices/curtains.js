@@ -32,6 +32,7 @@ export class Curtains extends Door {
 
   openHalf() {
     this.halfOpen = true
+    this.isOpen = false
     console.log(`${this.name} is open half`)
     this.saveState()
   }
@@ -40,6 +41,7 @@ export class Curtains extends Door {
     super.open()
     this.halfOpen = false
     this.saveState()
+    return this.isOpen
   }
 
   close() {

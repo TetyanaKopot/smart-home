@@ -99,6 +99,7 @@ export class Oven extends AirConditioner {
       timerElement.innerText = `Set timer for ${this.name}.`
     }
     this.saveState()
+    return this.isOn
   }
 
   off(roomName) {

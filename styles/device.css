@@ -11,6 +11,10 @@
     width: calc(50% - 10px);
   }
 }
+.device__status {
+  font-weight: bold;
+  margin-top: 5px;
+}
 
 .light-colors {
   margin: 20px 0;
@@ -75,14 +79,11 @@
   }
 }
 
-.power-controller {
-  margin: 15px 0;
-}
 .option-selector {
   display: flex;
   flex-direction: column;
-  margin: 5px auto;
-  width: 50%;
+  margin: 0 auto;
+  width: 70%;
   font-size: 0.8rem;
 }
 
@@ -101,9 +102,14 @@
   width: 50%;
   text-align: center;
 }
-
+.timer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
 .timer {
-  margin: 10px 0;
+  font-size: 0.8rem;
 
   &.error {
     color: var(--color-error);
@@ -111,7 +117,6 @@
 }
 
 .input-time,
-/* .channel-input, */
 .volume-input {
   padding: 5px;
   background-color: var(--color-background-light);
@@ -124,9 +129,9 @@
 
 .input-time {
   width: 40px;
+  max-height: 30px;
 }
 
-/* .channel-input, */
 .volume-input {
   width: 80px;
 }
