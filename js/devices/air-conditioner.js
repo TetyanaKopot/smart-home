@@ -28,7 +28,7 @@ export class AirConditioner extends Device {
   temperature(value) {
     this.tempValue = value
     console.log(`${this.name} temperature is set to ${this.tempValue}`)
-    this.saveState()
+    // this.saveState()
   }
 
   getStatus() {
@@ -44,5 +44,9 @@ export class AirConditioner extends Device {
     if (state) {
       this.tempValue = state.tempValue
     }
+  }
+
+  off() {
+    return super.off()
   }
 }

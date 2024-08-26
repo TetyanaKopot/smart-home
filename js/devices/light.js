@@ -37,7 +37,7 @@ export class Light extends Device {
     if (value > 0 && value < 100) {
       this.brightValue = value
       console.log(`${this.name} brightness is set to ${this.brightValue}`)
-      this.saveState()
+      // this.saveState()
     }
   }
 
@@ -46,7 +46,7 @@ export class Light extends Device {
     if (allowedColors.includes(newColor)) {
       this.color = newColor
       console.log(`${this.name} change ${this.color} color`)
-      this.saveState()
+      // this.saveState()
     }
   }
 

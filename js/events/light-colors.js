@@ -15,6 +15,7 @@ export const handleLightColorButtons = (device, roomName) => {
         })
         event.target.classList.add('is-active')
       }
+      device.saveState(roomName)
     })
   }
 }

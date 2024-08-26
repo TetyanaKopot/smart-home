@@ -11,67 +11,38 @@ export const handleOnOffClick = (device, roomName) => {
       `#${roomName}-${device.name}-${actions.off}`
     )
 
-    const updateStatusElement = (message, error) => {
+    const updateStatusElement = (message) => {
       const statusElement = document.querySelector(
         `#${roomName}-${device.name}-status`
       )
       if (statusElement) {
-        statusElement.textContent = message || error
-        statusElement.style.color = error ? 'red' : 'green'
+        statusElement.textContent = message
       }
     }
 
     const handleOnClick = () => {
       if (onButton.classList.contains('is-active')) return
-      const isOn = device[actions.on]?.(roomName)
-      if (isOn) {
-        if (openHalfButton) {
-          setButtonState(onButton, [offButton, openHalfButton])
-        } else {
-          setButtonState(onButton, [offButton])
-        }
-        updateStatusElement(`${device.name} is ${actions.on}ed`)
-      } else if (!navigator.onLine) {
-        updateStatusElement(
-          null,
-          `Cannot ${actions.on} ${device.name} due to no internet connection`
-        )
-        return
-      } else if (!device.hasPower) {
-        updateStatusElement(
-          null,
-          `${device.name} cannot be ${actions.on} because it's unplugged`
-        )
-        return
+      if (openHalfButton) {
+        setButtonState(onButton, [offButton, openHalfButton])
+      } else {
+        setButtonState(onButton, [offButton])
       }
-      // device[actions.on]?.(roomName)
-      device.saveState()
+      device[actions.on]?.(roomName)
+      updateStatusElement(`${device.name} is ${actions.on}`)
+      device.saveState(roomName)
     }
 
     const handleOffClick = () => {
       if (offButton.classList.contains('is-active')) return
-      if (!navigator.onLine) {
-        updateStatusElement(
-          null,
-          `Cannot ${actions.off} ${device.name} due to no internet connection`
-        )
-        return
-      }
-      if (!device.hasPower) {
-        updateStatusElement(
-          null,
-          `${device.name} cannot be ${actions.off} because it's unplugged`
-        )
-        return
-      }
       device[actions.off]?.(roomName)
-      device.saveState()
-      updateStatusElement(`${device.name} is ${actions.off}ed`)
+      device.saveState(roomName)
+      updateStatusElement(`${device.name} is ${actions.off}`)
       if (openHalfButton) {
         setButtonState(offButton, [onButton, openHalfButton])
       } else {
         setButtonState(offButton, [onButton])
       }
+      device.saveState(roomName)
     }
 
     onButton.addEventListener('click', handleOnClick)
@@ -82,24 +53,73 @@ export const handleOnOffClick = (device, roomName) => {
     )
     openHalfButton?.addEventListener('click', () => {
       if (openHalfButton.classList.contains('is-active')) return
-      if (!navigator.onLine) {
-        updateStatusElement(
-          null,
-          `Cannot open ${device.name} halfway due to no internet connection`
-        )
-        return
-      }
-      if (!device.hasPower) {
-        updateStatusElement(
-          null,
-          `${device.name} cannot be opened halfway because it's unplugged`
-        )
-        return
-      }
       device.openHalf()
-      device.saveState()
+      device.saveState(roomName)
       updateStatusElement(`${device.name} is opened halfway`)
       setButtonState(openHalfButton, [onButton, offButton])
+      device.saveState(roomName)
     })
   }
 }
+
+// const updateStatusElement = (message, error) => {
+//   const statusElement = document.querySelector(
+//     `#${roomName}-${device.name}-status`
+//   )
+//   if (statusElement) {
+//     statusElement.textContent = message || error
+//     statusElement.style.color = error ? 'red' : 'green'
+//   }
+// }
+
+// const isOn = device[actions.on]?.(roomName)
+// if (isOn) {
+//   if (openHalfButton) {
+//     setButtonState(onButton, [offButton, openHalfButton])
+//   } else {
+//     setButtonState(onButton, [offButton])
+//   }
+//   updateStatusElement(`${device.name} is ${actions.on}`)
+// } else if (!navigator.onLine) {
+//   updateStatusElement(
+//     null,
+//     `Cannot ${actions.on} ${device.name} due to no internet connection`
+//   )
+//   return
+// } else if (!device.hasPower) {
+//   updateStatusElement(
+//     null,
+//     `${device.name} cannot be ${actions.on} because it's unplugged`
+//   )
+//   return
+// }
+
+// if (!navigator.onLine) {
+//   updateStatusElement(
+//     null,
+//     `Cannot ${actions.off} ${device.name} due to no internet connection`
+//   )
+//   return
+// }
+// if (!device.hasPower) {
+//   updateStatusElement(
+//     null,
+//     `${device.name} cannot be ${actions.off} because it's unplugged`
+//   )
+//   return
+// }
+
+// if (!navigator.onLine) {
+//   updateStatusElement(
+//     null,
+//     `Cannot open ${device.name} halfway due to no internet connection`
+//   )
+//   return
+// }
+// if (!device.hasPower) {
+//   updateStatusElement(
+//     null,
+//     `${device.name} cannot be opened halfway because it's unplugged`
+//   )
+//   return
+// }

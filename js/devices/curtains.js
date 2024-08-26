@@ -1,5 +1,4 @@
 import { Door } from './door.js'
-import { renderControlButtons } from '../ui/render-elements.js'
 
 export class Curtains extends Door {
   constructor(name, isOpen = false, halfOpen = false) {
@@ -34,19 +33,19 @@ export class Curtains extends Door {
     this.halfOpen = true
     this.isOpen = false
     console.log(`${this.name} is open half`)
-    this.saveState()
+    // this.saveState()
   }
 
   open() {
     super.open()
     this.halfOpen = false
-    this.saveState()
+    // this.saveState()
     return this.isOpen
   }
 
   close() {
     super.close()
     this.halfOpen = false
-    this.saveState()
+    // this.saveState()
   }
 }

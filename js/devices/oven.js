@@ -49,7 +49,7 @@ export class Oven extends AirConditioner {
         this.off(roomName)
       }
     }, 1000)
-    this.saveState()
+    // this.saveState()
   }
 
   formatTime(value) {
@@ -98,8 +98,8 @@ export class Oven extends AirConditioner {
       timerElement.classList.add('error')
       timerElement.innerText = `Set timer for ${this.name}.`
     }
-    this.saveState()
-    return this.isOn
+    // this.saveState()
+    // return this.isOn
   }
 
   off(roomName) {
@@ -117,6 +117,6 @@ export class Oven extends AirConditioner {
 
       setButtonState(offButton, [onButton])
     }
-    this.saveState()
+    // this.saveState()
   }
 }

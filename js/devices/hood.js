@@ -27,7 +27,7 @@ export class Hood extends Device {
   power(value) {
     this.powValue = value
     console.log(`${this.name} power is set to${this.powValue}`)
-    this.saveState()
+    // this.saveState()
   }
 
   getStatus() {

@@ -18,6 +18,7 @@ export const handleInputRange = (device, roomName) => {
         if (typeof device[param.power] === 'function') {
           device[param.power](newValue)
         }
+        device.saveState(roomName)
       })
     }
   }

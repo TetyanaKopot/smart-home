@@ -1,11 +1,12 @@
 import { renderControlButtons } from '../ui/render-elements.js'
 
 export class Device {
-  constructor(name) {
+  constructor(name, roomName) {
     this.name = name
+    this.roomName = roomName
     this.isOn = false
     this.hasPower = true
-    this.loadState()
+    this.loadState(roomName)
   }
 
   render(roomName) {
@@ -35,13 +36,17 @@ export class Device {
     }
   }
 
-  saveState() {
-    const state = this.getStatus()
-    localStorage.setItem(this.name, JSON.stringify(state))
+  getStorageKey(roomName) {
+    return `${roomName}-${this.name}`
   }
 
-  loadState() {
-    const state = JSON.parse(localStorage.getItem(this.name))
+  saveState(roomName) {
+    const state = this.getStatus()
+    localStorage.setItem(this.getStorageKey(roomName), JSON.stringify(state))
+  }
+
+  loadState(roomName) {
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.isOn = state.isOn
     }
@@ -49,12 +54,12 @@ export class Device {
 
   on() {
     this.isOn = true
-    this.saveState()
+    console.log(`${this.name} is on`)
     return this.isOn
   }
 
   off() {
     this.isOn = false
-    this.saveState()
+    console.log(`${this.name} is off`)
   }
 }

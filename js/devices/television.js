@@ -51,6 +51,7 @@ export class Television extends Device {
   switchChannelByName(channelInput) {
     if (this.isOn) {
       const channelIndex = this.channels.indexOf(channelName)
+      console.log(channelName)
       if (channelIndex !== -1) {
         this.currentChannel = this.channels[channelIndex]
         channelInput.value = this.currentChannel
@@ -59,7 +60,6 @@ export class Television extends Device {
         console.log('Channel not found.')
       }
     }
-    this.saveState()
   }
 
   filterChannels(inputValue) {
@@ -79,7 +79,6 @@ export class Television extends Device {
       option.textContent = channel
       datalist.appendChild(option)
     })
-    this.saveState()
   }
 
   switchToNextChannel(channelInput) {
@@ -93,7 +92,6 @@ export class Television extends Device {
     } else {
       console.log('TV is OFF. Cannot switch channel.')
     }
-    this.saveState()
   }
 
   switchToPrevChannel(channelInput) {
@@ -107,7 +105,6 @@ export class Television extends Device {
     } else {
       console.log('TV is OFF. Cannot switch channel.')
     }
-    this.saveState()
   }
 
   adjustVolume(volumeInput) {
@@ -121,7 +118,6 @@ export class Television extends Device {
     } else {
       console.log('Cannot adjust volume. TV is OFF')
     }
-    this.saveState()
   }
 
   quieterVolume(volumeInput) {
@@ -134,7 +130,6 @@ export class Television extends Device {
         console.log('Sound limits from 0 to 100')
       }
     }
-    this.saveState()
   }
 
   louderVolume(volumeInput) {
@@ -147,7 +142,6 @@ export class Television extends Device {
         console.log('Sound limits from 0 to 100')
       }
     }
-    this.saveState()
   }
 
   getStatus() {
@@ -163,7 +157,7 @@ export class Television extends Device {
     const state = JSON.parse(localStorage.getItem(this.name))
     if (state) {
       this.currentChannel = state.currentChannel
-      this.volume = state.value
+      this.volume = state.volume
     }
   }
 }

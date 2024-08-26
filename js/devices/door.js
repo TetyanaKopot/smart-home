@@ -28,7 +28,7 @@ export class Door extends Device {
   open() {
     this.isOpen = true
     console.log(`${this.name} is open`)
-    this.saveState()
+    // this.saveState()
     super.on()
     return this.isOpen
   }
@@ -36,7 +36,7 @@ export class Door extends Device {
   close() {
     this.isOpen = false
     console.log(`${this.name} is close`)
-    this.saveState()
+    // this.saveState()
     super.off()
   }
 }

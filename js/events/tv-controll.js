@@ -21,29 +21,28 @@ export const handleTvControll = (device, roomName) => {
       `#${roomName}-${device.name}-volume-up`
     )
 
-    // channelOptions.addEventListener('change', () => {
-    //   const selectedChannelIndex = channelOptions.selectedIndex
-    //   device.switchChannelByName(selectedChannelIndex, roomName)
-    // })
-
     channelInput.addEventListener('input', () => {
       device.setChannelsValue(channelInput.value)
+      device.saveState(roomName)
     })
 
     channelOptions.addEventListener('change', () => {
       const selectedChannelName = channelOptions.value
       device.switchChannelByName(selectedChannelName, channelInput)
+      device.saveState(roomName)
     })
 
     next.addEventListener('click', () => {
       device.switchToNextChannel(channelInput)
       next.classList.add('is-active')
       prev.classList.remove('is-active')
+      device.saveState(roomName)
     })
     prev.addEventListener('click', () => {
       device.switchToPrevChannel(channelInput)
       prev.classList.add('is-active')
       next.classList.remove('is-active')
+      device.saveState(roomName)
     })
 
     volumeInput.addEventListener('change', () => {
@@ -51,17 +50,21 @@ export const handleTvControll = (device, roomName) => {
         volumeInput.value = volumeInput.value.slice(0, 2)
       }
       device.adjustVolume(volumeInput)
+      device.saveState(roomName)
     })
 
     quieter.addEventListener('click', () => {
       device.quieterVolume(volumeInput)
       quieter.classList.add('is-active')
       louder.classList.remove('is-active')
+      device.saveState(roomName)
     })
+
     louder.addEventListener('click', () => {
       device.louderVolume(volumeInput)
       louder.classList.add('is-active')
       quieter.classList.remove('is-active')
+      device.saveState(roomName)
     })
   }
   return
