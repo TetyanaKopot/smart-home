@@ -40,7 +40,18 @@ export const syncUIWithStorage = (device, roomName) => {
       )
     }
 
-    // Оновлення додаткових параметрів пристрою
+    if (deviceData.color) {
+      const colorsElement = document.querySelectorAll(
+        `#${roomName}-${device.name}-colors .light-color`
+      )
+      colorsElement.forEach((button) => {
+        if (button.dataset.color === deviceData.color) {
+          button.classList.add('is-active')
+        } else {
+          button.classList.remove('is-active')
+        }
+      })
+    }
 
     if (param && deviceData[param.power] !== undefined) {
       const valueElement = document.querySelector(
@@ -56,43 +67,5 @@ export const syncUIWithStorage = (device, roomName) => {
         }`
       }
     }
-    // if (deviceData.tempValue) {
-    //   const tempValueElement = document.querySelector(
-    //     `#${roomName}-${device.name}-temperature`
-    //   )
-    //   const tempDisplayElement = document.querySelector(
-    //     `#${roomName}-${device.name}-temperature-value`
-    //   )
-    //   if (tempValueElement && tempDisplayElement) {
-    //     tempValueElement.value = deviceData.tempValue
-    //     tempDisplayElement.textContent = `${deviceData.tempValue}°C`
-    //   }
-    // }
-
-    // if (deviceData.brightValue) {
-    //   const brightnessValueElement = document.querySelector(
-    //     `#${roomName}-${device.name}-brightness`
-    //   )
-    //   const brightnessDisplayElement = document.querySelector(
-    //     `#${roomName}-${device.name}-brightness-value`
-    //   )
-    //   if (brightnessValueElement && brightnessDisplayElement) {
-    //     brightnessValueElement.value = deviceData.brightValue
-    //     brightnessDisplayElement.textContent = `${deviceData.brightValue}lm`
-    //   }
-    // }
-
-    // if (deviceData.powValue) {
-    //   const powerValueElement = document.querySelector(
-    //     `#${roomName}-${device.name}-power`
-    //   )
-    //   const powerDisplayElement = document.querySelector(
-    //     `#${roomName}-${device.name}-power-value`
-    //   )
-    //   if (powerValueElement && powerDisplayElement) {
-    //     powerValueElement.value = deviceData.powValue
-    //     powerDisplayElement.textContent = `${deviceData.powValue}RPM`
-    //   }
-    // }
   }
 }
