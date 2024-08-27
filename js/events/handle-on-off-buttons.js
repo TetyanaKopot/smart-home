@@ -1,5 +1,5 @@
 import { controlActions } from '../config.js'
-import { setButtonState } from './set-button-state.js'
+import { setButtonState, updateStatusElement } from '../ui/status-elements.js'
 
 export const handleOnOffClick = (device, roomName) => {
   const actions = controlActions[device.constructor.name]
@@ -11,38 +11,30 @@ export const handleOnOffClick = (device, roomName) => {
       `#${roomName}-${device.name}-${actions.off}`
     )
 
-    const updateStatusElement = (message) => {
-      const statusElement = document.querySelector(
-        `#${roomName}-${device.name}-status`
-      )
-      if (statusElement) {
-        statusElement.textContent = message
-      }
-    }
-
     const handleOnClick = () => {
       if (onButton.classList.contains('is-active')) return
+      device[actions.on]?.(roomName)
+      device.saveState(roomName)
+
       if (openHalfButton) {
         setButtonState(onButton, [offButton, openHalfButton])
       } else {
         setButtonState(onButton, [offButton])
       }
-      device[actions.on]?.(roomName)
-      updateStatusElement(`${device.name} is ${actions.on}`)
-      device.saveState(roomName)
+      updateStatusElement(`${device.name} is ${actions.on}`, roomName, device)
     }
 
     const handleOffClick = () => {
       if (offButton.classList.contains('is-active')) return
       device[actions.off]?.(roomName)
+
       device.saveState(roomName)
-      updateStatusElement(`${device.name} is ${actions.off}`)
+      updateStatusElement(`${device.name} is ${actions.off}`, roomName, device)
       if (openHalfButton) {
         setButtonState(offButton, [onButton, openHalfButton])
       } else {
         setButtonState(offButton, [onButton])
       }
-      device.saveState(roomName)
     }
 
     onButton.addEventListener('click', handleOnClick)
@@ -55,9 +47,8 @@ export const handleOnOffClick = (device, roomName) => {
       if (openHalfButton.classList.contains('is-active')) return
       device.openHalf()
       device.saveState(roomName)
-      updateStatusElement(`${device.name} is opened halfway`)
+      updateStatusElement(`${device.name} is opened halfway`, roomName, device)
       setButtonState(openHalfButton, [onButton, offButton])
-      device.saveState(roomName)
     })
   }
 }

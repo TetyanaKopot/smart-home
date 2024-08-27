@@ -2,9 +2,11 @@ import { renderPowerController } from '../ui/render-elements.js'
 import { AirConditioner } from './air-conditioner.js'
 
 export class Boiler extends AirConditioner {
-  constructor(name, tempValue = 50) {
+  constructor(name, roomName, tempValue = 50) {
     super(name, tempValue)
-    this.loadState()
+    this.roomName = roomName
+
+    // this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {

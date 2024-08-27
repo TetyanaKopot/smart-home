@@ -1,10 +1,11 @@
 import { Door } from './door.js'
 
 export class Curtains extends Door {
-  constructor(name, isOpen = false, halfOpen = false) {
+  constructor(name, roomName, isOpen = false, halfOpen = false) {
     super(name, isOpen)
+    this.roomName = roomName
     this.halfOpen = halfOpen
-    this.loadState()
+    // this.loadState(roomName)
   }
 
   getIcon() {
@@ -15,8 +16,8 @@ export class Curtains extends Door {
     return `<i class="fa-solid fa-circle-half-stroke" id="${roomName}-${this.name}-open-half"></i>`
   }
 
-  loadState() {
-    const state = JSON.parse(localStorage.getItem(this.name))
+  loadState(roomName) {
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.halfOpen = state.halfOpen
     }

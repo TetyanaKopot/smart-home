@@ -5,8 +5,6 @@ export class Device {
     this.name = name
     this.roomName = roomName
     this.isOn = false
-    this.hasPower = true
-    this.loadState(roomName)
   }
 
   render(roomName) {
@@ -32,7 +30,6 @@ export class Device {
   getStatus() {
     return {
       isOn: this.isOn,
-      hasPower: this.hasPower,
     }
   }
 
@@ -47,6 +44,7 @@ export class Device {
 
   loadState(roomName) {
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
+    console.log('Loading state for:', this.name, 'in room:', this.roomName)
     if (state) {
       this.isOn = state.isOn
     }
@@ -63,3 +61,28 @@ export class Device {
     console.log(`${this.name} is off`)
   }
 }
+
+// updateUI(roomName) {
+//   const actions = controlActions[this.constructor.name]
+//   const statusElement = document.getElementById(
+//     `${roomName}-${this.name}-status`
+//   )
+//   this.loadState(roomName)
+//   if (statusElement) {
+//     statusElement.textContent = this.isOn ? `${actions.on}` : `${actions.off}`
+//   }
+//   const onButton = document.querySelector(
+//     `#${roomName}-${this.name}-${actions.on}`
+//   )
+//   const offButton = document.querySelector(
+//     `#${roomName}-${this.name}-${actions.off}`
+//   )
+
+//   if (this.isOn) {
+//     onButton?.classList.add('is-active')
+//     offButton?.classList.remove('is-active')
+//   } else {
+//     offButton?.classList.add('is-active')
+//     onButton?.classList.remove('is-active')
+//   }
+// }

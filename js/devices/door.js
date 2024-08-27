@@ -1,10 +1,12 @@
 import { Device } from './device.js'
 
 export class Door extends Device {
-  constructor(name, isOpen = false) {
+  constructor(name, roomName, isOpen = false) {
     super(name)
+    this.roomName = roomName
     this.isOpen = isOpen
-    this.loadState()
+
+    // this.loadState(roomName)
   }
 
   getIcon() {
@@ -17,9 +19,9 @@ export class Door extends Device {
     }
   }
 
-  loadState() {
-    super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+  loadState(roomName) {
+    super.loadState(roomName)
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.isOpen = state.isOpen
     }
@@ -29,7 +31,7 @@ export class Door extends Device {
     this.isOpen = true
     console.log(`${this.name} is open`)
     // this.saveState()
-    super.on()
+    // super.on()
     return this.isOpen
   }
 
@@ -37,6 +39,6 @@ export class Door extends Device {
     this.isOpen = false
     console.log(`${this.name} is close`)
     // this.saveState()
-    super.off()
+    // super.off()
   }
 }

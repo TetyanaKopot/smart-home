@@ -2,11 +2,11 @@ import { Device } from './device.js'
 import { renderPowerController } from '../ui/render-elements.js'
 
 export class AirConditioner extends Device {
-  constructor(name, tempValue = 20) {
+  constructor(name, roomName, tempValue = 20) {
     super(name)
+    this.roomName = roomName
     this.isOn = false
     this.tempValue = tempValue
-    this.loadState()
   }
 
   renderDeviceOptions(roomName) {
@@ -28,7 +28,6 @@ export class AirConditioner extends Device {
   temperature(value) {
     this.tempValue = value
     console.log(`${this.name} temperature is set to ${this.tempValue}`)
-    // this.saveState()
   }
 
   getStatus() {
@@ -38,9 +37,9 @@ export class AirConditioner extends Device {
     }
   }
 
-  loadState() {
+  loadState(roomName) {
     super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.tempValue = state.tempValue
     }

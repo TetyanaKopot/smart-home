@@ -2,10 +2,11 @@ import { Device } from './device.js'
 import { renderPowerController } from '../ui/render-elements.js'
 
 export class Hood extends Device {
-  constructor(name, powValue = 30) {
+  constructor(name, roomName, powValue = 30) {
     super(name)
+    this.roomName = roomName
     this.powValue = powValue
-    this.loadState()
+    this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -37,9 +38,9 @@ export class Hood extends Device {
     }
   }
 
-  loadState() {
+  loadState(roomName) {
     super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.powValue = state.powValue
     }

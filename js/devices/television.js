@@ -2,12 +2,13 @@ import { Device } from './device.js'
 
 const channels = ['BBC', 'CNN', 'HBO', 'FOX', 'NBC', 'Discovery', 'Music Disco']
 export class Television extends Device {
-  constructor(name) {
+  constructor(name, roomName) {
     super(name)
+    this.roomName = roomName
     this.channels = channels
     this.currentChannel = this.channels[0]
     this.volume = 20
-    this.loadState()
+    this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -51,7 +52,6 @@ export class Television extends Device {
   switchChannelByName(channelInput) {
     if (this.isOn) {
       const channelIndex = this.channels.indexOf(channelName)
-      console.log(channelName)
       if (channelIndex !== -1) {
         this.currentChannel = this.channels[channelIndex]
         channelInput.value = this.currentChannel
@@ -152,9 +152,9 @@ export class Television extends Device {
     }
   }
 
-  loadState() {
+  loadState(roomName) {
     super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.currentChannel = state.currentChannel
       this.volume = state.volume

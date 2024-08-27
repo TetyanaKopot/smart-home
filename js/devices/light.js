@@ -2,11 +2,12 @@ import { Device } from './device.js'
 import { renderPowerController } from '../ui/render-elements.js'
 
 export class Light extends Device {
-  constructor(name, brightValue = 50, color = 'white') {
+  constructor(name, roomName, brightValue = 50, color = 'white') {
     super(name)
+    this.roomName = roomName
     this.brightValue = brightValue
     this.color = color
-    this.loadState()
+    this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -58,9 +59,9 @@ export class Light extends Device {
     }
   }
 
-  loadState() {
+  loadState(roomName) {
     super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.brightValue = state.brightValue
       this.color = state.color

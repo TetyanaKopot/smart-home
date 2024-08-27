@@ -1,13 +1,14 @@
 import { renderTimer, renderPowerController } from '../ui/render-elements.js'
 import { AirConditioner } from './air-conditioner.js'
-import { setButtonState } from '../events/set-button-state.js'
+import { setButtonState } from '../ui/status-elements.js'
 
 export class Oven extends AirConditioner {
-  constructor(name, tempValue = 180) {
+  constructor(name, roomName, tempValue = 180) {
     super(name)
+    this.roomName = roomName
     this.tempValue = tempValue
     this.timer = null
-    this.loadState()
+    this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -63,9 +64,9 @@ export class Oven extends AirConditioner {
     }
   }
 
-  loadState() {
+  loadState(roomName) {
     super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.timer = state.timer
     }

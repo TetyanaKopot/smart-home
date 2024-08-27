@@ -4,6 +4,7 @@ import { handleInputRange } from './events/input-range.js'
 import { handleOnOffClick } from './events/handle-on-off-buttons.js'
 import { handleLightColorButtons } from './events/light-colors.js'
 import { handleTvControll } from './events/tv-controll.js'
+import { syncUIWithStorage } from './ui/sync-ui-with-storage.js'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
@@ -17,10 +18,12 @@ const bindEvents = () => {
 
       room.devices.forEach((device) => {
         const roomName = room.name.toLowerCase()
+        device.loadState(roomName)
         handleOnOffClick(device, roomName)
         handleInputRange(device, roomName)
         handleLightColorButtons(device, roomName)
         handleTvControll(device, roomName)
+        syncUIWithStorage(device, roomName)
       })
 
       const toHome = document.querySelector('.home-button')

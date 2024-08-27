@@ -1,3 +1,14 @@
+export const updateStatusElement = (message, roomName, device) => {
+  // console.log(device)
+  const statusElement = document.querySelector(
+    `#${roomName}-${device.name}-status`
+  )
+
+  if (statusElement) {
+    statusElement.textContent = message
+  }
+}
+
 export const setButtonState = (activeButton, inactiveButtons) => {
   inactiveButtons.forEach((button) => {
     if (button) {

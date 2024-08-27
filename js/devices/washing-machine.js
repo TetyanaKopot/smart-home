@@ -7,14 +7,15 @@ import {
 
 const modes = ['Standard', 'Cotton', 'Silk', 'Wool', 'Delicate', 'Quik']
 export class WashingMachine extends Oven {
-  constructor(name, tempValue = 40, timer, machineModes = modes) {
+  constructor(name, roomName, tempValue = 40, timer, machineModes = modes) {
     super(name, timer)
+    this.roomName = roomName
     this.tempValue = tempValue
     this.timer = null
     this.modes = machineModes || ['Standard']
     this.currentMode = this.modes[0]
     this.isLocked = false
-    this.loadState()
+    // this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -53,7 +54,7 @@ export class WashingMachine extends Oven {
     )
     modeSelectLabel.innerText = text
     modeSelectElement.disabled = isDisabled
-    this.saveState()
+    // this.saveState()
   }
 
   getStatus() {
@@ -63,9 +64,9 @@ export class WashingMachine extends Oven {
     }
   }
 
-  loadState() {
+  loadState(roomName) {
     super.loadState()
-    const state = JSON.parse(localStorage.getItem(this.name))
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.mode = state.mode
     }
@@ -82,7 +83,7 @@ export class WashingMachine extends Oven {
     this.updateModeElements(roomName, 'Cannot change now', true)
     this.isLocked = true
     // }
-    this.saveState()
+    // this.saveState()
     return this.isOn
   }
 
@@ -91,6 +92,6 @@ export class WashingMachine extends Oven {
     // this.isOn = false
     this.isLocked = false
     this.updateModeElements(roomName, 'select mode:', false)
-    this.saveState()
+    // this.saveState()
   }
 }

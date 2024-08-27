@@ -12,36 +12,36 @@ export const rooms = [
   {
     name: 'LivingRoom',
     devices: [
-      new Door('Door'),
-      new Light('Light'),
-      new Curtains('Curtains'),
-      new AirConditioner('AC'),
-      new Television('Television'),
+      new Door('Door', 'LivingRoom'),
+      new Light('Light', 'LivingRoom'),
+      new Curtains('Curtains', 'LivingRoom'),
+      new AirConditioner('AC', 'LivingRoom'),
+      new Television('Television', 'LivingRoom'),
     ],
   },
   {
     name: 'Bedroom',
     devices: [
-      new Light('Light'),
-      new Curtains('Curtains'),
-      new AirConditioner('AC'),
+      new Light('Light', 'Bedroom'),
+      new Curtains('Curtains', 'Bedroom'),
+      new AirConditioner('AC', 'Bedroom'),
     ],
   },
   {
     name: 'Kitchen',
     devices: [
-      new Light('Light'),
-      new Curtains('Curtains'),
-      new Oven('Oven'),
-      new Hood('Hood'),
+      new Light('Light', 'Kitchen'),
+      new Curtains('Curtains', 'Kitchen'),
+      new Oven('Oven', 'Kitchen'),
+      new Hood('Hood', 'Kitchen'),
     ],
   },
   {
     name: 'UtilityRoom',
     devices: [
-      new Light('Light'),
-      new WashingMachine('WashingMachine'),
-      new Boiler('Boiler'),
+      new Light('Light', 'UtilityRoom'),
+      new WashingMachine('WashingMachine', 'UtilityRoom'),
+      new Boiler('Boiler', 'UtilityRoom'),
     ],
   },
 ]

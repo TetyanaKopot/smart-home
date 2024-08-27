@@ -6,14 +6,14 @@ export const handleInputRange = (device, roomName) => {
     const powerSlider = document.querySelector(
       `#${roomName}-${device.name}-${param.power}`
     )
-    const poverValueSpan = document.querySelector(
+    const powerValueSpan = document.querySelector(
       `#${roomName}-${device.name}-${param.power}-value`
     )
     const unit = param.unit || ''
-    if (powerSlider && poverValueSpan) {
+    if (powerSlider && powerValueSpan) {
       powerSlider.addEventListener('input', (event) => {
         const newValue = event.target.value
-        poverValueSpan.textContent = `${newValue}${unit}`
+        powerValueSpan.textContent = `${newValue}${unit}`
 
         if (typeof device[param.power] === 'function') {
           device[param.power](newValue)
