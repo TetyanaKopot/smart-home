@@ -8,7 +8,6 @@ export class Television extends Device {
     this.channels = channels
     this.currentChannel = this.channels[0]
     this.volume = 20
-    this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -17,7 +16,10 @@ export class Television extends Device {
     <button class="device-button" id="${roomName}-${
       this.name
     }-channel-prev">Prev</button>
-    <input list="channels" class="channel-input" id="channel-input">
+    <input list="channels" class="channel-input" id="${roomName}-${
+      this.name
+    }-channel-input" value="${this.currentChannel}"/>
+    
       <datalist id="channels">
       ${channels
         .map((channel) => `<option value="${channel}">${channel}</option>`)
@@ -49,16 +51,14 @@ export class Television extends Device {
     return this.channels
   }
 
-  switchChannelByName(channelInput) {
-    if (this.isOn) {
-      const channelIndex = this.channels.indexOf(channelName)
-      if (channelIndex !== -1) {
-        this.currentChannel = this.channels[channelIndex]
-        channelInput.value = this.currentChannel
-        console.log(`Switched to channel ${this.currentChannel}`)
-      } else {
-        console.log('Channel not found.')
-      }
+  switchChannelByName(channelName, channelInput) {
+    const channelIndex = this.channels.indexOf(channelName)
+    if (channelIndex !== -1) {
+      this.currentChannel = this.channels[channelIndex]
+      channelInput.value = this.currentChannel
+      console.log(`Switched to channel ${this.currentChannel}`)
+    } else {
+      console.log('Channel not found.')
     }
   }
 
@@ -82,65 +82,44 @@ export class Television extends Device {
   }
 
   switchToNextChannel(channelInput) {
-    if (this.isOn) {
-      let currentIndex = channels.indexOf(this.currentChannel)
-      let nextIndex = (currentIndex + 1) % channels.length
-      const nextChannel = channels[nextIndex]
-      this.currentChannel = nextChannel
-      channelInput.value = this.currentChannel
-      console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      console.log('TV is OFF. Cannot switch channel.')
-    }
+    let currentIndex = channels.indexOf(this.currentChannel)
+    let nextIndex = (currentIndex + 1) % channels.length
+    const nextChannel = channels[nextIndex]
+    this.currentChannel = nextChannel
+    channelInput.value = this.currentChannel
+    console.log(`Switched to channel ${this.currentChannel}`)
   }
 
   switchToPrevChannel(channelInput) {
-    if (this.isOn) {
-      const currentIndex = channels.indexOf(this.currentChannel)
-      let prevIndex =
-        currentIndex === 0 ? channels.length - 1 : currentIndex - 1
-      this.currentChannel = channels[prevIndex]
-      channelInput.value = this.currentChannel
-      console.log(`Switched to channel ${this.currentChannel}`)
-    } else {
-      console.log('TV is OFF. Cannot switch channel.')
-    }
+    const currentIndex = channels.indexOf(this.currentChannel)
+    let prevIndex = currentIndex === 0 ? channels.length - 1 : currentIndex - 1
+    this.currentChannel = channels[prevIndex]
+    channelInput.value = this.currentChannel
+    console.log(`Switched to channel ${this.currentChannel}`)
   }
 
   adjustVolume(volumeInput) {
-    if (this.isOn) {
-      let currentVolume = this.volume
-      currentVolume = parseInt(volumeInput.value) || 0
-      currentVolume = Math.max(0, Math.min(currentVolume, 100))
-      this.volume = currentVolume
+    let currentVolume = this.volume
+    currentVolume = parseInt(volumeInput.value) || 0
+    currentVolume = Math.max(0, Math.min(currentVolume, 100))
+    this.volume = currentVolume
 
-      console.log(`Volume set to ${this.volume}`)
-    } else {
-      console.log('Cannot adjust volume. TV is OFF')
-    }
+    console.log(`Volume set to ${this.volume}`)
   }
 
   quieterVolume(volumeInput) {
-    if (this.isOn) {
-      if (this.volume > 0) {
-        this.volume--
-        volumeInput.value = this.volume
-        console.log(`Volume decreased to ${this.volume}`)
-      } else {
-        console.log('Sound limits from 0 to 100')
-      }
+    if (this.volume > 0) {
+      this.volume--
+      volumeInput.value = this.volume
+      console.log(`Volume decreased to ${this.volume}`)
     }
   }
 
   louderVolume(volumeInput) {
-    if (this.isOn) {
-      if (this.volume < 100) {
-        this.volume++
-        volumeInput.value = this.volume
-        console.log(`Volume increased  to ${this.volume}`)
-      } else {
-        console.log('Sound limits from 0 to 100')
-      }
+    if (this.volume < 100) {
+      this.volume++
+      volumeInput.value = this.volume
+      console.log(`Volume increased  to ${this.volume}`)
     }
   }
 
@@ -153,7 +132,6 @@ export class Television extends Device {
   }
 
   loadState(roomName) {
-    super.loadState()
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.currentChannel = state.currentChannel

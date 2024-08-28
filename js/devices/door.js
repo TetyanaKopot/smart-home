@@ -5,8 +5,6 @@ export class Door extends Device {
     super(name)
     this.roomName = roomName
     this.isOpen = isOpen
-
-    // this.loadState(roomName)
   }
 
   getIcon() {
@@ -30,15 +28,11 @@ export class Door extends Device {
   open() {
     this.isOpen = true
     console.log(`${this.name} is open`)
-    // this.saveState()
-    // super.on()
     return this.isOpen
   }
 
   close() {
     this.isOpen = false
     console.log(`${this.name} is close`)
-    // this.saveState()
-    // super.off()
   }
 }

@@ -15,7 +15,6 @@ export class WashingMachine extends Oven {
     this.modes = machineModes || ['Standard']
     this.currentMode = this.modes[0]
     this.isLocked = false
-    // this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -42,7 +41,6 @@ export class WashingMachine extends Oven {
       this.currentMode = this.modes[modeIndex]
       console.log(`Washing mode set to ${this.currentMode}`)
     }
-    // this.saveState()
   }
 
   updateModeElements(roomName, text, isDisabled) {
@@ -54,7 +52,6 @@ export class WashingMachine extends Oven {
     )
     modeSelectLabel.innerText = text
     modeSelectElement.disabled = isDisabled
-    // this.saveState()
   }
 
   getStatus() {
@@ -73,7 +70,6 @@ export class WashingMachine extends Oven {
   }
 
   on(roomName) {
-    // if (!this.isLocked) {
     super.on(roomName)
     const modeSelectElement = document.querySelector(
       `#${roomName}-${this.name}-mode-select`
@@ -82,16 +78,12 @@ export class WashingMachine extends Oven {
     this.setMode(selectedModeIndex)
     this.updateModeElements(roomName, 'Cannot change now', true)
     this.isLocked = true
-    // }
-    // this.saveState()
     return this.isOn
   }
 
   off(roomName) {
     super.off(roomName)
-    // this.isOn = false
     this.isLocked = false
     this.updateModeElements(roomName, 'select mode:', false)
-    // this.saveState()
   }
 }

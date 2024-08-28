@@ -6,7 +6,6 @@ export class Hood extends Device {
     super(name)
     this.roomName = roomName
     this.powValue = powValue
-    this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {
@@ -28,13 +27,12 @@ export class Hood extends Device {
   power(value) {
     this.powValue = value
     console.log(`${this.name} power is set to${this.powValue}`)
-    // this.saveState()
   }
 
   getStatus() {
     return {
       ...super.getStatus(),
-      powValue: this.powValue,
+      power: this.powValue,
     }
   }
 
@@ -42,7 +40,7 @@ export class Hood extends Device {
     super.loadState()
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
-      this.powValue = state.powValue
+      this.powValue = state.power
     }
   }
 }

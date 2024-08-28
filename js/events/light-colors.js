@@ -8,6 +8,7 @@ export const handleLightColorButtons = (device, roomName) => {
       const color = event.target.dataset.color
       if (color) {
         device.changeColor(color)
+        device.saveState(roomName)
 
         const allColorButtons = colorsElement.querySelectorAll('.light-color')
         allColorButtons.forEach((button) => {
@@ -15,7 +16,6 @@ export const handleLightColorButtons = (device, roomName) => {
         })
         event.target.classList.add('is-active')
       }
-      device.saveState(roomName)
     })
   }
 }

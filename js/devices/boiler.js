@@ -5,8 +5,6 @@ export class Boiler extends AirConditioner {
   constructor(name, roomName, tempValue = 50) {
     super(name, tempValue)
     this.roomName = roomName
-
-    // this.loadState(roomName)
   }
 
   renderDeviceOptions(roomName) {

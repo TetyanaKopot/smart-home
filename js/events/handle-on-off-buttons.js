@@ -11,8 +11,33 @@ export const handleOnOffClick = (device, roomName) => {
       `#${roomName}-${device.name}-${actions.off}`
     )
 
+    const timerElement = document.querySelector(
+      `#${roomName}-${device.name}-timer`
+    )
+    const hoursElement = document.querySelector(
+      `#${roomName}-${device.name}-hours`
+    )
+    const minutesElement = document.querySelector(
+      `#${roomName}-${device.name}-minutes`
+    )
+
     const handleOnClick = () => {
       if (onButton.classList.contains('is-active')) return
+      if (typeof device.startTimer === 'function') {
+        const getHours = () => parseInt(hoursElement.value) || 0
+        const getMinutes = () => parseInt(minutesElement.value) || 0
+        const hours = parseInt(hoursElement.value) || 0
+        const minutes = parseInt(minutesElement.value) || 0
+
+        if (hours === 0 && minutes === 0) {
+          timerElement.classList.add('error')
+          timerElement.innerText = `Set timer for ${device.name}.`
+          return
+        } else {
+          timerElement.classList.remove('error')
+          timerElement.innerText = ''
+        }
+      }
       device[actions.on]?.(roomName)
       device.saveState(roomName)
 
@@ -21,7 +46,7 @@ export const handleOnOffClick = (device, roomName) => {
       } else {
         setButtonState(onButton, [offButton])
       }
-      updateStatusElement(`${device.name} is ${actions.on}`, roomName, device)
+      updateStatusElement(`${actions.on}`, roomName, device)
     }
 
     const handleOffClick = () => {
@@ -29,7 +54,7 @@ export const handleOnOffClick = (device, roomName) => {
       device[actions.off]?.(roomName)
 
       device.saveState(roomName)
-      updateStatusElement(`${device.name} is ${actions.off}`, roomName, device)
+      updateStatusElement(`${actions.off}`, roomName, device)
       if (openHalfButton) {
         setButtonState(offButton, [onButton, openHalfButton])
       } else {
@@ -47,7 +72,7 @@ export const handleOnOffClick = (device, roomName) => {
       if (openHalfButton.classList.contains('is-active')) return
       device.openHalf()
       device.saveState(roomName)
-      updateStatusElement(`${device.name} is opened halfway`, roomName, device)
+      updateStatusElement(`opened halfway`, roomName, device)
       setButtonState(openHalfButton, [onButton, offButton])
     })
   }

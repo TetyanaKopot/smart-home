@@ -5,7 +5,6 @@ export class Curtains extends Door {
     super(name, isOpen)
     this.roomName = roomName
     this.halfOpen = halfOpen
-    // this.loadState(roomName)
   }
 
   getIcon() {
@@ -34,19 +33,16 @@ export class Curtains extends Door {
     this.halfOpen = true
     this.isOpen = false
     console.log(`${this.name} is open half`)
-    // this.saveState()
   }
 
   open() {
     super.open()
     this.halfOpen = false
-    // this.saveState()
     return this.isOpen
   }
 
   close() {
     super.close()
     this.halfOpen = false
-    // this.saveState()
   }
 }

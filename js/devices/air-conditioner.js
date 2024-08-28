@@ -33,7 +33,7 @@ export class AirConditioner extends Device {
   getStatus() {
     return {
       ...super.getStatus(),
-      tempValue: this.tempValue,
+      temperature: this.tempValue,
     }
   }
 
@@ -41,7 +41,7 @@ export class AirConditioner extends Device {
     super.loadState()
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
-      this.tempValue = state.tempValue
+      this.tempValue = state.temperature
     }
   }
 

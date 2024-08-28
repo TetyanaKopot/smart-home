@@ -2,8 +2,9 @@ import { Television } from '../devices/television.js'
 
 export const handleTvControll = (device, roomName) => {
   if (device instanceof Television) {
-    const channelInput = document.querySelector('#channel-input')
-    const channelOptions = document.querySelector('#channels')
+    const channelInput = document.querySelector(
+      `#${roomName}-${device.name}-channel-input`
+    )
 
     const next = document.querySelector(
       `#${roomName}-${device.name}-channel-next`
@@ -27,12 +28,12 @@ export const handleTvControll = (device, roomName) => {
       // syncUIWithStorage(device, roomName)
     })
 
-    channelOptions.addEventListener('change', () => {
-      const selectedChannelName = channelOptions.value
+    channelInput.addEventListener('change', () => {
+      const selectedChannelName = channelInput.value
       device.switchChannelByName(selectedChannelName, channelInput)
       device.saveState(roomName)
-      // syncUIWithStorage(device, roomName)
     })
+    // syncUIWithStorage(device, roomName)
 
     next.addEventListener('click', () => {
       device.switchToNextChannel(channelInput)
