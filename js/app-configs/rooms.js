@@ -1,12 +1,12 @@
-import { AirConditioner } from './devices/air-conditioner.js'
-import { Boiler } from './devices/boiler.js'
-import { Curtains } from './devices/curtains.js'
-import { Door } from './devices/door.js'
-import { Hood } from './devices/hood.js'
-import { Light } from './devices/light.js'
-import { Oven } from './devices/oven.js'
-import { Television } from './devices/television.js'
-import { WashingMachine } from './devices/washing-machine.js'
+import { AirConditioner } from '../devices/air-conditioner.js'
+import { Boiler } from '../devices/boiler.js'
+import { Curtains } from '../devices/curtains.js'
+import { Door } from '../devices/door.js'
+import { Hood } from '../devices/hood.js'
+import { Light } from '../devices/light.js'
+import { Oven } from '../devices/oven.js'
+import { Television } from '../devices/television.js'
+import { WashingMachine } from '../devices/washing-machine.js'
 
 export const rooms = [
   {

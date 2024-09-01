@@ -1,7 +1,6 @@
-const modal = document.querySelector('#backdrop-sequrity')
+import { initModal } from './init-modal.js'
+
 const security = document.querySelector('#security')
-const openBtn = document.querySelector('#security')
-const closeBtn = document.querySelector('#close-modal-sequrity')
 const changeStatusBtn = document.querySelector('#change-status')
 const newUser = document.querySelector('#new-user')
 const userName = document.querySelector('#name')
@@ -9,11 +8,11 @@ const userPassword = document.querySelector('#password')
 const nameError = document.querySelector('#name-error')
 const passwordError = document.querySelector('#password-error')
 
-const open = () => modal.classList.remove('is-hidden')
-const close = () => modal.classList.add('is-hidden')
-
-openBtn.addEventListener('click', open)
-closeBtn.addEventListener('click', close)
+const closeSecurityModal = initModal(
+  '#backdrop-sequrity',
+  '#security',
+  '#close-modal-sequrity'
+)
 
 let isProtect = false
 changeStatusBtn.innerText = 'Activate'
@@ -35,7 +34,7 @@ const hendleSuccess = (btn, innerBtn) => {
   btn.innerText = 'Successfully!'
   setTimeout(() => {
     btn.innerText = innerBtn
-    close()
+    closeSecurityModal()
   }, 3000)
 }
 

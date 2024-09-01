@@ -57,7 +57,7 @@ export class Light extends Device {
   }
 
   loadState(roomName) {
-    super.loadState()
+    super.loadState(roomName)
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       this.brightValue = state.brightness

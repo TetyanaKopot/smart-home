@@ -33,7 +33,8 @@
   border-radius: 30px;
 }
 
-.login-fieldset {
+.login-fieldset,
+.config-fieldset {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -42,7 +43,16 @@
   border-radius: 10px;
 }
 
-.login-input {
+.config-fieldset label,
+.room-select option {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
+}
+
+.login-input,
+.room-select,
+.device-type-select {
   margin: 0 auto;
   text-align: center;
   width: 100%;

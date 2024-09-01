@@ -24,7 +24,7 @@
         <button type="button" class="menu button">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <button type="button" class="sttings button">
+        <button type="button" class="settings button" id="settings">
           <i class="fa-solid fa-gears"></i>
         </button>
       </section>
@@ -72,7 +72,29 @@
         </fieldset>
       </div>
     </div>
+
+    <div class="backdrop is-hidden" id="backdrop-config">
+      <div class="modal" id="modal-config">
+        <i class="fa-solid fa-xmark" id="close-modal-config"></i>
+        <fieldset class="config-fieldset">
+          <label for="room-select">Select Room:</label>
+          <select class="room-select" id="room-select"></select>
+
+          <label for="device-type-select">Select Device Type:</label>
+          <select class="device-type-select" id="device-type-select"></select>
+
+          <button type="button" class="button" id="add-device">
+            Add Device
+          </button>
+          <button type="button" class="button" id="remove-device">
+            Remove Device
+          </button>
+        </fieldset>
+      </div>
+    </div>
     <script src="./js/main.js" type="module"></script>
-    <script src="./js/sequrity.js" type="module"></script>
+    <script src="./js/events/sequrity.js" type="module"></script>
+    <script src="./js/ui/modal-dropdowns.js" type="module"></script>
+    <script src="./js/events/config-devices.js" type="module"></script>
   </body>
 </html>

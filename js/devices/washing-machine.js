@@ -65,9 +65,17 @@ export class WashingMachine extends Oven {
   loadState(roomName) {
     super.loadState(roomName)
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
+
     if (state) {
       this.currentMode = state.mode
       this.updateModeElements(roomName, 'Cannot change now', this.isOn)
+
+      const modeSelectElement = document.querySelector(
+        `#${roomName}-${this.name}-mode-select`
+      )
+      if (modeSelectElement) {
+        modeSelectElement.value = this.currentMode
+      }
     }
   }
 

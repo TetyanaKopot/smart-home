@@ -1,6 +1,5 @@
-import { controlActions } from '../config.js'
+import { controlActions, parameterControls } from '../app-configs/config.js'
 import { setButtonState, updateStatusElement } from './status-elements.js'
-import { parameterControls } from '../config.js'
 
 export const syncUIWithStorage = (device, roomName) => {
   const actions = controlActions[device.constructor.name]

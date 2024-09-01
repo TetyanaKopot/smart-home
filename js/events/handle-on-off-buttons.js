@@ -1,4 +1,4 @@
-import { controlActions } from '../config.js'
+import { controlActions } from '../app-configs/config.js'
 import { updateDeviceStatus } from '../ui/status-elements.js'
 
 export const handleOnOffClick = (device, roomName) => {

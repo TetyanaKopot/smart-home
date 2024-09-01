@@ -1,4 +1,4 @@
-import { parameterControls } from '../config.js'
+import { parameterControls } from '../app-configs/config.js'
 
 export const handleInputRange = (device, roomName) => {
   const param = parameterControls[device.constructor.name]

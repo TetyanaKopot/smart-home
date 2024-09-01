@@ -1,4 +1,4 @@
-import { rooms } from './rooms.js'
+import { rooms } from './app-configs/rooms.js'
 import { renderRoom } from './ui/render-room.js'
 import { handleInputRange } from './events/input-range.js'
 import { handleOnOffClick } from './events/handle-on-off-buttons.js'

@@ -1,4 +1,4 @@
-import { controlActions } from '../config.js'
+import { controlActions } from '../app-configs/config.js'
 import { formatTime } from '../events/timer.js'
 
 export const updateStatusElement = (message, roomName, device) => {

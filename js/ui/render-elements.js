@@ -1,4 +1,4 @@
-import { controlActions } from '../config.js'
+import { controlActions } from '../app-configs/config.js'
 
 export const renderSelectOptions = (roomName, name, options, type) => {
   return `
@@ -6,7 +6,7 @@ export const renderSelectOptions = (roomName, name, options, type) => {
       <label for="${roomName}-${name}-${type}" id="${roomName}-${name}-${type}-label">Select ${type}:</label>
       <select id="${roomName}-${name}-${type}-select">
         ${options
-          .map((option, index) => `<option value="${index}">${option}</option>`)
+          .map((option) => `<option value="${option}">${option}</option>`)
           .join('')}
       </select>
     </div>
