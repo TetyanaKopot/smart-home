@@ -1,4 +1,4 @@
-export const initializeTimer = (duration, onUpdate, onComplete, storageKey) => {
+export const initializeTimer = (duration, onUpdate, onComplete) => {
   let timeInSeconds = duration
   let timer
 
@@ -11,22 +11,16 @@ export const initializeTimer = (duration, onUpdate, onComplete, storageKey) => {
       const secs = Math.floor(timeInSeconds % 60)
 
       if (onUpdate) onUpdate(hrs, mins, secs)
-      if (storageKey) {
-        localStorage.setItem(storageKey, JSON.stringify(timeInSeconds))
-      }
 
       timer = setTimeout(tick, 1000)
     } else {
       if (onComplete) onComplete()
-      if (storageKey) {
-        localStorage.removeItem(storageKey)
-      }
     }
   }
   timer = setTimeout(tick, 1000)
   return () => clearTimeout(timer)
 }
 
-export function formatTime(value) {
+export const formatTime = (value) => {
   return value < 10 ? `0${value}` : value
 }

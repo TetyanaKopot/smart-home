@@ -4,6 +4,7 @@ import {
   renderTimer,
   renderPowerController,
 } from '../ui/render-elements.js'
+import { updateDeviceStatus } from '../ui/status-elements.js'
 
 const modes = ['Standard', 'Cotton', 'Silk', 'Wool', 'Delicate', 'Quik']
 export class WashingMachine extends Oven {
@@ -62,10 +63,11 @@ export class WashingMachine extends Oven {
   }
 
   loadState(roomName) {
-    super.loadState()
+    super.loadState(roomName)
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
-      this.mode = state.mode
+      this.currentMode = state.mode
+      this.updateModeElements(roomName, 'Cannot change now', this.isOn)
     }
   }
 
@@ -78,12 +80,13 @@ export class WashingMachine extends Oven {
     this.setMode(selectedModeIndex)
     this.updateModeElements(roomName, 'Cannot change now', true)
     this.isLocked = true
-    return this.isOn
+    updateDeviceStatus(this, roomName)
   }
 
   off(roomName) {
     super.off(roomName)
     this.isLocked = false
     this.updateModeElements(roomName, 'select mode:', false)
+    updateDeviceStatus(this, roomName)
   }
 }

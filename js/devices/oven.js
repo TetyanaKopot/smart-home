@@ -1,7 +1,7 @@
 import { renderTimer, renderPowerController } from '../ui/render-elements.js'
 import { AirConditioner } from './air-conditioner.js'
-import { setButtonState } from '../ui/status-elements.js'
 import { initializeTimer, formatTime } from '../events/timer.js'
+import { updateDeviceStatus } from '../ui/status-elements.js'
 
 export class Oven extends AirConditioner {
   constructor(name, roomName, tempValue = 180) {
@@ -9,7 +9,6 @@ export class Oven extends AirConditioner {
     this.roomName = roomName
     this.tempValue = tempValue
     this.timer = null
-    this.stopTimer = null
   }
 
   renderDeviceOptions(roomName) {
@@ -31,8 +30,11 @@ export class Oven extends AirConditioner {
   }
 
   startTimer(hours, minutes, roomName, remainingTime = null) {
-    const storageKey = `${roomName}-${this.name}-remaining-time`
+    this.startTimestamp = Date.now()
     const duration = remainingTime || hours * 3600 + minutes * 60
+    this.timer = duration
+
+    this.saveState(roomName)
 
     this.stopTimer = initializeTimer(
       duration,
@@ -43,18 +45,12 @@ export class Oven extends AirConditioner {
           mins
         )} : ${formatTime(secs)}`
 
-        // Збереження залишкового часу в localStorage
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify(hrs * 3600 + mins * 60 + secs)
-        )
+        this.saveState(roomName)
       },
       () => {
         this.off(roomName)
         this.saveState(roomName)
-        localStorage.removeItem(storageKey) // Видалення після завершення
-      },
-      storageKey // Передаємо ключ збереження в таймер
+      }
     )
   }
 
@@ -75,18 +71,38 @@ export class Oven extends AirConditioner {
     return {
       ...super.getStatus(),
       timer: this.timer,
+      startTimestamp: this.startTimestamp,
     }
   }
 
   loadState(roomName) {
-    super.loadState()
-    const storageKey = `${roomName}-${this.name}-remaining-time`
-    const remainingTime = JSON.parse(localStorage.getItem(storageKey))
+    // super.loadState()
+    const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
+    if (state) {
+      const { timer, startTimestamp } = state
+      const elapsed = Math.floor((Date.now() - startTimestamp) / 1000)
 
-    if (remainingTime) {
-      const hours = Math.floor(remainingTime / 3600)
-      const minutes = Math.floor((remainingTime % 3600) / 60)
-      this.startTimer(hours, minutes, roomName, remainingTime)
+      const remainingTime = Math.max(timer - elapsed, 0)
+
+      if (remainingTime > 0) {
+        const hours = Math.floor(remainingTime / 3600)
+        const minutes = Math.floor((remainingTime % 3600) / 60)
+        this.startTimer(hours, minutes, roomName, remainingTime)
+
+        super.on(roomName)
+        this.isOn = true
+        localStorage.setItem(
+          this.getStorageKey(roomName),
+          JSON.stringify({
+            ...state,
+            isOn: true,
+          })
+        )
+      } else {
+        this.off(roomName)
+      }
+
+      this.tempValue = state.temperature
     }
   }
 
@@ -103,12 +119,14 @@ export class Oven extends AirConditioner {
       const minutes = parseInt(minutesElement.value) || 0
 
       const storageKey = `${roomName}-${this.name}-remaining-time`
-      const remainingTime = JSON.parse(localStorage.getItem(storageKey))
-      if (remainingTime) {
-        // Якщо значення не null, запускаємо таймер з залишковим часом
-        this.startTimer(0, 0, roomName, remainingTime)
+      const savedState = JSON.parse(localStorage.getItem(storageKey))
+      if (savedState && savedState.isOn) {
+        this.startTimer(
+          savedState.hours || 0,
+          savedState.minutes || 0,
+          roomName
+        )
       } else {
-        // Якщо таймер не був збережений, запускаємо з початковим часом
         this.startTimer(hours, minutes, roomName)
       }
 
@@ -120,6 +138,7 @@ export class Oven extends AirConditioner {
       timerElement.classList.remove('error')
       timerElement.innerText = ''
       super.on(roomName)
+      updateDeviceStatus(this, roomName)
     } else {
       const timerElement = document.querySelector(
         `#${roomName}-${this.name}-timer`
@@ -138,81 +157,7 @@ export class Oven extends AirConditioner {
       )
       timerElement.innerText = 'Timer 00 : 00 : 00'
       super.off(roomName)
-
-      const onButton = document.querySelector(`#${roomName}-${this.name}-on`)
-      const offButton = document.querySelector(`#${roomName}-${this.name}-off`)
-
-      setButtonState(offButton, [onButton])
+      updateDeviceStatus(this, roomName)
     }
   }
 }
-
-// off(roomName) {
-//   if (this.timer) {
-//     clearInterval(this.timer)
-//     this.timer = null
-//     const timerElement = document.querySelector(
-//       `#${roomName}-${this.name}-timer`
-//     )
-//     timerElement.innerText = 'Timer 00 : 00 : 00'
-//     super.off(roomName)
-
-//     const onButton = document.querySelector(`#${roomName}-${this.name}-on`)
-//     const offButton = document.querySelector(`#${roomName}-${this.name}-off`)
-
-//     setButtonState(offButton, [onButton])
-//   }
-// }
-
-// startTimer(hours, minutes, roomName) {
-//   let timeInSeconds = hours * 60 * 60 + minutes * 60
-
-//   this.timer = setInterval(() => {
-//     if (timeInSeconds > 0) {
-//       timeInSeconds--
-
-//       const hrs = Math.floor(timeInSeconds / 3600)
-//       const mins = Math.floor((timeInSeconds % 3600) / 60)
-//       const secs = Math.floor(timeInSeconds % 60)
-
-//       document.querySelector(
-//         `#${roomName}-${this.name}-timer`
-//       ).innerText = `Timer ${this.formatTime(hrs)} : ${this.formatTime(
-//         mins
-//       )} : ${this.formatTime(secs)}`
-//     } else {
-//       clearInterval(this.timer)
-//       this.off(roomName)
-//     }
-//   }, 1000)
-// }
-
-// formatTime(value) {
-//   return value < 10 ? `0${value}` : value
-// }
-// on(roomName) {
-//   const timerElement = document.querySelector(
-//     `#${roomName}-${this.name}-timer`
-//   )
-//   const hoursElement = document.querySelector(
-//     `#${roomName}-${this.name}-hours`
-//   )
-//   const minutesElement = document.querySelector(
-//     `#${roomName}-${this.name}-minutes`
-//   )
-
-//   const hours = parseInt(hoursElement.value) || 0
-//   const minutes = parseInt(minutesElement.value) || 0
-
-//   if (hours > 0 || minutes > 0) {
-//     this.startTimer(hours, minutes, roomName)
-//     hoursElement.value = 0
-//     minutesElement.value = 0
-//     timerElement.classList.remove('error')
-//     timerElement.innerText = ''
-//     super.on(roomName)
-//   } else {
-//     timerElement.classList.add('error')
-//     timerElement.innerText = `Set timer for ${this.name}.`
-//   }
-// }

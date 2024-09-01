@@ -54,8 +54,6 @@ export const syncUIWithStorage = (device, roomName) => {
     }
 
     if (param && deviceData[param.power] !== undefined) {
-      console.log('deviceData[param.power]:', deviceData[param.power])
-
       const valueElement = document.querySelector(
         `#${roomName}-${device.name}-${param.power}`
       )
