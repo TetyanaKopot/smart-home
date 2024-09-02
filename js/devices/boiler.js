@@ -8,10 +8,14 @@ export class Boiler extends AirConditioner {
   }
 
   renderDeviceOptions(roomName) {
+    const validTempValue =
+      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
+        ? this.tempValue
+        : 50
     return `${renderPowerController({
       min: 40,
       max: 60,
-      value: this.tempValue,
+      value: validTempValue,
       deviceParam: 'temperature',
       name: this.name,
       roomName,

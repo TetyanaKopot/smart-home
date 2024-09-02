@@ -9,10 +9,14 @@ export class Hood extends Device {
   }
 
   renderDeviceOptions(roomName) {
+    const validPowValue =
+      typeof this.powValue === 'number' && !isNaN(this.powValue)
+        ? this.powValue
+        : 30
     return `${renderPowerController({
       min: 0,
       max: 100,
-      value: this.powValue,
+      value: validPowValue,
       deviceParam: 'power',
       name: this.name,
       roomName,

@@ -15,11 +15,16 @@ import { WashingMachine } from '../devices/washing-machine.js'
 initModal('#backdrop-config', '#settings', '#close-modal-config')
 
 const addDeviceToRoom = (roomName, newDevice) => {
+  console.log('Before saving to storage, device:', newDevice)
   const storedRooms = JSON.parse(localStorage.getItem('rooms')) || rooms
   const room = storedRooms.find((room) => room.name === roomName)
 
   if (room) {
-    room.devices.push(newDevice)
+    const deviceWithType = {
+      ...newDevice,
+      type: newDevice.constructor.name,
+    }
+    room.devices.push(deviceWithType)
     localStorage.setItem('rooms', JSON.stringify(storedRooms))
   }
 }
@@ -32,6 +37,8 @@ export const loadRoomsFromStorage = () => {
 const addNewDevice = () => {
   const roomName = document.querySelector('#room-select').value
   const deviceType = document.querySelector('#device-type-select').value
+  console.log(roomName)
+  console.log(deviceType)
 
   let newDevice
 
@@ -73,60 +80,50 @@ const addNewDevice = () => {
   }
 }
 
-const restoreDevice = (deviceData) => {
-  // Визначаємо клас на основі типу пристрою
+export const restoreDevice = (deviceData) => {
+  if (!deviceData.type) {
+    if (deviceData.name === 'AC') {
+      deviceData.type = 'AirConditioner'
+    } else {
+      deviceData.type = deviceData.name
+    }
+  }
   switch (deviceData.type) {
     case 'AirConditioner':
       return new AirConditioner(
         deviceData.name,
-        deviceData.state,
+        deviceData.roomName,
         deviceData.isOn,
-        deviceData.temperature
+        deviceData.tempValue
       )
     case 'Boiler':
       return new Boiler(
         deviceData.name,
-        deviceData.state,
+        deviceData.roomName,
         deviceData.isOn,
-        deviceData.temperature
-      )
-    case 'Curtains':
-      return new Curtains(
-        deviceData.name,
-        deviceData.state,
-        deviceData.isOpen,
-        deviceData.halfOpen
-      )
-    case 'Door':
-      return new Door(deviceData.name, deviceData.state, deviceData.isOpen)
-    case 'Hood':
-      return new Hood(
-        deviceData.name,
-        deviceData.state,
-        deviceData.isOn,
-        deviceData.temperature
+        deviceData.tempValue
       )
     case 'Light':
       return new Light(
         deviceData.name,
-        deviceData.state,
+        deviceData.roomName,
         deviceData.isOn,
-        deviceData.brightness,
+        deviceData.brightnessValue,
         deviceData.color
       )
-    case 'Oven':
-      return new Oven(
+    case 'Curtains':
+      return new Curtains(
         deviceData.name,
-        deviceData.state,
-        deviceData.isOn,
-        deviceData.temperature,
-        deviceData.timer,
-        deviceData.startTimestamp
+        deviceData.roomName,
+        deviceData.isOpen,
+        deviceData.halfOpen
       )
+    case 'Door':
+      return new Door(deviceData.name, deviceData.roomName, deviceData.isOpen)
     case 'Television':
       return new Television(
         deviceData.name,
-        deviceData.state,
+        deviceData.roomName,
         deviceData.isOn,
         deviceData.currentChannel,
         deviceData.volume
@@ -134,15 +131,26 @@ const restoreDevice = (deviceData) => {
     case 'WashingMachine':
       return new WashingMachine(
         deviceData.name,
-        deviceData.state,
+        deviceData.roomName,
         deviceData.isOn,
-        deviceData.temperature,
+        deviceData.tempValue,
         deviceData.timer,
         deviceData.startTimestamp,
         deviceData.mode
       )
+    case 'Oven':
+      return new Oven(
+        deviceData.name,
+        deviceData.roomName,
+        deviceData.isOn,
+        deviceData.tempValue,
+        deviceData.timer,
+        deviceData.startTimestamp
+      )
+    case 'Hood':
+      return new Hood(deviceData.name, deviceData.roomName, deviceData.isOn)
     default:
-      throw new Error(`Unknown device type: ${deviceData.type}`)
+      throw new Error('Unknown device type: ' + deviceData.type)
   }
 }
 

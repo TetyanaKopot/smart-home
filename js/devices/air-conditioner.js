@@ -10,10 +10,14 @@ export class AirConditioner extends Device {
   }
 
   renderDeviceOptions(roomName) {
+    const validTempValue =
+      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
+        ? this.tempValue
+        : 20
     return `${renderPowerController({
       min: 15,
       max: 30,
-      value: this.tempValue,
+      value: validTempValue,
       deviceParam: 'temperature',
       name: this.name,
       roomName,

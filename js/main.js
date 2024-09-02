@@ -1,4 +1,4 @@
-// import { rooms } from './app-configs/rooms.js'
+import { rooms } from './app-configs/rooms.js'
 import { renderRoom } from './ui/render-room.js'
 import { handleInputRange } from './events/input-range.js'
 import { handleOnOffClick } from './events/handle-on-off-buttons.js'
@@ -6,6 +6,7 @@ import { handleLightColorButtons } from './events/light-colors.js'
 import { handleTvControll } from './events/tv-controll.js'
 import { syncUIWithStorage } from './ui/sync-ui-with-storage.js'
 import { loadRoomsFromStorage } from './events/config-devices.js'
+import { restoreDevice } from './events/config-devices.js'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
@@ -15,6 +16,9 @@ export const bindEvents = () => {
   storedRooms.forEach((room) => {
     const roomName = room.name.toLowerCase()
     const roomElement = document.querySelector(`#${roomName}`)
+
+    room.devices = room.devices.map(restoreDevice)
+
     roomElement.addEventListener('click', () => {
       main.innerHTML = renderRoom(room)
 
@@ -36,4 +40,5 @@ export const bindEvents = () => {
     })
   })
 }
+
 bindEvents()

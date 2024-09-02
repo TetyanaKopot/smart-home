@@ -19,18 +19,22 @@ export class WashingMachine extends Oven {
   }
 
   renderDeviceOptions(roomName) {
+    const validTempValue =
+      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
+        ? this.tempValue
+        : 40
     return `
-      ${renderSelectOptions(roomName, this.name, modes, 'mode')}
-      ${renderTimer(this.name, roomName)}
-      ${renderPowerController({
-        min: 0,
-        max: 90,
-        value: this.tempValue,
-        deviceParam: 'temperature',
-        name: this.name,
-        roomName,
-        unit: '°C',
-      })}`
+    ${renderSelectOptions(roomName, this.name, modes, 'mode')}
+    ${renderTimer(this.name, roomName)}
+    ${renderPowerController({
+      min: 0,
+      max: 90,
+      value: validTempValue,
+      deviceParam: 'temperature',
+      name: this.name,
+      roomName,
+      unit: '°C',
+    })}`
   }
 
   getIcon() {
@@ -67,6 +71,7 @@ export class WashingMachine extends Oven {
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
 
     if (state) {
+      this.tempValue = state.tempValue || this.tempValue
       this.currentMode = state.mode
       this.updateModeElements(roomName, 'Cannot change now', this.isOn)
 
@@ -76,6 +81,7 @@ export class WashingMachine extends Oven {
       if (modeSelectElement) {
         modeSelectElement.value = this.currentMode
       }
+      console.log('Restored tempValue:', this.tempValue)
     }
   }
 

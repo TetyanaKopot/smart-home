@@ -12,12 +12,16 @@ export class Oven extends AirConditioner {
   }
 
   renderDeviceOptions(roomName) {
+    const validTempValue =
+      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
+        ? this.tempValue
+        : 180
     return `
     ${renderTimer(this.name, roomName)}
     ${renderPowerController({
       min: 50,
       max: 360,
-      value: this.tempValue,
+      value: validTempValue,
       deviceParam: 'temperature',
       name: this.name,
       roomName,
@@ -76,7 +80,6 @@ export class Oven extends AirConditioner {
   }
 
   loadState(roomName) {
-    // super.loadState()
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
     if (state) {
       const { timer, startTimestamp } = state

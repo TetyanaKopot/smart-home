@@ -10,6 +10,10 @@ export class Light extends Device {
   }
 
   renderDeviceOptions(roomName) {
+    const validBrightValue =
+      typeof this.brightValue === 'number' && !isNaN(this.brightValue)
+        ? this.brightValue
+        : 50
     return `
     <div class="light-colors" id="${roomName}-${this.name}-colors">
     <button class="light-color white is-active" id="${roomName}-white" data-color="white">W</button>
@@ -21,7 +25,7 @@ export class Light extends Device {
     ${renderPowerController({
       min: 0,
       max: 100,
-      value: this.brightValue,
+      value: validBrightValue,
       deviceParam: 'brightness',
       name: this.name,
       roomName,
