@@ -7,7 +7,7 @@ export const renderRoom = (room) => {
       <i class="fa-solid fa-house"></i>
     </button>
     <h2>${room.name} devices</h2>
-    <div class="devices-wrapper">
+    <div id="${room.name.toLowerCase()}" class="devices-wrapper">
       ${deviceHtml}
     </div>
     `

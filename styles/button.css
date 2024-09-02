@@ -15,6 +15,9 @@
     color: var(--color-background-dark);
   }
 }
+.button i {
+  pointer-events: none;
+}
 
 .button.security {
   height: 54px;

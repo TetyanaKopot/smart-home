@@ -1,16 +1,18 @@
-import { rooms } from './app-configs/rooms.js'
+// import { rooms } from './app-configs/rooms.js'
 import { renderRoom } from './ui/render-room.js'
 import { handleInputRange } from './events/input-range.js'
 import { handleOnOffClick } from './events/handle-on-off-buttons.js'
 import { handleLightColorButtons } from './events/light-colors.js'
 import { handleTvControll } from './events/tv-controll.js'
 import { syncUIWithStorage } from './ui/sync-ui-with-storage.js'
+import { loadRoomsFromStorage } from './events/config-devices.js'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
 
-const bindEvents = () => {
-  rooms.forEach((room) => {
+export const bindEvents = () => {
+  const storedRooms = loadRoomsFromStorage()
+  storedRooms.forEach((room) => {
     const roomName = room.name.toLowerCase()
     const roomElement = document.querySelector(`#${roomName}`)
     roomElement.addEventListener('click', () => {

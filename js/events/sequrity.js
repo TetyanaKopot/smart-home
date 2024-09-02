@@ -14,8 +14,24 @@ const closeSecurityModal = initModal(
   '#close-modal-sequrity'
 )
 
-let isProtect = false
-changeStatusBtn.innerText = 'Activate'
+// Використовуємо однаковий ключ 'Security' для зберігання і завантаження стану
+let isProtect = JSON.parse(localStorage.getItem('Security')) || false
+
+const updateSecurityUI = () => {
+  const lock = isProtect
+    ? `<i class="fa-solid fa-lock"></i>`
+    : `<i class="fa-solid fa-lock-open"></i>`
+  security.innerHTML = `Security ${lock}`
+  changeStatusBtn.innerText = isProtect ? 'Deactivate' : 'Activate'
+}
+
+const saveProtect = () => {
+  localStorage.setItem('Security', JSON.stringify(isProtect)) // Змінено ключ на 'Security'
+  console.log(`Security status saved: ${isProtect}`)
+}
+
+// Оновлюємо інтерфейс одразу після ініціалізації
+updateSecurityUI()
 
 const regName = /^\w{3,}$/i
 const regPass = /^(\w|\d){8,}$/
@@ -68,12 +84,9 @@ const checkUserCredentials = () => {
 
   if (userExists) {
     isProtect = !isProtect
-    const previousText = isProtect ? 'Deactivate' : 'Activate'
-    hendleSuccess(changeStatusBtn, previousText)
-    const lock = isProtect
-      ? `<i class="fa-solid fa-lock"></i>`
-      : `<i class="fa-solid fa-lock-open"></i>`
-    security.innerHTML = `Security ${lock}`
+    updateSecurityUI()
+    saveProtect()
+    hendleSuccess(changeStatusBtn, isProtect ? 'Deactivate' : 'Activate')
   } else {
     const previousText = changeStatusBtn.innerText
     changeStatusBtn.classList.add('error')

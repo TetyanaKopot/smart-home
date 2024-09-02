@@ -1,10 +1,6 @@
-import { rooms } from '../app-configs/rooms.js'
-import {
-  populateRoomSelect,
-  populateDeviceTypeSelect,
-} from '../ui/modal-dropdowns.js'
-
 import { initModal } from './init-modal.js'
+import { rooms } from '../app-configs/rooms.js'
+import { bindEvents } from '../main.js'
 
 import { AirConditioner } from '../devices/air-conditioner.js'
 import { Boiler } from '../devices/boiler.js'
@@ -16,96 +12,140 @@ import { Oven } from '../devices/oven.js'
 import { Television } from '../devices/television.js'
 import { WashingMachine } from '../devices/washing-machine.js'
 
-// const modal = document.querySelector('#backdrop-config')
-// const openBtn = document.querySelector('#settings')
-// const closeBtn = document.querySelector('#close-modal-config')
-
-// const open = () => modal.classList.remove('is-hidden')
-// const close = () => modal.classList.add('is-hidden')
-
-// openBtn.addEventListener('click', open)
-// closeBtn.addEventListener('click', close)
-
-// const closeConfigModal = initModal('#backdrop-config', '#settings', '#close-modal-config');
 initModal('#backdrop-config', '#settings', '#close-modal-config')
 
-const addDeviceToRoom = () => {
+const addDeviceToRoom = (roomName, newDevice) => {
+  const storedRooms = JSON.parse(localStorage.getItem('rooms')) || rooms
+  const room = storedRooms.find((room) => room.name === roomName)
+
+  if (room) {
+    room.devices.push(newDevice)
+    localStorage.setItem('rooms', JSON.stringify(storedRooms))
+  }
+}
+
+export const loadRoomsFromStorage = () => {
+  const storedRooms = JSON.parse(localStorage.getItem('rooms')) || rooms
+  return storedRooms
+}
+
+const addNewDevice = () => {
   const roomName = document.querySelector('#room-select').value
   const deviceType = document.querySelector('#device-type-select').value
 
-  const room = rooms.find((r) => r.name === roomName)
-  const deviceName = `${deviceType}`
-
   let newDevice
+
   switch (deviceType) {
     case 'AirConditioner':
-      newDevice = new AirConditioner(deviceName, roomName)
+      newDevice = new AirConditioner('AC', roomName)
       break
     case 'Boiler':
-      newDevice = new Boiler(deviceName, roomName)
+      newDevice = new Boiler('Boiler', roomName)
       break
     case 'Curtains':
-      newDevice = new Curtains(deviceName, roomName)
+      newDevice = new Curtains('Curtains', roomName)
       break
     case 'Door':
-      newDevice = new Door(deviceName, roomName)
+      newDevice = new Door('Door', roomName)
       break
     case 'Hood':
-      newDevice = new Hood(deviceName, roomName)
+      newDevice = new Hood('Hood', roomName)
       break
     case 'Light':
-      newDevice = new Light(deviceName, roomName)
+      newDevice = new Light('Light', roomName)
       break
     case 'Oven':
-      newDevice = new Oven(deviceName, roomName)
+      newDevice = new Oven('Oven', roomName)
       break
     case 'Television':
-      newDevice = new Television(deviceName, roomName)
+      newDevice = new Television('Television', roomName)
       break
     case 'WashingMachine':
-      newDevice = new WashingMachine(deviceName, roomName)
+      newDevice = new WashingMachine('WashingMachine', roomName)
       break
     default:
-      console.error('Unknown device type')
+      throw new Error('Unknown device type')
   }
 
-  room.devices.push(newDevice)
-  saveDevices(rooms)
-  console.log(`${deviceName} added to ${roomName}`)
-  // Можливо, оновити UI тут
-  updateUI(roomName, newDevice)
-}
-
-const updateUI = (roomName, newDevice) => {
-  const roomElement = document.querySelector(
-    `#${roomName.toLowerCase()} .devices-wrapper`
-  )
-  if (roomElement) {
-    roomElement.innerHTML += newDevice.render(roomName)
+  if (newDevice) {
+    addDeviceToRoom(roomName, newDevice)
+    bindEvents()
   }
 }
-const saveDevices = (devices) => {
-  localStorage.setItem('devices', JSON.stringify(devices))
+
+const restoreDevice = (deviceData) => {
+  // Визначаємо клас на основі типу пристрою
+  switch (deviceData.type) {
+    case 'AirConditioner':
+      return new AirConditioner(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.temperature
+      )
+    case 'Boiler':
+      return new Boiler(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.temperature
+      )
+    case 'Curtains':
+      return new Curtains(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOpen,
+        deviceData.halfOpen
+      )
+    case 'Door':
+      return new Door(deviceData.name, deviceData.state, deviceData.isOpen)
+    case 'Hood':
+      return new Hood(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.temperature
+      )
+    case 'Light':
+      return new Light(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.brightness,
+        deviceData.color
+      )
+    case 'Oven':
+      return new Oven(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.temperature,
+        deviceData.timer,
+        deviceData.startTimestamp
+      )
+    case 'Television':
+      return new Television(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.currentChannel,
+        deviceData.volume
+      )
+    case 'WashingMachine':
+      return new WashingMachine(
+        deviceData.name,
+        deviceData.state,
+        deviceData.isOn,
+        deviceData.temperature,
+        deviceData.timer,
+        deviceData.startTimestamp,
+        deviceData.mode
+      )
+    default:
+      throw new Error(`Unknown device type: ${deviceData.type}`)
+  }
 }
 
-const loadDevices = () => {
-  const devices = localStorage.getItem('devices')
-  return devices ? JSON.parse(devices) : []
-}
-
-const renderSavedDevices = () => {
-  const savedRooms = loadDevices()
-  savedRooms.forEach((room) => {
-    room.devices.forEach((deviceData) => {
-      const deviceClass = getClassByName(deviceData.type)
-      const deviceInstance = new deviceClass(deviceData.name, room.name)
-      Object.assign(deviceInstance, deviceData)
-      updateUI(room.name, deviceInstance)
-    })
-  })
-}
-
-// Обробник для кнопки додавання пристрою
-document.querySelector('#add-device').addEventListener('click', addDeviceToRoom)
-
-renderSavedDevices()
+const savedDevices = JSON.parse(localStorage.getItem('devices')) || []
+const devices = savedDevices.map(restoreDevice)
+document.querySelector('#add-device').addEventListener('click', addNewDevice)
