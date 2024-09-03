@@ -1,6 +1,5 @@
 import { initModal, handleSuccess, handleError } from './handle-modal.js'
 
-const security = document.querySelector('#security')
 const changeStatusBtn = document.querySelector('#change-status')
 const newUser = document.querySelector('#new-user')
 const deleteUser = document.querySelector('#delete-user')
