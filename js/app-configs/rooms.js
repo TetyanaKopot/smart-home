@@ -15,7 +15,7 @@ export const rooms = [
       new Door('Door', 'LivingRoom'),
       new Light('Light', 'LivingRoom'),
       new Curtains('Curtains', 'LivingRoom'),
-      new AirConditioner('AC', 'LivingRoom'),
+      new AirConditioner('AirConditioner', 'LivingRoom'),
       new Television('Television', 'LivingRoom'),
     ],
   },

@@ -1,4 +1,4 @@
-import { initModal } from './init-modal.js'
+import { initModal, handleSuccess, handleError } from './handle-modal.js'
 import { rooms } from '../app-configs/rooms.js'
 import { bindEvents } from '../main.js'
 
@@ -12,7 +12,14 @@ import { Oven } from '../devices/oven.js'
 import { Television } from '../devices/television.js'
 import { WashingMachine } from '../devices/washing-machine.js'
 
-initModal('#backdrop-config', '#settings', '#close-modal-config')
+const addDevice = document.querySelector('#add-device')
+const removeDevice = document.querySelector('#remove-device')
+
+const closeConfigModal = initModal(
+  '#backdrop-config',
+  '#settings',
+  '#close-modal-config'
+)
 
 const addDeviceToRoom = (roomName, newDevice) => {
   console.log('Before saving to storage, device:', newDevice)
@@ -20,12 +27,26 @@ const addDeviceToRoom = (roomName, newDevice) => {
   const room = storedRooms.find((room) => room.name === roomName)
 
   if (room) {
+    const existingDevice = room.devices.find(
+      (device) => device.name === newDevice.name
+    )
+
+    if (existingDevice) {
+      console.log(`Device ${newDevice.name} already exists in ${roomName}`)
+      handleError(
+        addDevice,
+        `Device ${newDevice.name} already exists in ${roomName}`
+      )
+      return
+    }
+
     const deviceWithType = {
       ...newDevice,
       type: newDevice.constructor.name,
     }
     room.devices.push(deviceWithType)
     localStorage.setItem('rooms', JSON.stringify(storedRooms))
+    handleSuccess(addDevice, 'Add Device', closeConfigModal)
   }
 }
 
@@ -44,7 +65,7 @@ const addNewDevice = () => {
 
   switch (deviceType) {
     case 'AirConditioner':
-      newDevice = new AirConditioner('AC', roomName)
+      newDevice = new AirConditioner('AirConditioner', roomName)
       break
     case 'Boiler':
       newDevice = new Boiler('Boiler', roomName)
@@ -153,7 +174,32 @@ export const restoreDevice = (deviceData) => {
       throw new Error('Unknown device type: ' + deviceData.type)
   }
 }
-
 const savedDevices = JSON.parse(localStorage.getItem('devices')) || []
 const devices = savedDevices.map(restoreDevice)
-document.querySelector('#add-device').addEventListener('click', addNewDevice)
+
+const removeDeviceFromRoom = (roomName, deviceName) => {
+  const storedRooms = JSON.parse(localStorage.getItem('rooms')) || rooms
+  const room = storedRooms.find((room) => room.name === roomName)
+  if (room) {
+    const deviceIndex = room.devices.findIndex(
+      (device) => device.name === deviceName
+    )
+    if (deviceIndex !== -1) {
+      room.devices.splice(deviceIndex, 1)
+      localStorage.setItem('rooms', JSON.stringify(storedRooms))
+      console.log(`Device ${deviceName} removed from ${roomName}`)
+      handleSuccess(removeDevice, 'Remove Device', closeConfigModal)
+    } else {
+      handleError(removeDevice, `Device ${deviceName} not found in ${roomName}`)
+    }
+  }
+}
+
+const removeDev = () => {
+  const roomName = document.querySelector('#room-select').value
+  const deviceName = document.querySelector('#device-type-select').value
+  removeDeviceFromRoom(roomName, deviceName)
+}
+
+removeDevice.addEventListener('click', removeDev)
+addDevice.addEventListener('click', addNewDevice)

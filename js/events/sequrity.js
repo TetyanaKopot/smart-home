@@ -1,8 +1,9 @@
-import { initModal } from './init-modal.js'
+import { initModal, handleSuccess, handleError } from './handle-modal.js'
 
 const security = document.querySelector('#security')
 const changeStatusBtn = document.querySelector('#change-status')
 const newUser = document.querySelector('#new-user')
+const deleteUser = document.querySelector('#delete-user')
 const userName = document.querySelector('#name')
 const userPassword = document.querySelector('#password')
 const nameError = document.querySelector('#name-error')
@@ -14,7 +15,6 @@ const closeSecurityModal = initModal(
   '#close-modal-sequrity'
 )
 
-// Використовуємо однаковий ключ 'Security' для зберігання і завантаження стану
 let isProtect = JSON.parse(localStorage.getItem('Security')) || false
 
 const updateSecurityUI = () => {
@@ -26,11 +26,10 @@ const updateSecurityUI = () => {
 }
 
 const saveProtect = () => {
-  localStorage.setItem('Security', JSON.stringify(isProtect)) // Змінено ключ на 'Security'
+  localStorage.setItem('Security', JSON.stringify(isProtect))
   console.log(`Security status saved: ${isProtect}`)
 }
 
-// Оновлюємо інтерфейс одразу після ініціалізації
 updateSecurityUI()
 
 const regName = /^\w{3,}$/i
@@ -42,16 +41,6 @@ const displayError = (element, condition) => {
   } else {
     element.classList.remove('error')
   }
-}
-
-const hendleSuccess = (btn, innerBtn) => {
-  userName.value = ''
-  userPassword.value = ''
-  btn.innerText = 'Successfully!'
-  setTimeout(() => {
-    btn.innerText = innerBtn
-    closeSecurityModal()
-  }, 3000)
 }
 
 const addNewUser = () => {
@@ -66,10 +55,35 @@ const addNewUser = () => {
 
   if (!hasNameError && !hasPasswordError) {
     const users = JSON.parse(localStorage.getItem('users')) || []
+
+    const existingUser = users.find((user) => user.name === name)
+
+    if (existingUser) {
+      handleError(newUser, `${name} already exists`)
+      return
+    }
+
     users.push({ name, password })
     localStorage.setItem('users', JSON.stringify(users))
+    userName.value = ''
+    userPassword.value = ''
+    handleSuccess(newUser, 'New User', closeSecurityModal)
+  }
+}
 
-    hendleSuccess(newUser, 'New User')
+const deleteOldUser = () => {
+  const name = userName.value.trim()
+  let users = JSON.parse(localStorage.getItem('users')) || []
+
+  const userIndex = users.findIndex((user) => user.name === name)
+  if (userIndex !== -1) {
+    users.splice(userIndex, 1)
+    localStorage.setItem('users', JSON.stringify(users))
+    userName.value = ''
+    userPassword.value = ''
+    handleSuccess(deleteUser, 'Delete User', closeSecurityModal)
+  } else {
+    handleError(deleteUser, 'User not found')
   }
 }
 
@@ -86,17 +100,18 @@ const checkUserCredentials = () => {
     isProtect = !isProtect
     updateSecurityUI()
     saveProtect()
-    hendleSuccess(changeStatusBtn, isProtect ? 'Deactivate' : 'Activate')
+    userName.value = ''
+    userPassword.value = ''
+    handleSuccess(
+      changeStatusBtn,
+      isProtect ? 'Deactivate' : 'Activate',
+      closeSecurityModal
+    )
   } else {
-    const previousText = changeStatusBtn.innerText
-    changeStatusBtn.classList.add('error')
-    changeStatusBtn.innerText = 'Incorrect name or password!'
-    setTimeout(() => {
-      changeStatusBtn.classList.remove('error')
-      changeStatusBtn.innerText = previousText
-    }, 3000)
+    handleError(changeStatusBtn, 'Incorrect name or password!')
   }
 }
 
 changeStatusBtn.addEventListener('click', checkUserCredentials)
 newUser.addEventListener('click', addNewUser)
+deleteUser.addEventListener('click', deleteOldUser)

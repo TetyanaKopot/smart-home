@@ -8,12 +8,12 @@ import { updateDeviceStatus } from '../ui/status-elements.js'
 
 const modes = ['Standard', 'Cotton', 'Silk', 'Wool', 'Delicate', 'Quik']
 export class WashingMachine extends Oven {
-  constructor(name, roomName, tempValue = 40, timer, machineModes = modes) {
+  constructor(name, roomName, tempValue = 40, timer) {
     super(name, timer)
     this.roomName = roomName
     this.tempValue = tempValue
     this.timer = null
-    this.modes = machineModes || ['Standard']
+    this.modes = modes || ['Standard']
     this.currentMode = this.modes[0]
     this.isLocked = false
   }
@@ -44,7 +44,6 @@ export class WashingMachine extends Oven {
   setMode(modeIndex) {
     if (!this.isLocked) {
       this.currentMode = this.modes[modeIndex]
-      console.log(`Washing mode set to ${this.currentMode}`)
     }
   }
 
@@ -71,8 +70,9 @@ export class WashingMachine extends Oven {
     const state = JSON.parse(localStorage.getItem(this.getStorageKey(roomName)))
 
     if (state) {
+      // console.log(state)
       this.tempValue = state.tempValue || this.tempValue
-      this.currentMode = state.mode
+      this.currentMode = state.mode || this.modes[0]
       this.updateModeElements(roomName, 'Cannot change now', this.isOn)
 
       const modeSelectElement = document.querySelector(
@@ -81,7 +81,6 @@ export class WashingMachine extends Oven {
       if (modeSelectElement) {
         modeSelectElement.value = this.currentMode
       }
-      console.log('Restored tempValue:', this.tempValue)
     }
   }
 

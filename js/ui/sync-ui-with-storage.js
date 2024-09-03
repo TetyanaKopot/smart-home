@@ -10,7 +10,7 @@ export const syncUIWithStorage = (device, roomName) => {
 
   if (deviceData) {
     updateStatusElement(
-      deviceData.isOn ? `${actions.on}` : `${actions.off}`,
+      deviceData.isOn || deviceData.isOpen ? `${actions.on}` : `${actions.off}`,
       roomName,
       device
     )
