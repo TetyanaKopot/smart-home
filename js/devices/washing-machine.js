@@ -3,6 +3,7 @@ import {
   renderSelectOptions,
   renderTimer,
   renderPowerController,
+  getValidValue,
 } from '../ui/render-elements.js'
 import { updateDeviceStatus } from '../ui/status-elements.js'
 
@@ -19,10 +20,7 @@ export class WashingMachine extends Oven {
   }
 
   renderDeviceOptions(roomName) {
-    const validTempValue =
-      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
-        ? this.tempValue
-        : 40
+    const validTempValue = getValidValue(this.tempValue, 40)
     return `
     ${renderSelectOptions(roomName, this.name, modes, 'mode')}
     ${renderTimer(this.name, roomName)}

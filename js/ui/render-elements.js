@@ -24,7 +24,9 @@ export const renderTimer = (name, roomName) => {
   </div>
   `
 }
-
+export const getValidValue = (value, defaultValue) => {
+  return typeof value === 'number' && !isNaN(value) ? value : defaultValue
+}
 export const renderPowerController = ({
   min,
   max,

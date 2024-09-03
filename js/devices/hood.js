@@ -1,5 +1,5 @@
 import { Device } from './device.js'
-import { renderPowerController } from '../ui/render-elements.js'
+import { getValidValue, renderPowerController } from '../ui/render-elements.js'
 
 export class Hood extends Device {
   constructor(name, roomName, powValue = 30) {
@@ -9,10 +9,7 @@ export class Hood extends Device {
   }
 
   renderDeviceOptions(roomName) {
-    const validPowValue =
-      typeof this.powValue === 'number' && !isNaN(this.powValue)
-        ? this.powValue
-        : 30
+    const validPowValue = getValidValue(this.powValue, 30)
     return `${renderPowerController({
       min: 0,
       max: 100,

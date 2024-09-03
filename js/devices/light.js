@@ -1,5 +1,5 @@
 import { Device } from './device.js'
-import { renderPowerController } from '../ui/render-elements.js'
+import { getValidValue, renderPowerController } from '../ui/render-elements.js'
 
 export class Light extends Device {
   constructor(name, roomName, brightValue = 50, color = 'white') {
@@ -10,10 +10,7 @@ export class Light extends Device {
   }
 
   renderDeviceOptions(roomName) {
-    const validBrightValue =
-      typeof this.brightValue === 'number' && !isNaN(this.brightValue)
-        ? this.brightValue
-        : 50
+    const validBrightValue = getValidValue(this.brightValue, 50)
     return `
     <div class="light-colors" id="${roomName}-${this.name}-colors">
     <button class="light-color white is-active" id="${roomName}-white" data-color="white">W</button>

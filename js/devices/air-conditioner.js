@@ -1,5 +1,5 @@
 import { Device } from './device.js'
-import { renderPowerController } from '../ui/render-elements.js'
+import { getValidValue, renderPowerController } from '../ui/render-elements.js'
 
 export class AirConditioner extends Device {
   constructor(name, roomName, tempValue = 20) {
@@ -10,10 +10,7 @@ export class AirConditioner extends Device {
   }
 
   renderDeviceOptions(roomName) {
-    const validTempValue =
-      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
-        ? this.tempValue
-        : 20
+    const validTempValue = getValidValue(this.tempValue, 20)
     return `${renderPowerController({
       min: 15,
       max: 30,

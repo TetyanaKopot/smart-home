@@ -1,4 +1,8 @@
-import { renderTimer, renderPowerController } from '../ui/render-elements.js'
+import {
+  renderTimer,
+  getValidValue,
+  renderPowerController,
+} from '../ui/render-elements.js'
 import { AirConditioner } from './air-conditioner.js'
 import { initializeTimer, formatTime } from '../events/timer.js'
 import { updateDeviceStatus } from '../ui/status-elements.js'
@@ -12,10 +16,7 @@ export class Oven extends AirConditioner {
   }
 
   renderDeviceOptions(roomName) {
-    const validTempValue =
-      typeof this.tempValue === 'number' && !isNaN(this.tempValue)
-        ? this.tempValue
-        : 180
+    const validTempValue = getValidValue(this.tempValue, 180)
     return `
     ${renderTimer(this.name, roomName)}
     ${renderPowerController({
