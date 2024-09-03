@@ -7,9 +7,12 @@ import { handleTvControll } from './events/tv-controll.js'
 import { syncUIWithStorage } from './ui/sync-ui-with-storage.js'
 import { loadRoomsFromStorage } from './events/config-devices.js'
 import { restoreDevice } from './events/config-devices.js'
+import { updateSecurityUI } from './events/sequrity.js'
 
 const main = document.querySelector('main')
 const originalContent = main.innerHTML
+
+let isProtect = JSON.parse(localStorage.getItem('Security')) || false
 
 export const bindEvents = () => {
   const storedRooms = loadRoomsFromStorage()
@@ -35,6 +38,7 @@ export const bindEvents = () => {
       const toHome = document.querySelector('.home-button')
       toHome.addEventListener('click', () => {
         main.innerHTML = originalContent
+        updateSecurityUI()
         bindEvents()
       })
     })

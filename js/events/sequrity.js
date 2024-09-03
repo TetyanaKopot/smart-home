@@ -8,6 +8,7 @@ const userName = document.querySelector('#name')
 const userPassword = document.querySelector('#password')
 const nameError = document.querySelector('#name-error')
 const passwordError = document.querySelector('#password-error')
+const securityIcon = document.querySelector('#security-icon')
 
 const closeSecurityModal = initModal(
   '#backdrop-sequrity',
@@ -17,11 +18,14 @@ const closeSecurityModal = initModal(
 
 let isProtect = JSON.parse(localStorage.getItem('Security')) || false
 
-const updateSecurityUI = () => {
-  const lock = isProtect
-    ? `<i class="fa-solid fa-lock"></i>`
-    : `<i class="fa-solid fa-lock-open"></i>`
-  security.innerHTML = `Security ${lock}`
+export const updateSecurityUI = () => {
+  if (isProtect) {
+    securityIcon.classList.remove('fa-lock-open')
+    securityIcon.classList.add('fa-lock')
+  } else {
+    securityIcon.classList.remove('fa-lock')
+    securityIcon.classList.add('fa-lock-open')
+  }
   changeStatusBtn.innerText = isProtect ? 'Deactivate' : 'Activate'
 }
 
