@@ -189,6 +189,7 @@ const removeDeviceFromRoom = (roomName, deviceName) => {
       localStorage.setItem('rooms', JSON.stringify(storedRooms))
       console.log(`Device ${deviceName} removed from ${roomName}`)
       handleSuccess(removeDevice, 'Remove Device', closeConfigModal)
+      bindEvents()
     } else {
       handleError(removeDevice, `Device ${deviceName} not found in ${roomName}`)
     }
