@@ -5,6 +5,7 @@ const newUser = document.querySelector('#new-user')
 const deleteUser = document.querySelector('#delete-user')
 const userName = document.querySelector('#name')
 const userPassword = document.querySelector('#password')
+const userStatus = document.querySelector('#status')
 const nameError = document.querySelector('#name-error')
 const passwordError = document.querySelector('#password-error')
 const securityIcon = document.querySelector('#security-icon')
@@ -49,6 +50,7 @@ const displayError = (element, condition) => {
 const addNewUser = () => {
   const name = userName.value.trim()
   const password = userPassword.value.trim()
+  const status = userStatus.value
 
   const hasNameError = !regName.test(name)
   const hasPasswordError = !regPass.test(password)
@@ -66,7 +68,7 @@ const addNewUser = () => {
       return
     }
 
-    users.push({ name, password })
+    users.push({ name, password, status })
     localStorage.setItem('users', JSON.stringify(users))
     userName.value = ''
     userPassword.value = ''
@@ -96,7 +98,10 @@ const checkUserCredentials = () => {
 
   const users = JSON.parse(localStorage.getItem('users')) || []
   const userExists = users.some(
-    (user) => user.name === name && user.password === password
+    (user) =>
+      user.name === name &&
+      user.password === password &&
+      user.status === 'admin'
   )
 
   if (userExists) {

@@ -21,7 +21,7 @@ export const handleSuccess = (btn, innerBtn, closeModal) => {
     btn.classList.remove('successful')
     btn.innerText = innerBtn
     closeModal()
-  }, 2000)
+  }, 1000)
 }
 
 export const handleError = (btn, errorMessage) => {
@@ -31,5 +31,5 @@ export const handleError = (btn, errorMessage) => {
   setTimeout(() => {
     btn.classList.remove('error')
     btn.innerText = previousText
-  }, 2000)
+  }, 1000)
 }

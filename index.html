@@ -16,7 +16,11 @@
   <body>
     <main>
       <h1 class="title">SMART HOME</h1>
+      <section class="header">
+        <h2 class="greeting" id="greeting"></h2>
+      </section>
       <section class="options">
+        <button class="login button" id="login">Log In</button>
         <button class="security button" id="security">
           <i id="security-icon" class="fa-solid fa-lock-open"></i>
           Security
@@ -32,6 +36,35 @@
         <div class="rooms__item item" id="utilityroom">Utility Room</div>
       </section>
     </main>
+    <div class="backdrop is-hidden" id="backdrop-login">
+      <div class="modal" id="modal-login">
+        <i class="fa-solid fa-xmark" id="close-modal-login"></i>
+        <fieldset class="login-fieldset">
+          <input
+            type="text"
+            name="name"
+            class="login-input"
+            id="log-name"
+            placeholder="Name"
+            autocomplete="off"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            class="login-input"
+            id="log-password"
+            placeholder="Password"
+            autocomplete="off"
+            required
+          />
+          <button type="submit" class="button login" id="login-btn">
+            Log In
+          </button>
+        </fieldset>
+      </div>
+    </div>
+
     <div class="backdrop is-hidden" id="backdrop-sequrity">
       <div class="modal" id="modal-sequrity">
         <i class="fa-solid fa-xmark" id="close-modal-sequrity"></i>
@@ -60,6 +93,11 @@
           <p class="message" id="password-error">
             Password must be at least 8 characters long
           </p>
+          <select name="status" class="login-input" id="status">
+            <option value="admin">Admin</option>
+            <option value="family-member">Family member</option>
+            <option value="guest">Guest</option>
+          </select>
           <button type="button" class="button" id="change-status"></button>
           <button type="submit" class="button new-user" id="new-user">
             New User
@@ -91,6 +129,7 @@
       </div>
     </div>
     <script src="./js/main.js" type="module"></script>
+    <script src="./js/events/login.js" type="module"></script>
     <script src="./js/events/sequrity.js" type="module"></script>
     <script src="./js/ui/modal-dropdowns.js" type="module"></script>
     <script src="./js/events/config-devices.js" type="module"></script>
