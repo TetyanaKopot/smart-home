@@ -40,6 +40,12 @@ export const bindEvents = () => {
         main.innerHTML = originalContent
         updateSecurityUI()
         bindEvents()
+
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        if (currentUser) {
+          const greeting = document.querySelector('#greeting')
+          greeting.innerText = `Hello, ${currentUser.name}!`
+        }
       })
     })
   })
